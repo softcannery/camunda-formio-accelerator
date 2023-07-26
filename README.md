@@ -9,7 +9,7 @@
 
 The “Camunda Platform Accelerator for Form.io” (the Accelerator) Extends Camunda's reach into the application layer by enabling the rapid development of complex, form-centric, business process applications by delivering additional low-code / no-code capabilities into the Camunda Platform using powerful Camunda Modeler Form.io forms builder plugin.
 
-![image](https://github.com/softcannery/camunda-formio-accelerator/assets/140441971/ebe44b54-14c0-4296-8529-848b6af7b1ab)
+![image](https://github.com/softcannery/camunda-formio-accelerator/assets/140441971/e8ea6455-6fdb-4655-8953-86fadb1a700b)
 
 ## Implementation
 
@@ -29,7 +29,7 @@ The project integrates the following frameworks to provide fast and user-friendl
 
 The general flow of actions to develop, deploy and execute workflow implementation in softCannery’s Camunda Platform Accelerator for Form.io:
 
-![image](https://github.com/softcannery/camunda-formio-accelerator/assets/140441971/5a0fc14d-42fb-4b3b-bb8e-3aba1600c829)
+![image](https://github.com/softcannery/camunda-formio-accelerator/assets/140441971/67705ac5-d4a8-40fb-90a4-58f13dba0e9b)
 
 ## Getting Started
 
