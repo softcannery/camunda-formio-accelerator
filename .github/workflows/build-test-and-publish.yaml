@@ -5,6 +5,7 @@ on:
       - master
     paths-ignore:
       - 'README.md'
+      - '.github/ISSUE_TEMPLATE/*.md'
       - '.github/**'
       - 'cucumber-tests/**'
   pull_request:
