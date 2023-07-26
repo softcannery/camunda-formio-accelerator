@@ -3,7 +3,10 @@
 [![release](https://img.shields.io/github/release/softcannery/camunda-formio-accelerator.svg)](https://github.com/softcannery/camunda-formio-accelerator/releases/latest)
 [![GitHub release date](https://img.shields.io/github/release-date/softcannery/camunda-formio-accelerator.svg)](https://github.com/softcannery/camunda-formio-accelerator/releases)
 [![CI](https://github.com/softcannery/camunda-formio-accelerator/actions/workflows/build-test-and-publish.yaml/badge.svg?branch=master)](https://github.com/softcannery/camunda-formio-accelerator/actions/workflows/build-test-and-publish.yaml)
-[![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
+[![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://github.com/softcannery/camunda-formio-accelerator/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-SoftCannery)](https://dependabot.com/)
+[![Slack](https://img.shields.io/badge/Slack-4A154B?logo=slack&logoColor=white&labelColor=555555)](https://join.slack.com/t/soft-cannery/shared_invite/zt-1zx0px9lf-6a5IsxJO5U~OyR9qklEWBg)
+
 
 ## Overview
 
