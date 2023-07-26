@@ -1,0 +1,982 @@
+{
+  "_id": "642c98901a36ecdf2eb52f3f",
+  "owner": "6176bbafe4633a3bc03859b3",
+  "project": "6273f252a320256483cf5dc4",
+  "tag": "0.0.9",
+  "description": "",
+  "template": {
+    "title": "sofcannery-sow",
+    "version": "2.0.0",
+    "name": "softcanery-sow",
+    "roles": {
+      "administrator": {
+        "title": "Administrator",
+        "description": "A role for Administrative Users.",
+        "admin": true,
+        "default": false
+      },
+      "authenticated": {
+        "title": "Authenticated",
+        "description": "A role for Authenticated Users.",
+        "admin": false,
+        "default": false
+      },
+      "anonymous": {
+        "title": "Anonymous",
+        "description": "A role for Anonymous Users.",
+        "admin": false,
+        "default": true
+      }
+    },
+    "forms": {
+      "startMultiInstance": {
+        "title": "Start Multi Instance",
+        "type": "form",
+        "name": "startMultiInstance",
+        "path": "startmultiinstance",
+        "display": "form",
+        "tags": [],
+        "settings": {},
+        "components": [
+          {
+            "label": "Employee Data",
+            "reorder": false,
+            "addAnotherPosition": "bottom",
+            "layoutFixed": false,
+            "enableRowGroups": false,
+            "initEmpty": false,
+            "tableView": false,
+            "defaultValue": [
+              {
+                "textField": "",
+                "employeeName": "Edward",
+                "employeeEmail": "edward@example.com",
+                "doh": "2023-04-01T00:00:00-07:00",
+                "position": "Position1 ",
+                "supervisorName": "Joe Doe",
+                "supervisorEmail": "joe@example.com"
+              },
+              {
+                "employeeName": "Tyler",
+                "employeeEmail": "tyler@example.com",
+                "doh": "2023-04-04T00:00:00-07:00",
+                "position": "Position2",
+                "supervisorName": "Joe Doe",
+                "supervisorEmail": "joe@example.com"
+              },
+              {
+                "employeeName": "Chris",
+                "employeeEmail": "chris@example.com",
+                "doh": "2023-04-02T00:00:00-07:00",
+                "position": "Position3",
+                "supervisorName": "Joe Doe",
+                "supervisorEmail": "joe@example.com"
+              }
+            ],
+            "key": "employeeData",
+            "type": "datagrid",
+            "input": true,
+            "components": [
+              {
+                "label": "Employee Name",
+                "tableView": true,
+                "key": "employeeName",
+                "type": "textfield",
+                "input": true
+              },
+              {
+                "label": "Employee Email",
+                "tableView": true,
+                "key": "employeeEmail",
+                "type": "email",
+                "input": true
+              },
+              {
+                "label": "DOH",
+                "format": "yyyy-MM-dd",
+                "tableView": false,
+                "enableMinDateInput": false,
+                "datePicker": {
+                  "disableWeekends": false,
+                  "disableWeekdays": false
+                },
+                "enableMaxDateInput": false,
+                "enableTime": false,
+                "key": "doh",
+                "type": "datetime",
+                "input": true,
+                "widget": {
+                  "type": "calendar",
+                  "displayInTimezone": "viewer",
+                  "locale": "en",
+                  "useLocaleSettings": false,
+                  "allowInput": true,
+                  "mode": "single",
+                  "enableTime": false,
+                  "noCalendar": false,
+                  "format": "yyyy-MM-dd",
+                  "hourIncrement": 1,
+                  "minuteIncrement": 1,
+                  "time_24hr": false,
+                  "minDate": null,
+                  "disableWeekends": false,
+                  "disableWeekdays": false,
+                  "maxDate": null
+                }
+              },
+              {
+                "label": "Position",
+                "tableView": true,
+                "key": "position",
+                "type": "textfield",
+                "input": true
+              },
+              {
+                "label": "Supervisor Name",
+                "tableView": true,
+                "key": "supervisorName",
+                "type": "textfield",
+                "input": true
+              },
+              {
+                "label": "Supervisor Email",
+                "tableView": true,
+                "key": "supervisorEmail",
+                "type": "email",
+                "input": true
+              }
+            ]
+          }
+        ],
+        "access": [
+          {
+            "roles": [],
+            "type": "create_own"
+          },
+          {
+            "roles": [],
+            "type": "create_all"
+          },
+          {
+            "roles": [],
+            "type": "read_own"
+          },
+          {
+            "roles": [
+              "administrator",
+              "authenticated",
+              "anonymous"
+            ],
+            "type": "read_all"
+          },
+          {
+            "roles": [],
+            "type": "update_own"
+          },
+          {
+            "roles": [],
+            "type": "update_all"
+          },
+          {
+            "roles": [],
+            "type": "delete_own"
+          },
+          {
+            "roles": [],
+            "type": "delete_all"
+          },
+          {
+            "roles": [],
+            "type": "team_read"
+          },
+          {
+            "roles": [],
+            "type": "team_write"
+          },
+          {
+            "roles": [],
+            "type": "team_admin"
+          }
+        ],
+        "submissionAccess": [
+          {
+            "roles": [],
+            "type": "create_own"
+          },
+          {
+            "roles": [],
+            "type": "create_all"
+          },
+          {
+            "roles": [],
+            "type": "read_own"
+          },
+          {
+            "roles": [],
+            "type": "read_all"
+          },
+          {
+            "roles": [],
+            "type": "update_own"
+          },
+          {
+            "roles": [],
+            "type": "update_all"
+          },
+          {
+            "roles": [],
+            "type": "delete_own"
+          },
+          {
+            "roles": [],
+            "type": "delete_all"
+          },
+          {
+            "roles": [],
+            "type": "team_read"
+          },
+          {
+            "roles": [],
+            "type": "team_write"
+          },
+          {
+            "roles": [],
+            "type": "team_admin"
+          }
+        ],
+        "properties": {},
+        "controller": ""
+      },
+      "reviewEmployeeRecord": {
+        "title": "Review Employee Record",
+        "type": "form",
+        "name": "reviewEmployeeRecord",
+        "path": "reviewemployeerecord",
+        "display": "form",
+        "tags": [],
+        "settings": {
+        },
+        "components": [
+          {
+            "label": "Employee Name",
+            "tableView": true,
+            "key": "employeeName",
+            "type": "textfield",
+            "input": true
+          },
+          {
+            "label": "Employee Email",
+            "tableView": true,
+            "key": "employeeEmail",
+            "type": "email",
+            "input": true
+          },
+          {
+            "label": "DOH",
+            "format": "yyyy-MM-dd",
+            "tableView": false,
+            "enableMinDateInput": false,
+            "datePicker": {
+              "disableWeekends": false,
+              "disableWeekdays": false
+            },
+            "enableMaxDateInput": false,
+            "enableTime": false,
+            "key": "doh",
+            "type": "datetime",
+            "input": true,
+            "widget": {
+              "type": "calendar",
+              "displayInTimezone": "viewer",
+              "locale": "en",
+              "useLocaleSettings": false,
+              "allowInput": true,
+              "mode": "single",
+              "enableTime": false,
+              "noCalendar": false,
+              "format": "yyyy-MM-dd",
+              "hourIncrement": 1,
+              "minuteIncrement": 1,
+              "time_24hr": false,
+              "minDate": null,
+              "disableWeekends": false,
+              "disableWeekdays": false,
+              "maxDate": null
+            }
+          },
+          {
+            "label": "Position",
+            "tableView": true,
+            "key": "position",
+            "type": "textfield",
+            "input": true
+          },
+          {
+            "label": "Supervisor Name",
+            "tableView": true,
+            "key": "supervisorName",
+            "type": "textfield",
+            "input": true
+          },
+          {
+            "label": "Supervisor Email",
+            "tableView": true,
+            "key": "supervisorEmail",
+            "type": "email",
+            "input": true
+          },
+          {
+            "label": "Approved",
+            "tableView": false,
+            "defaultValue": false,
+            "key": "approved",
+            "type": "checkbox",
+            "input": true
+          },
+          {
+            "label": "Notes",
+            "autoExpand": false,
+            "tableView": true,
+            "key": "notes",
+            "type": "textarea",
+            "input": true
+          }
+        ],
+        "access": [
+          {
+            "roles": [],
+            "type": "create_own"
+          },
+          {
+            "roles": [],
+            "type": "create_all"
+          },
+          {
+            "roles": [],
+            "type": "read_own"
+          },
+          {
+            "roles": [
+              "administrator",
+              "authenticated",
+              "anonymous"
+            ],
+            "type": "read_all"
+          },
+          {
+            "roles": [],
+            "type": "update_own"
+          },
+          {
+            "roles": [],
+            "type": "update_all"
+          },
+          {
+            "roles": [],
+            "type": "delete_own"
+          },
+          {
+            "roles": [],
+            "type": "delete_all"
+          },
+          {
+            "roles": [],
+            "type": "team_read"
+          },
+          {
+            "roles": [],
+            "type": "team_write"
+          },
+          {
+            "roles": [],
+            "type": "team_admin"
+          }
+        ],
+        "submissionAccess": [
+          {
+            "roles": [],
+            "type": "create_own"
+          },
+          {
+            "roles": [],
+            "type": "create_all"
+          },
+          {
+            "roles": [],
+            "type": "read_own"
+          },
+          {
+            "roles": [],
+            "type": "read_all"
+          },
+          {
+            "roles": [],
+            "type": "update_own"
+          },
+          {
+            "roles": [],
+            "type": "update_all"
+          },
+          {
+            "roles": [],
+            "type": "delete_own"
+          },
+          {
+            "roles": [],
+            "type": "delete_all"
+          },
+          {
+            "roles": [],
+            "type": "team_read"
+          },
+          {
+            "roles": [],
+            "type": "team_write"
+          },
+          {
+            "roles": [],
+            "type": "team_admin"
+          }
+        ],
+        "properties": {},
+        "controller": ""
+      },
+      "reviewEmployeeData": {
+        "title": "Review Employee Data",
+        "type": "form",
+        "name": "reviewEmployeeData",
+        "path": "reviewemployeedata",
+        "display": "form",
+        "tags": [],
+        "settings": {
+        },
+        "components": [
+          {
+            "label": "Employee Data",
+            "reorder": false,
+            "addAnotherPosition": "bottom",
+            "layoutFixed": false,
+            "enableRowGroups": false,
+            "initEmpty": false,
+            "tableView": false,
+            "defaultValue": [
+              {
+                "employeeName": "",
+                "employeeEmail": "",
+                "doh": "",
+                "position": "",
+                "supervisorName": "",
+                "supervisorEmail": "",
+                "approved": false,
+                "notes": ""
+              }
+            ],
+            "key": "employeeData",
+            "type": "datagrid",
+            "input": true,
+            "components": [
+              {
+                "label": "Employee Name",
+                "tableView": true,
+                "key": "employeeName",
+                "type": "textfield",
+                "input": true
+              },
+              {
+                "label": "Employee Email",
+                "tableView": true,
+                "key": "employeeEmail",
+                "type": "email",
+                "input": true
+              },
+              {
+                "label": "DOH",
+                "format": "yyyy-MM-dd",
+                "tableView": false,
+                "enableMinDateInput": false,
+                "datePicker": {
+                  "disableWeekends": false,
+                  "disableWeekdays": false
+                },
+                "enableMaxDateInput": false,
+                "enableTime": false,
+                "key": "doh",
+                "type": "datetime",
+                "input": true,
+                "widget": {
+                  "type": "calendar",
+                  "displayInTimezone": "viewer",
+                  "locale": "en",
+                  "useLocaleSettings": false,
+                  "allowInput": true,
+                  "mode": "single",
+                  "enableTime": false,
+                  "noCalendar": false,
+                  "format": "yyyy-MM-dd",
+                  "hourIncrement": 1,
+                  "minuteIncrement": 1,
+                  "time_24hr": false,
+                  "minDate": null,
+                  "disableWeekends": false,
+                  "disableWeekdays": false,
+                  "maxDate": null
+                }
+              },
+              {
+                "label": "Position",
+                "tableView": true,
+                "key": "position",
+                "type": "textfield",
+                "input": true
+              },
+              {
+                "label": "Supervisor Name",
+                "tableView": true,
+                "key": "supervisorName",
+                "type": "textfield",
+                "input": true
+              },
+              {
+                "label": "Supervisor Email",
+                "tableView": true,
+                "key": "supervisorEmail",
+                "type": "email",
+                "input": true
+              },
+              {
+                "label": "Approved",
+                "tableView": false,
+                "key": "approved",
+                "type": "checkbox",
+                "input": true,
+                "defaultValue": false
+              },
+              {
+                "label": "Notes",
+                "autoExpand": false,
+                "tableView": true,
+                "key": "notes",
+                "type": "textarea",
+                "input": true
+              },
+              {
+                "label": "Status",
+                "tableView": true,
+                "key": "status",
+                "type": "textfield",
+                "input": true
+              }
+            ]
+          }
+        ],
+        "access": [
+          {
+            "roles": [],
+            "type": "create_own"
+          },
+          {
+            "roles": [],
+            "type": "create_all"
+          },
+          {
+            "roles": [],
+            "type": "read_own"
+          },
+          {
+            "roles": [
+              "administrator",
+              "authenticated",
+              "anonymous"
+            ],
+            "type": "read_all"
+          },
+          {
+            "roles": [],
+            "type": "update_own"
+          },
+          {
+            "roles": [],
+            "type": "update_all"
+          },
+          {
+            "roles": [],
+            "type": "delete_own"
+          },
+          {
+            "roles": [],
+            "type": "delete_all"
+          },
+          {
+            "roles": [],
+            "type": "team_read"
+          },
+          {
+            "roles": [],
+            "type": "team_write"
+          },
+          {
+            "roles": [],
+            "type": "team_admin"
+          }
+        ],
+        "submissionAccess": [
+          {
+            "roles": [],
+            "type": "create_own"
+          },
+          {
+            "roles": [],
+            "type": "create_all"
+          },
+          {
+            "roles": [],
+            "type": "read_own"
+          },
+          {
+            "roles": [],
+            "type": "read_all"
+          },
+          {
+            "roles": [],
+            "type": "update_own"
+          },
+          {
+            "roles": [],
+            "type": "update_all"
+          },
+          {
+            "roles": [],
+            "type": "delete_own"
+          },
+          {
+            "roles": [],
+            "type": "delete_all"
+          },
+          {
+            "roles": [],
+            "type": "team_read"
+          },
+          {
+            "roles": [],
+            "type": "team_write"
+          },
+          {
+            "roles": [],
+            "type": "team_admin"
+          }
+        ],
+        "properties": {},
+        "controller": ""
+      }
+    },
+    "actions": {
+      "startPurchaseAgreement:save": {
+        "title": "Save Submission",
+        "name": "save",
+        "form": "startPurchaseAgreement",
+        "priority": 10,
+        "method": [
+          "create",
+          "update"
+        ],
+        "handler": [
+          "before"
+        ]
+      },
+      "startMultiInstance:save": {
+        "title": "Save Submission",
+        "name": "save",
+        "form": "startMultiInstance",
+        "priority": 10,
+        "method": [
+          "create",
+          "update"
+        ],
+        "handler": [
+          "before"
+        ]
+      },
+      "reviewEmployeeRecord:save": {
+        "title": "Save Submission",
+        "name": "save",
+        "form": "reviewEmployeeRecord",
+        "priority": 10,
+        "method": [
+          "create",
+          "update"
+        ],
+        "handler": [
+          "before"
+        ]
+      },
+      "reviewEmployeeData:save": {
+        "title": "Save Submission",
+        "name": "save",
+        "form": "reviewEmployeeData",
+        "priority": 10,
+        "method": [
+          "create",
+          "update"
+        ],
+        "handler": [
+          "before"
+        ]
+      }
+    },
+    "resources": {
+      "user": {
+        "title": "User",
+        "type": "resource",
+        "name": "user",
+        "path": "user",
+        "tags": [],
+        "components": [
+          {
+            "type": "email",
+            "persistent": true,
+            "unique": true,
+            "required": true,
+            "protected": false,
+            "defaultValue": "",
+            "suffix": "",
+            "prefix": "",
+            "placeholder": "Enter your email address",
+            "key": "email",
+            "label": "Email",
+            "inputType": "email",
+            "tableView": true,
+            "input": true
+          },
+          {
+            "type": "password",
+            "persistent": true,
+            "protected": true,
+            "suffix": "",
+            "prefix": "",
+            "placeholder": "Enter your password.",
+            "key": "password",
+            "label": "Password",
+            "inputType": "password",
+            "tableView": false,
+            "input": true
+          },
+          {
+            "type": "button",
+            "theme": "primary",
+            "disableOnInvalid": true,
+            "action": "submit",
+            "block": false,
+            "rightIcon": "",
+            "leftIcon": "",
+            "size": "md",
+            "key": "submit",
+            "tableView": false,
+            "label": "Submit",
+            "input": true
+          }
+        ],
+        "access": [
+          {
+            "roles": [
+              "anonymous",
+              "authenticated",
+              "administrator"
+            ],
+            "type": "read_all"
+          }
+        ],
+        "submissionAccess": [
+          {
+            "roles": [
+              "administrator"
+            ],
+            "type": "create_all"
+          },
+          {
+            "roles": [
+              "administrator"
+            ],
+            "type": "read_all"
+          },
+          {
+            "roles": [
+              "administrator"
+            ],
+            "type": "update_all"
+          },
+          {
+            "roles": [
+              "administrator"
+            ],
+            "type": "delete_all"
+          },
+          {
+            "roles": [],
+            "type": "create_own"
+          },
+          {
+            "roles": [],
+            "type": "read_own"
+          },
+          {
+            "roles": [],
+            "type": "update_own"
+          },
+          {
+            "roles": [],
+            "type": "delete_own"
+          }
+        ]
+      },
+      "admin": {
+        "title": "Admin",
+        "type": "resource",
+        "name": "admin",
+        "path": "admin",
+        "tags": [],
+        "components": [
+          {
+            "type": "email",
+            "persistent": true,
+            "unique": true,
+            "required": true,
+            "protected": false,
+            "defaultValue": "",
+            "suffix": "",
+            "prefix": "",
+            "placeholder": "Enter your email address",
+            "key": "email",
+            "label": "Email",
+            "inputType": "email",
+            "tableView": true,
+            "input": true
+          },
+          {
+            "type": "password",
+            "persistent": true,
+            "protected": true,
+            "suffix": "",
+            "prefix": "",
+            "placeholder": "Enter your password.",
+            "key": "password",
+            "label": "Password",
+            "inputType": "password",
+            "tableView": false,
+            "input": true
+          },
+          {
+            "type": "button",
+            "theme": "primary",
+            "disableOnInvalid": true,
+            "action": "submit",
+            "block": false,
+            "rightIcon": "",
+            "leftIcon": "",
+            "size": "md",
+            "key": "submit",
+            "tableView": false,
+            "label": "Submit",
+            "input": true
+          }
+        ],
+        "access": [
+          {
+            "roles": [
+              "anonymous",
+              "authenticated",
+              "administrator"
+            ],
+            "type": "read_all"
+          }
+        ],
+        "submissionAccess": [
+          {
+            "roles": [
+              "administrator"
+            ],
+            "type": "create_all"
+          },
+          {
+            "roles": [
+              "administrator"
+            ],
+            "type": "read_all"
+          },
+          {
+            "roles": [
+              "administrator"
+            ],
+            "type": "update_all"
+          },
+          {
+            "roles": [
+              "administrator"
+            ],
+            "type": "delete_all"
+          },
+          {
+            "roles": [],
+            "type": "create_own"
+          },
+          {
+            "roles": [],
+            "type": "read_own"
+          },
+          {
+            "roles": [],
+            "type": "update_own"
+          },
+          {
+            "roles": [],
+            "type": "delete_own"
+          }
+        ]
+      }
+    },
+    "access": [
+      {
+        "type": "create_own",
+        "roles": []
+      },
+      {
+        "type": "create_all",
+        "roles": [
+          "administrator"
+        ]
+      },
+      {
+        "type": "read_own",
+        "roles": []
+      },
+      {
+        "type": "read_all",
+        "roles": [
+          "administrator"
+        ]
+      },
+      {
+        "type": "update_own",
+        "roles": []
+      },
+      {
+        "type": "update_all",
+        "roles": [
+          "administrator"
+        ]
+      },
+      {
+        "type": "delete_own",
+        "roles": []
+      },
+      {
+        "type": "delete_all",
+        "roles": [
+          "administrator"
+        ]
+      }
+    ],
+    "tag": "0.0.9"
+  },
+  "created": "2023-04-04T21:37:20.605Z",
+  "modified": "2023-04-04T21:37:20.612Z"
+}

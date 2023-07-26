@@ -1,0 +1,195 @@
+name: CI
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - 'README.md'
+      - '.github/**'
+      - 'cucumber-tests/**'
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build-maven:
+    name: Build Maven
+    runs-on: ubuntu-22.04
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '17'
+      - name: Cache local Maven repository
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: New version
+        id: version
+        uses: softcannery/.github/actions/jx-release-version@master
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          previous-version: "auto"
+          tag: false
+      - name: MVN set version
+        run: |
+          if [[ $GITHUB_REF == 'ref/head/master' ]]; then
+            mvn versions:set -DnewVersion=$NEW_VERSION
+          else
+            mvn versions:set -DnewVersion=$NEW_VERSION-SNAPSHOT
+          fi
+        env:
+          NEW_VERSION: ${{ steps.version.outputs.version }}
+      - name: test and build JAR
+        run: mvn package -ntp
+      - name: Build and push Docker image camunda-formio-react-app
+        uses: softcannery/.github/actions/github-docker-registry@master
+        with:
+          chart-path: ./camunda-formio-react-app
+          git-username: ${{ github.actor }}
+          git-token: ${{ secrets.GH_TOKEN }}
+          image-name: camunda-formio-react-app
+          version: ${{ steps.version.outputs.version }}
+      - name: Build and push Docker image camunda-formio-example
+        uses: softcannery/.github/actions/github-docker-registry@master
+        with:
+          chart-path: ./camunda-formio-example
+          git-username: ${{ github.actor }}
+          git-token: ${{ secrets.GH_TOKEN }}
+          image-name: camunda-formio-example
+          version: ${{ steps.version.outputs.version }}
+      - name: Build and push Docker image camunda-formio-content
+        uses: softcannery/.github/actions/github-docker-registry@master
+        with:
+          chart-path: ./camunda-formio-content
+          git-username: ${{ github.actor }}
+          git-token: ${{ secrets.GH_TOKEN }}
+          image-name: camunda-formio-content
+          version: ${{ steps.version.outputs.version }}
+
+  build-plugin:
+    name: Build Camunda Modeler Plugin
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 12
+      - uses: actions/cache@v3
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        with:
+          path: ./camunda-modeler-formio-plugin
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: build plugin
+        run: |
+          cd ./camunda-modeler-formio-plugin
+          chmod +x ./install.sh
+          export MODELER_DIR=$(pwd)
+          npm install
+          npm run build
+          cd ${MODELER_DIR}/resources/plugins/formio-plugin
+          zip -r -l ~/formio-plugin.zip ./
+      - name: Upload build results
+        uses: actions/upload-artifact@v3
+        with:
+          name: plugin
+          path: ~/formio-plugin.zip
+          retention-days: 1
+  run-tests:
+    name: Run Tests
+    needs: [build-maven]
+    runs-on: ubuntu-22.04
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '17'
+      - name: Cache local Maven repository
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_TOKEN }}
+      - name: run services
+        env:
+          CR_PAT: ${{ secrets.GH_TOKEN }}
+        run: |
+          sed -i -e "s/IMAGE_TAG=.*/IMAGE_TAG=${{ github.sha }}/" ./.env
+          docker compose pull
+          docker compose -f "docker-compose.yml" up -d --no-build
+      - name: run cucumber tests
+        run: |
+          sleep 25
+          cd ./cucumber-tests
+          mvn clean verify -ntp
+      - name: save test report
+        if: always()
+        run: |
+          cd ./cucumber-tests/target/site/serenity
+          zip -r -l ~/report.zip ./
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: ~/report.zip
+  release:
+    name: Publish Release
+    if: github.ref == 'refs/heads/master'
+    needs:
+      - build-maven
+      - build-plugin
+      - run-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v3
+        with:
+          name: plugin
+          path: ./
+      - name: MVN set version
+        run: |
+          mvn versions:set -DnewVersion=$NEW_VERSION
+        env:
+          NEW_VERSION: ${{ needs.build-maven.outputs.version }}
+      - name: Create Release Tag
+        uses: softcannery/.github/actions/release-tag@master
+        with:
+          git-token: ${{ secrets.GH_TOKEN }}
+          version: v${{ needs.build-maven.outputs.version }}
+      - name: Release it
+        run: |
+          export PREV_VERSION=$(gh release list | grep Latest | awk '{print $3}')
+          gh release create v$NEW_VERSION --title v$NEW_VERSION --notes-start-tag $PREV_VERSION --generate-notes --latest ./formio-plugin.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NEW_VERSION: ${{ needs.build-maven.outputs.version }}

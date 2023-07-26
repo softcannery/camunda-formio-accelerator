@@ -1,0 +1,90 @@
+@import 'bootstrap-iso.css';
+@import 'formio-iso.css';
+
+.form-builder {
+    width: 90%;
+    --input-width: 100%;
+    cursor: auto;
+}
+
+.form-builder .form-group label {
+    font-size: unset !important;
+}
+
+.form-builder .bootstrap-iso .form-check-input {
+    margin-top: 0.1rem !important;
+}
+
+.form-builder .btn+.btn {
+    margin-left: unset;
+}
+
+.form-builder .modal-footer .btn+.btn {
+    margin-left: 15px;
+}
+
+.form-builder .formcomponents .formcomponent {
+    height: 28px;
+}
+
+.form-builder .formio-dialog.formio-dialog-theme-default .formio-dialog-close {
+    min-width: 40px;
+}
+
+.form-builder .btn-group-xxs>.btn,
+.btn-xxs,
+.component-btn-group .component-settings-button {
+    min-width: 18px;
+    min-height: 18px;
+}
+
+.form-builder .fields {
+    position: relative;
+}
+
+.form-builder .fields .form-group {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+/* Browse button */
+.form-builder .fields input[type=file].form-control+label.btn {
+    position: relative;
+    top: 0;
+    right: 0;
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    min-width: 120px;
+    height: 30px;
+    border-radius: 3px;
+    
+    line-height: 1;
+    font-size: 13px !important;
+    font-weight: bold;
+}
+
+.form-builder .fields input[type=file].form-control+label.btn:hover {
+    background-color: var(--color-grey-225-10-90);
+    color: inherit;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.form-builder .fields input[type=file].form-control+label.btn:active {
+    background-color: var(--color-grey-225-10-75);
+}
+
+/* Clearfix */
+.form-builder div[ref="element"]:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}

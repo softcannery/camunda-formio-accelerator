@@ -1,0 +1,108 @@
+/*
+ * Camunda Platform Accelerator for Form.io Community License v1.0
+ *
+ * This Camunda Platform Accelerator for Form.io Community License v1.0 (“this Agreement”) sets
+ * forth the terms and conditions on which Soft Cannery LTD. (“the Licensor”) makes available
+ * this software (“the Software”). BY INSTALLING, DOWNLOADING, ACCESSING, USING OR DISTRIBUTING
+ * THE SOFTWARE YOU INDICATE YOUR ACCEPTANCE TO, AND ARE ENTERING INTO A CONTRACT WITH,
+ * THE LICENSOR ON THE TERMS SET OUT IN THIS AGREEMENT. IF YOU DO NOT AGREE TO THESE TERMS,
+ * YOU MUST NOT USE THE SOFTWARE. IF YOU ARE RECEIVING THE SOFTWARE ON BEHALF OF A LEGAL ENTITY,
+ * YOU REPRESENT AND WARRANT THAT YOU HAVE THE ACTUAL AUTHORITY TO AGREE TO THE TERMS AND
+ * CONDITIONS OF THIS AGREEMENT ON BEHALF OF SUCH ENTITY. “Licensee” means you, an individual,
+ * or the entity on whose behalf you are receiving the Software.
+ *
+ * Permission is hereby granted, free of charge, to the Licensee obtaining a copy of this
+ * Software and associated documentation files, to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software
+ * is furnished to do so, subject in each case to the following conditions:
+ *
+ * Condition 1: If the Licensee distributes the Software or any derivative works of the Software,
+ * the Licensee must attach this Agreement.
+ *
+ * Condition 2: Without limiting other conditions in this Agreement, the grant of rights under
+ * this Agreement does not include the right to provide Commercial Product or Service. Written
+ * permission from the Licensor is required to provide Commercial Product or Service.
+ *
+ * A “Commercial Product or Service” is software or service intended for or directed towards
+ * commercial advantage or monetary compensation for the provider of the product or service
+ * enabling parties to deploy and/or execute Commercial Product or Service.
+ *
+ * If the Licensee is in breach of the Conditions, this Agreement, including the rights granted
+ * under it, will automatically terminate with immediate effect.
+ *
+ * SUBJECT AS SET OUT BELOW, THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ *
+ * NOTHING IN THIS AGREEMENT EXCLUDES OR RESTRICTS A PARTY’S LIABILITY FOR (A) DEATH OR PERSONAL
+ * INJURY CAUSED BY THAT PARTY’S NEGLIGENCE, (B) FRAUD, OR (C) ANY OTHER LIABILITY TO THE EXTENT
+ * THAT IT CANNOT BE LAWFULLY EXCLUDED OR RESTRICTED.
+ */
+package org.softcannery.formio.model;
+
+import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity(name = "SubmissionHistory")
+@Table(
+    name = "formio_submission_history",
+    indexes = {
+        @Index(name = "activity_instance_idx", columnList = "activity_instance_id"),
+        @Index(name = "task_idx", columnList = "task_id"),
+        @Index(name = "submission_idx", columnList = "submission_id"),
+    }
+)
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class SubmissionHistoryEntity {
+
+    @Id
+    @Column(name = "submission_history_id", nullable = false)
+    private String id;
+
+    @Column(name = "submission_id", nullable = false)
+    private String submissionId;
+
+    @Column(name = "instance_id", nullable = false)
+    private String instanceId;
+
+    @Column(name = "task_id")
+    private String taskId;
+
+    @Column(name = "loop_counter")
+    private Integer loopCounter;
+
+    @Column(name = "activity_instance_id")
+    private String activityInstanceId;
+
+    @Column(name = "submission_name")
+    private String submissionName;
+
+    @Column(name = "value", columnDefinition = "text")
+    @Convert(converter = SubmissionHistoryValueConverter.class)
+    private SubmissionHistoryValue value;
+
+    @Column(name = "created_on", nullable = false)
+    private Date createdOn;
+
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "created_from")
+    private String createdFrom;
+}

@@ -1,0 +1,44 @@
+{
+  "name": "camunda-react-app",
+  "description": "Example Camunda Tasklist based on react redux",
+  "author": "Felix Mueller <felix.mueller@camunda.com>",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:8080",
+  "homepage": ".",
+  "dependencies": {
+    "@formio/core": "^5.0.0-m.8",
+    "@formio/react": "^5.0.0-m.5",
+    "bpmn-js": "8.8.3",
+    "font-awesome": "^4.7.0",
+    "formiojs": "^4.13.4",
+    "humps": "^2.0.0",
+    "lodash": "^4.16.1",
+    "native-promise-only": "^0.8.1",
+    "normalizr": "^3.2.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-file-reader-input": "^2.0.0",
+    "react-redux": "^8.1.1",
+    "react-router-dom": "^5.2.1",
+    "react-scripts": "^5.0.0",
+    "react-semantic-redux-form": "^1.2.7",
+    "redux": "^4.1.2",
+    "redux-form": "^8.3.8",
+    "redux-thunk": "^2.1.0",
+    "semantic-ui-css": "^2.2.12",
+    "semantic-ui-react": "^2.0.4"
+  },
+  "scripts": {
+    "start": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

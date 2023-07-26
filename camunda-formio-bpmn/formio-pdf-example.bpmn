@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0c7pd3h" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+  <bpmn:process id="Process_0f8o0dy" name="Example PDF Form" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" camunda:formHandlerClass="org.softcannery.camunda.FormioStartFormHandler" camunda:formKey="embedded:app:formio.html">
+      <bpmn:extensionElements>
+        <camunda:properties>
+          <camunda:property name="formio.variable" value="StartEvent_1" />
+          <camunda:property name="formio.outputDataSource" value="startEvent1" />
+          <camunda:property name="formio.file" value="formio-pdf-example.formio" />
+          <camunda:property name="formio.form" value="noticeOfPrivacyPracticesAcknowledgementForm" />
+        </camunda:properties>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_03x64gw</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0q4pxb7">
+        <bpmn:targetRef>DataStoreReference_0kkfy7a</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_03x64gw" sourceRef="StartEvent_1" targetRef="Activity_166rau7" />
+    <bpmn:endEvent id="Event_04p5z5b">
+      <bpmn:incoming>Flow_0pssgdd</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0pssgdd" sourceRef="Activity_166rau7" targetRef="Event_04p5z5b" />
+    <bpmn:userTask id="Activity_166rau7" name="Review PDF" camunda:formKey="embedded:app:formio.html">
+      <bpmn:extensionElements>
+        <camunda:properties>
+          <camunda:property name="formio.variable" value="Activity_166rau7" />
+          <camunda:property name="formio.inputDataSource" value="startEvent1" />
+          <camunda:property name="formio.outputDataSource" value="activity166Rau7" />
+          <camunda:property name="formio.file" value="formio-pdf-example.formio" />
+          <camunda:property name="formio.form" value="noticeOfPrivacyPracticesAcknowledgementForm" />
+        </camunda:properties>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="Activity_166rau7">${formio.startEvent1.json}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_03x64gw</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pssgdd</bpmn:outgoing>
+      <bpmn:property id="Property_1hjysmu" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0txiwc1">
+        <bpmn:sourceRef>DataStoreReference_0kkfy7a</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1hjysmu</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1wxk61k">
+        <bpmn:targetRef>DataStoreReference_17ud6li</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:dataStoreReference id="DataStoreReference_0kkfy7a" name="startEvent1" />
+    <bpmn:dataStoreReference id="DataStoreReference_17ud6li" name="activity166Rau7" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0f8o0dy">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_04p5z5b_di" bpmnElement="Event_04p5z5b">
+        <dc:Bounds x="432" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16qr0lp_di" bpmnElement="Activity_166rau7">
+        <dc:Bounds x="260" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_0kkfy7a_di" bpmnElement="DataStoreReference_0kkfy7a">
+        <dc:Bounds x="195" y="275" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="192" y="332" width="56" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_17ud6li_di" bpmnElement="DataStoreReference_17ud6li">
+        <dc:Bounds x="355" y="265" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="341" y="322" width="79" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0q4pxb7_di" bpmnElement="DataOutputAssociation_0q4pxb7">
+        <di:waypoint x="175" y="137" />
+        <di:waypoint x="213" y="275" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03x64gw_di" bpmnElement="Flow_03x64gw">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="260" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pssgdd_di" bpmnElement="Flow_0pssgdd">
+        <di:waypoint x="360" y="120" />
+        <di:waypoint x="432" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0txiwc1_di" bpmnElement="DataInputAssociation_0txiwc1">
+        <di:waypoint x="233" y="275" />
+        <di:waypoint x="290" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1wxk61k_di" bpmnElement="DataOutputAssociation_1wxk61k">
+        <di:waypoint x="326" y="160" />
+        <di:waypoint x="370" y="265" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,1191 @@
+{
+  "_id": "61532f9af8418e0fab866572",
+  "owner": "5e835d9b8a2bac7edd7ff6ad",
+  "project": "602ab57b38e6eeb92ce90f5d",
+  "tag": "0.0.50",
+  "description": "",
+  "template": {
+    "title": "Demo",
+    "version": "2.0.0",
+    "name": "demo-zfpnmkocytouupd",
+    "roles": {
+      "administrator": {
+        "title": "Administrator",
+        "description": "A role for Administrative Users.",
+        "admin": true,
+        "default": false
+      },
+      "authenticated": {
+        "title": "Authenticated",
+        "description": "A role for Authenticated Users.",
+        "admin": false,
+        "default": false
+      },
+      "anonymous": {
+        "title": "Anonymous",
+        "description": "A role for Anonymous Users.",
+        "admin": false,
+        "default": true
+      }
+    },
+    "forms": {
+      "noticeOfPrivacyPracticesAcknowledgementForm": {
+        "title": "Notice of Privacy Practices Acknowledgement Form",
+        "type": "form",
+        "name": "noticeOfPrivacyPracticesAcknowledgementForm",
+        "path": "noticeofprivacypracticesacknowledgementform",
+        "display": "pdf",
+        "tags": [],
+        "settings": {
+          "project": {
+            "projectId": "602ab57b38e6eeb92ce90f5d",
+            "projectUrl": "https://demo-zfpnmkocytouupd.form.io",
+            "formId": "61522c8096477e31193e5204"
+          },
+          "pdf": {
+            "src": "https://files.form.io/pdf/614a11d240905d05cd72e725/file/3f095189-36ea-52b0-add0-02adbc8078bd",
+            "id": "3f095189-36ea-52b0-add0-02adbc8078bd"
+          }
+        },
+        "components": [
+          {
+            "label": "HTML",
+            "attrs": [
+              {
+                "attr": "",
+                "value": ""
+              }
+            ],
+            "content": "<center><img src=\"https://www.floridamuseum.ufl.edu/wp-content/uploads/sites/85/2019/10/fl-health-hi-res.jpg\" alt=\"FL Health\" width=\"180\">\n<h2>State of Florida</h2>\n<h3>Department of Health</h3>\n</center>",
+            "refreshOnChange": false,
+            "key": "html",
+            "type": "htmlelement",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "html": "<p style=\"text-align:center;\"><span class=\"text-big\">Notice of Privacy Practices Acknowledgment Form</span></p>",
+            "label": "Content",
+            "refreshOnChange": false,
+            "key": "content5",
+            "type": "content",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "label": "Columns",
+            "columns": [
+              {
+                "components": [
+                  {
+                    "label": "Name:",
+                    "labelPosition": "left-left",
+                    "tableView": true,
+                    "validate": {
+                      "required": true
+                    },
+                    "key": "name",
+                    "overlay": {
+                      "page": 1,
+                      "left": 156,
+                      "top": 322,
+                      "width": 371.91779279708857,
+                      "height": 22.204179886579514
+                    },
+                    "type": "textfield",
+                    "labelWidth": 20,
+                    "input": true
+                  }
+                ],
+                "width": 7,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 7
+              },
+              {
+                "components": [
+                  {
+                    "label": "Client ID#",
+                    "labelPosition": "left-left",
+                    "tableView": true,
+                    "validate": {
+                      "required": true
+                    },
+                    "key": "clientId",
+                    "overlay": {
+                      "page": 1,
+                      "left": 624.9690902853011,
+                      "top": 325.652783138752,
+                      "width": 171.88734427571296,
+                      "height": 22.194598040878773
+                    },
+                    "type": "textfield",
+                    "labelWidth": 20,
+                    "input": true
+                  }
+                ],
+                "width": 5,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 5
+              }
+            ],
+            "key": "columns",
+            "type": "columns",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "label": "Facility/Site/Program",
+            "labelPosition": "left-left",
+            "tableView": true,
+            "validate": {
+              "required": true
+            },
+            "key": "facilitySiteProgram",
+            "overlay": {
+              "page": 1,
+              "left": 288.0086091613769,
+              "top": 369.8354010343552,
+              "width": 512.2028220534324,
+              "height": 22.810824420154095
+            },
+            "type": "textfield",
+            "labelWidth": 20,
+            "input": true
+          },
+          {
+            "html": "<p><span style=\"font-family:Arial, Helvetica, sans-serif;\"><strong>I have received a copy of the DOH Notice of Privacy Practices Form DH 150-741, 09/13.</strong></span></p>",
+            "label": "Content",
+            "refreshOnChange": false,
+            "key": "content",
+            "type": "content",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "label": "Columns",
+            "columns": [
+              {
+                "components": [
+                  {
+                    "label": "Signature",
+                    "footer": "Individual or Representative with legal authority to make health care decisions",
+                    "labelPosition": "left-left",
+                    "height": "120px",
+                    "tableView": false,
+                    "modalEdit": true,
+                    "validate": {
+                      "required": true
+                    },
+                    "key": "signature",
+                    "overlay": {
+                      "page": 1,
+                      "left": 195,
+                      "top": 448,
+                      "width": 408,
+                      "height": 30
+                    },
+                    "type": "signature",
+                    "labelWidth": 20,
+                    "input": true
+                  }
+                ],
+                "width": 8,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 8
+              },
+              {
+                "components": [
+                  {
+                    "label": "Date",
+                    "labelPosition": "left-left",
+                    "format": "yyyy-MM-dd",
+                    "tableView": false,
+                    "enableMinDateInput": false,
+                    "datePicker": {
+                      "disableWeekends": false,
+                      "disableWeekdays": false
+                    },
+                    "enableMaxDateInput": false,
+                    "enableTime": false,
+                    "validate": {
+                      "required": true
+                    },
+                    "key": "date2",
+                    "overlay": {
+                      "page": 1,
+                      "left": 679,
+                      "top": 458,
+                      "width": 100,
+                      "height": 20
+                    },
+                    "type": "datetime",
+                    "labelWidth": 30,
+                    "input": true,
+                    "widget": {
+                      "type": "calendar",
+                      "displayInTimezone": "viewer",
+                      "locale": "en",
+                      "useLocaleSettings": false,
+                      "allowInput": true,
+                      "mode": "single",
+                      "enableTime": false,
+                      "noCalendar": false,
+                      "format": "yyyy-MM-dd",
+                      "hourIncrement": 1,
+                      "minuteIncrement": 1,
+                      "time_24hr": false,
+                      "minDate": null,
+                      "disableWeekends": false,
+                      "disableWeekdays": false,
+                      "maxDate": null
+                    }
+                  }
+                ],
+                "width": 4,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 4
+              }
+            ],
+            "key": "columns2",
+            "type": "columns",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "html": "<p><span style=\"font-family:Arial, Helvetica, sans-serif;\"><strong>If signed by a Representative:</strong></span></p>",
+            "label": "Content",
+            "refreshOnChange": false,
+            "key": "content1",
+            "type": "content",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "label": "Columns",
+            "columns": [
+              {
+                "components": [
+                  {
+                    "label": "Print Name:",
+                    "labelPosition": "left-left",
+                    "tableView": true,
+                    "key": "printName",
+                    "overlay": {
+                      "page": 1,
+                      "left": 204.33608248114584,
+                      "top": 1202.9465767765046,
+                      "width": 405.2311186122894,
+                      "height": 30.414012418985365
+                    },
+                    "type": "textfield",
+                    "input": true,
+                    "labelWidth": 20
+                  },
+                  {
+                    "label": "Witness:",
+                    "labelPosition": "left-left",
+                    "tableView": true,
+                    "key": "witness",
+                    "overlay": {
+                      "page": 1,
+                      "left": 169.50264276266097,
+                      "top": 620.7395362615586,
+                      "width": 345.09294847011563,
+                      "height": 26.487438223063947
+                    },
+                    "type": "textfield",
+                    "input": true,
+                    "labelWidth": 20
+                  }
+                ],
+                "width": 7,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 7
+              },
+              {
+                "components": [
+                  {
+                    "label": "Role",
+                    "labelPosition": "left-left",
+                    "tooltip": "(Parent, Guardian, etc.)",
+                    "tableView": true,
+                    "key": "parentGuardianEtc",
+                    "overlay": {
+                      "page": 1,
+                      "left": 558.6548862218856,
+                      "top": 566.6642101764679,
+                      "width": 230.5319734919071,
+                      "height": 27.527033032178878
+                    },
+                    "type": "textfield",
+                    "input": true,
+                    "labelWidth": 20
+                  },
+                  {
+                    "label": "Date",
+                    "labelPosition": "left-left",
+                    "format": "yyyy-MM-dd",
+                    "tableView": false,
+                    "enableMinDateInput": false,
+                    "datePicker": {
+                      "disableWeekends": false,
+                      "disableWeekdays": false
+                    },
+                    "enableMaxDateInput": false,
+                    "enableTime": false,
+                    "key": "date",
+                    "overlay": {
+                      "page": 1,
+                      "left": 571,
+                      "top": 622,
+                      "width": 100,
+                      "height": 20
+                    },
+                    "type": "datetime",
+                    "input": true,
+                    "widget": {
+                      "type": "calendar",
+                      "displayInTimezone": "viewer",
+                      "locale": "en",
+                      "useLocaleSettings": false,
+                      "allowInput": true,
+                      "mode": "single",
+                      "enableTime": false,
+                      "noCalendar": false,
+                      "format": "yyyy-MM-dd",
+                      "hourIncrement": 1,
+                      "minuteIncrement": 1,
+                      "time_24hr": false,
+                      "minDate": null,
+                      "disableWeekends": false,
+                      "disableWeekdays": false,
+                      "maxDate": null
+                    },
+                    "labelWidth": 20
+                  }
+                ],
+                "width": 5,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 5
+              }
+            ],
+            "key": "columns1",
+            "type": "columns",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "label": "HTML",
+            "attrs": [
+              {
+                "attr": "style",
+                "value": "border-top: double 3px black "
+              }
+            ],
+            "refreshOnChange": false,
+            "key": "html1",
+            "type": "htmlelement",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "html": "<p>If the individual has a representative with legal authority to make health care decisions on the individual’s behalf, the notice must be given to and acknowledgment obtained from the representative.<i> <strong>If the individual or representative did not sign above, staff must document when and how the notice was given to the individual, why the acknowledgment could not be obtained, and the efforts that were made to obtain it.&nbsp;</strong></i></p>",
+            "label": "Content",
+            "refreshOnChange": false,
+            "key": "content2",
+            "type": "content",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "label": "Columns",
+            "columns": [
+              {
+                "components": [
+                  {
+                    "label": "Columns",
+                    "columns": [
+                      {
+                        "components": [
+                          {
+                            "html": "<p>Notice of Privacy Practices given to the individual on:</p>",
+                            "label": "Content",
+                            "refreshOnChange": false,
+                            "key": "content6",
+                            "type": "content",
+                            "input": false,
+                            "tableView": false
+                          }
+                        ],
+                        "width": 7,
+                        "offset": 0,
+                        "push": 0,
+                        "pull": 0,
+                        "size": "md",
+                        "currentWidth": 7
+                      },
+                      {
+                        "components": [
+                          {
+                            "label": "Notice of Privacy Practices given to the individual on:",
+                            "format": "yyyy-MM-dd",
+                            "description": "<center>date</center>",
+                            "hideLabel": true,
+                            "tableView": false,
+                            "enableMinDateInput": false,
+                            "datePicker": {
+                              "disableWeekends": false,
+                              "disableWeekdays": false
+                            },
+                            "enableMaxDateInput": false,
+                            "enableTime": false,
+                            "key": "NoticeofPrivacyDate",
+                            "overlay": {
+                              "page": 1,
+                              "left": 551,
+                              "top": 767,
+                              "width": 100,
+                              "height": 20
+                            },
+                            "type": "datetime",
+                            "input": true,
+                            "widget": {
+                              "type": "calendar",
+                              "displayInTimezone": "viewer",
+                              "locale": "en",
+                              "useLocaleSettings": false,
+                              "allowInput": true,
+                              "mode": "single",
+                              "enableTime": false,
+                              "noCalendar": false,
+                              "format": "yyyy-MM-dd",
+                              "hourIncrement": 1,
+                              "minuteIncrement": 1,
+                              "time_24hr": false,
+                              "minDate": null,
+                              "disableWeekends": false,
+                              "disableWeekdays": false,
+                              "maxDate": null
+                            }
+                          }
+                        ],
+                        "width": 5,
+                        "offset": 0,
+                        "push": 0,
+                        "pull": 0,
+                        "size": "md",
+                        "currentWidth": 5
+                      }
+                    ],
+                    "key": "columns6",
+                    "type": "columns",
+                    "input": false,
+                    "tableView": false
+                  }
+                ],
+                "width": 8,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 8
+              },
+              {
+                "components": [
+                  {
+                    "label": "meeting type",
+                    "hideLabel": true,
+                    "key": "meetingType",
+                    "type": "well",
+                    "input": false,
+                    "tableView": false,
+                    "components": [
+                      {
+                        "type": "checkbox",
+                        "key": "faceToFaceMeeting",
+                        "label": "Face to face meeting",
+                        "overlay": {
+                          "page": 1,
+                          "left": 717,
+                          "top": 762,
+                          "height": 17.341492976993322,
+                          "width": 17.341492976993322
+                        },
+                        "input": true,
+                        "tableView": false
+                      },
+                      {
+                        "type": "checkbox",
+                        "key": "email1",
+                        "label": "Email",
+                        "overlay": {
+                          "width": 21.203647110611197,
+                          "height": 16.454198047220707,
+                          "left": 717.840883026123,
+                          "top": 797.826833782196,
+                          "page": 1
+                        },
+                        "input": true,
+                        "tableView": false
+                      },
+                      {
+                        "type": "checkbox",
+                        "key": "mailing",
+                        "label": "Mailing",
+                        "overlay": {
+                          "width": 20.452473519891498,
+                          "height": 15.241883182525635,
+                          "left": 718.1450843667983,
+                          "top": 781.8968433094025,
+                          "page": 1
+                        },
+                        "input": true,
+                        "tableView": false
+                      },
+                      {
+                        "type": "checkbox",
+                        "key": "other1",
+                        "label": "Other",
+                        "overlay": {
+                          "width": 22.49591437205672,
+                          "height": 17.131944917589426,
+                          "left": 717.499346408844,
+                          "top": 814.900112543106,
+                          "page": 1
+                        },
+                        "input": true,
+                        "tableView": false
+                      }
+                    ]
+                  }
+                ],
+                "width": 4,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 4
+              }
+            ],
+            "key": "columns3",
+            "type": "columns",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "html": "<p><strong>Reason Individual or Representative did not sign this form:</strong></p>",
+            "label": "Content",
+            "refreshOnChange": false,
+            "key": "content3",
+            "type": "content",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "label": "Individual or Representative chose not to sign",
+            "tableView": false,
+            "key": "individualOrRepresentativeChoseNotToSign",
+            "overlay": {
+              "page": 1,
+              "left": 98,
+              "top": 865,
+              "height": 20,
+              "width": 20
+            },
+            "type": "checkbox",
+            "input": true,
+            "defaultValue": false
+          },
+          {
+            "label": "Individual or Representative did not respond after more than one attempt",
+            "tableView": false,
+            "key": "individualOrRepresentativeDidNotRespondAfterMoreThanOneAttempt",
+            "overlay": {
+              "page": 1,
+              "left": 99,
+              "top": 886,
+              "height": 20,
+              "width": 20
+            },
+            "type": "checkbox",
+            "input": true,
+            "defaultValue": false
+          },
+          {
+            "type": "checkbox",
+            "key": "emailReceiptVerification",
+            "label": "Email receipt verification",
+            "overlay": {
+              "page": 1,
+              "left": 98,
+              "top": 907,
+              "height": 18.971012012064456,
+              "width": 18.971012012064456
+            },
+            "input": true,
+            "tableView": false
+          },
+          {
+            "type": "checkbox",
+            "key": "other2",
+            "label": "Other",
+            "overlay": {
+              "page": 1,
+              "left": 98,
+              "top": 927,
+              "height": 19.569999471902847,
+              "width": 19.569999471902847
+            },
+            "input": true,
+            "tableView": false
+          },
+          {
+            "label": "Other",
+            "hideLabel": true,
+            "tableView": true,
+            "key": "other4",
+            "conditional": {
+              "show": true,
+              "when": "other2",
+              "eq": "true"
+            },
+            "overlay": {
+              "page": 1,
+              "left": 184.1102222222222,
+              "top": 930.1118888888889,
+              "width": 567.292,
+              "height": 20.9549
+            },
+            "type": "textfield",
+            "input": true
+          },
+          {
+            "html": "<p><span style=\"font-family:Arial, Helvetica, sans-serif;\"><strong>Good faith efforts: </strong>The following good faith efforts were made to obtain the individual's or Representative's signature. Please document with detail (e.g. date(s), time(s), individuals spoken to, and outcome of attempt(s), and efforts that were made to obtain the signature. More then <strong>one</strong> attempt must have been made:</span></p>",
+            "label": "Content",
+            "refreshOnChange": false,
+            "key": "content4",
+            "type": "content",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "label": "Columns",
+            "columns": [
+              {
+                "components": [
+                  {
+                    "label": "Face to face Presentation(s)",
+                    "tableView": false,
+                    "defaultValue": false,
+                    "key": "faceToFacePresentationS1",
+                    "overlay": {
+                      "page": 1,
+                      "left": 96,
+                      "top": 1040,
+                      "width": 20,
+                      "height": 20
+                    },
+                    "type": "checkbox",
+                    "input": true
+                  }
+                ],
+                "width": 3,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 3
+              },
+              {
+                "components": [
+                  {
+                    "label": "Face to face presentation(s)",
+                    "hideLabel": true,
+                    "tableView": true,
+                    "key": "faceToFacePresentationS",
+                    "overlay": {
+                      "page": 1,
+                      "left": 357,
+                      "top": 1041,
+                      "height": 21.2188,
+                      "width": 631.641
+                    },
+                    "type": "textfield",
+                    "input": true
+                  }
+                ],
+                "width": 9,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 9
+              }
+            ],
+            "key": "columns7",
+            "type": "columns",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "label": "Columns",
+            "columns": [
+              {
+                "components": [
+                  {
+                    "label": "Telephone contact(s)",
+                    "tableView": false,
+                    "key": "telephoneContactS",
+                    "overlay": {
+                      "page": 1,
+                      "left": 95,
+                      "top": 1063,
+                      "height": 20,
+                      "width": 20
+                    },
+                    "type": "checkbox",
+                    "input": true,
+                    "defaultValue": false
+                  }
+                ],
+                "width": 3,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 3
+              },
+              {
+                "components": [
+                  {
+                    "label": "Telephone Conact",
+                    "hideLabel": true,
+                    "tableView": true,
+                    "key": "textfield",
+                    "overlay": {
+                      "page": 1,
+                      "left": 252.77263023018835,
+                      "top": 1068.5863389015199,
+                      "width": 735.5268308115005,
+                      "height": 17.63416072502732
+                    },
+                    "type": "textfield",
+                    "input": true
+                  }
+                ],
+                "width": 9,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 9
+              }
+            ],
+            "key": "columns8",
+            "type": "columns",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "label": "Columns",
+            "columns": [
+              {
+                "components": [
+                  {
+                    "type": "checkbox",
+                    "key": "mailingS",
+                    "label": "Mailing(s)",
+                    "overlay": {
+                      "page": 1,
+                      "left": 95,
+                      "top": 1086,
+                      "height": 20.41421548426151,
+                      "width": 20.41421548426151
+                    },
+                    "input": true,
+                    "tableView": false
+                  }
+                ],
+                "width": 3,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 3
+              },
+              {
+                "components": [
+                  {
+                    "label": "Mailing(s)",
+                    "hideLabel": true,
+                    "tableView": true,
+                    "key": "mailingS1",
+                    "overlay": {
+                      "page": 1,
+                      "left": 216,
+                      "top": 1083.2000122070312,
+                      "width": 771,
+                      "height": 22
+                    },
+                    "type": "textfield",
+                    "input": true
+                  }
+                ],
+                "width": 9,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 9
+              }
+            ],
+            "key": "columns9",
+            "type": "columns",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "label": "Columns",
+            "columns": [
+              {
+                "components": [
+                  {
+                    "label": "Email",
+                    "tableView": false,
+                    "key": "email",
+                    "overlay": {
+                      "page": 1,
+                      "left": 95,
+                      "top": 1108,
+                      "height": 20,
+                      "width": 20
+                    },
+                    "type": "checkbox",
+                    "input": true,
+                    "defaultValue": false
+                  }
+                ],
+                "width": 3,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 3
+              },
+              {
+                "components": [
+                  {
+                    "label": "Email",
+                    "hideLabel": true,
+                    "tableView": true,
+                    "key": "email2",
+                    "overlay": {
+                      "page": 1,
+                      "left": 177,
+                      "top": 1106.2000122070312,
+                      "width": 809,
+                      "height": 24
+                    },
+                    "type": "textfield",
+                    "input": true
+                  }
+                ],
+                "width": 9,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 9
+              }
+            ],
+            "key": "columns10",
+            "type": "columns",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "label": "Columns",
+            "columns": [
+              {
+                "components": [
+                  {
+                    "label": "Other",
+                    "tableView": false,
+                    "key": "other",
+                    "overlay": {
+                      "page": 1,
+                      "left": 95,
+                      "top": 1130,
+                      "height": 20,
+                      "width": 20
+                    },
+                    "type": "checkbox",
+                    "input": true,
+                    "defaultValue": false
+                  }
+                ],
+                "width": 3,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 3
+              },
+              {
+                "components": [
+                  {
+                    "label": "Other",
+                    "hideLabel": true,
+                    "tableView": true,
+                    "key": "other3",
+                    "overlay": {
+                      "page": 1,
+                      "left": 177,
+                      "top": 1132,
+                      "height": 22,
+                      "width": 811
+                    },
+                    "type": "textfield",
+                    "input": true
+                  }
+                ],
+                "width": 9,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 9
+              }
+            ],
+            "key": "columns11",
+            "type": "columns",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "label": "Columns",
+            "columns": [
+              {
+                "components": [
+                  {
+                    "label": "Staff Signature:",
+                    "labelPosition": "left-left",
+                    "height": "120px",
+                    "tableView": false,
+                    "modalEdit": true,
+                    "key": "staffSignature",
+                    "overlay": {
+                      "page": 1,
+                      "left": 235,
+                      "top": 1159,
+                      "width": 369,
+                      "height": 35
+                    },
+                    "type": "signature",
+                    "input": true
+                  },
+                  {
+                    "label": "Print Name:",
+                    "labelPosition": "left-left",
+                    "tableView": true,
+                    "key": "printName1",
+                    "overlay": {
+                      "page": 1,
+                      "left": 200.01754350185394,
+                      "top": 570.9251563882827,
+                      "width": 310.6003473615646,
+                      "height": 23.856873648762704
+                    },
+                    "type": "textfield",
+                    "input": true
+                  },
+                  {
+                    "label": "Date:",
+                    "labelPosition": "left-left",
+                    "format": "yyyy-MM-dd",
+                    "tableView": false,
+                    "enableMinDateInput": false,
+                    "datePicker": {
+                      "disableWeekends": false,
+                      "disableWeekdays": false
+                    },
+                    "enableMaxDateInput": false,
+                    "enableTime": false,
+                    "key": "date1",
+                    "overlay": {
+                      "page": 1,
+                      "left": 155,
+                      "top": 1243,
+                      "width": 100,
+                      "height": 20
+                    },
+                    "type": "datetime",
+                    "input": true,
+                    "widget": {
+                      "type": "calendar",
+                      "displayInTimezone": "viewer",
+                      "locale": "en",
+                      "useLocaleSettings": false,
+                      "allowInput": true,
+                      "mode": "single",
+                      "enableTime": false,
+                      "noCalendar": false,
+                      "format": "yyyy-MM-dd",
+                      "hourIncrement": 1,
+                      "minuteIncrement": 1,
+                      "time_24hr": false,
+                      "minDate": null,
+                      "disableWeekends": false,
+                      "disableWeekdays": false,
+                      "maxDate": null
+                    }
+                  }
+                ],
+                "width": 7,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 7
+              },
+              {
+                "components": [
+                  {
+                    "label": "Title:",
+                    "labelPosition": "left-left",
+                    "tableView": true,
+                    "key": "title",
+                    "overlay": {
+                      "page": 1,
+                      "left": 659.5682430267333,
+                      "top": 1177.3681272125243,
+                      "width": 331.8130178403854,
+                      "height": 22.42571510016918
+                    },
+                    "type": "textfield",
+                    "input": true,
+                    "labelWidth": 20
+                  }
+                ],
+                "width": 5,
+                "offset": 0,
+                "push": 0,
+                "pull": 0,
+                "size": "md",
+                "currentWidth": 5
+              }
+            ],
+            "key": "columns5",
+            "type": "columns",
+            "input": false,
+            "tableView": false
+          },
+          {
+            "label": "Submit",
+            "showValidations": false,
+            "hidden": true,
+            "tableView": false,
+            "key": "submit",
+            "type": "button",
+            "input": true,
+            "saveOnEnter": false
+          }
+        ],
+        "access": [
+          {
+            "roles": [
+              "administrator",
+              "authenticated",
+              "anonymous"
+            ],
+            "type": "read_all"
+          }
+        ],
+        "submissionAccess": [],
+        "properties": {},
+        "controller": ""
+      }
+    },
+    "actions": {
+      "noticeOfPrivacyPracticesAcknowledgementForm:save": {
+        "title": "Save Submission",
+        "name": "save",
+        "form": "noticeOfPrivacyPracticesAcknowledgementForm",
+        "priority": 10,
+        "method": [
+          "create",
+          "update"
+        ],
+        "handler": [
+          "before"
+        ]
+      }
+    },
+    "resources": {},
+    "access": [
+      {
+        "type": "create_own",
+        "roles": []
+      },
+      {
+        "type": "create_all",
+        "roles": [
+          "administrator"
+        ]
+      },
+      {
+        "type": "read_own",
+        "roles": []
+      },
+      {
+        "type": "read_all",
+        "roles": [
+          "administrator",
+          "authenticated",
+          "anonymous"
+        ]
+      },
+      {
+        "type": "update_own",
+        "roles": []
+      },
+      {
+        "type": "update_all",
+        "roles": [
+          "administrator"
+        ]
+      },
+      {
+        "type": "delete_own",
+        "roles": []
+      },
+      {
+        "type": "delete_all",
+        "roles": [
+          "administrator"
+        ]
+      }
+    ],
+    "tag": "0.0.50"
+  },
+  "created": "2021-09-28T15:07:06.271Z",
+  "modified": "2021-09-28T15:07:06.278Z"
+}

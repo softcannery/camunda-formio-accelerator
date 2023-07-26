@@ -1,0 +1,1161 @@
+{
+  "_id": "6104cdd6da92da4eb83a8c08",
+  "owner": "5e835d9b8a2bac7edd7ff6ad",
+  "project": "602ab57b38e6eeb92ce90f5d",
+  "tag": "0.0.15",
+  "description": "Added Signature field to W-4 form",
+  "template": {
+    "title": "staging",
+    "version": "2.0.0",
+    "name": "tldeidtjtvaxrsj",
+    "roles": {
+      "administrator": {
+        "title": "Administrator",
+        "description": "A role for Administrative Users.",
+        "admin": true,
+        "default": false
+      },
+      "authenticated": {
+        "title": "Authenticated",
+        "description": "A role for Authenticated Users.",
+        "admin": false,
+        "default": false
+      },
+      "anonymous": {
+        "title": "Anonymous",
+        "description": "A role for Anonymous Users.",
+        "admin": false,
+        "default": true
+      }
+    },
+    "forms": {
+      "w4": {
+        "title": "w4",
+        "type": "form",
+        "name": "w4",
+        "path": "w4",
+        "display": "pdf",
+        "tags": [],
+        "settings": {
+          "pdf": {
+            "src": "https://files.form.io/pdf/602ab57b38e6eeb92ce90f5d/file/7055075f-7c9f-55c9-8acc-ebc20bf10aa2",
+            "id": "7055075f-7c9f-55c9-8acc-ebc20bf10aa2"
+          }
+        },
+        "components": [
+          {
+            "title": "Page 1",
+            "label": "Page 1",
+            "type": "panel",
+            "key": "page1",
+            "components": [
+              {
+                "label": "First Name",
+                "tableView": true,
+                "key": "firstName",
+                "overlay": {
+                  "page": 1,
+                  "left": 171,
+                  "top": 167,
+                  "height": 20,
+                  "width": 308
+                },
+                "type": "textfield",
+                "input": true
+              },
+              {
+                "label": "Last Name",
+                "tableView": true,
+                "key": "lastName",
+                "overlay": {
+                  "page": 1,
+                  "left": 492,
+                  "top": 166,
+                  "height": 20,
+                  "width": 347
+                },
+                "type": "textfield",
+                "input": true
+              },
+              {
+                "label": "SSN",
+                "mask": false,
+                "tableView": false,
+                "delimiter": false,
+                "requireDecimal": false,
+                "inputFormat": "plain",
+                "key": "ssn",
+                "overlay": {
+                  "page": 1,
+                  "left": 850,
+                  "top": 167,
+                  "height": 20,
+                  "width": 172
+                },
+                "type": "number",
+                "input": true
+              },
+              {
+                "label": "Address",
+                "tableView": true,
+                "key": "address",
+                "overlay": {
+                  "page": 1,
+                  "left": 172,
+                  "top": 210,
+                  "height": 20,
+                  "width": 668
+                },
+                "type": "textfield",
+                "input": true
+              },
+              {
+                "label": "City",
+                "tableView": true,
+                "key": "city",
+                "overlay": {
+                  "page": 1,
+                  "left": 172,
+                  "top": 251,
+                  "height": 21,
+                  "width": 300
+                },
+                "type": "textfield",
+                "input": true
+              },
+              {
+                "label": "Zip Code",
+                "mask": false,
+                "tableView": false,
+                "delimiter": false,
+                "requireDecimal": false,
+                "inputFormat": "plain",
+                "key": "zip",
+                "overlay": {
+                  "page": 1,
+                  "left": 738,
+                  "top": 251,
+                  "height": 20,
+                  "width": 100
+                },
+                "type": "number",
+                "input": true
+              },
+              {
+                "label": "State",
+                "widget": "choicesjs",
+                "tableView": true,
+                "data": {
+                  "values": [
+                    {
+                      "label": "Washington",
+                      "value": "WA"
+                    },
+                    {
+                      "label": "Oregon",
+                      "value": "OR"
+                    }
+                  ]
+                },
+                "selectThreshold": 0.3,
+                "validate": {
+                  "required": true
+                },
+                "key": "state",
+                "overlay": {
+                  "page": 1,
+                  "left": 486,
+                  "top": 252,
+                  "height": 19,
+                  "width": 237
+                },
+                "type": "select",
+                "input": true
+              },
+              {
+                "label": "Filing Separately",
+                "tableView": false,
+                "defaultValue": false,
+                "key": "singleOrMarriedFilingSeparately",
+                "overlay": {
+                  "page": 1,
+                  "left": 203.3045652173913,
+                  "top": 279.0004347826087,
+                  "height": 15.8036,
+                  "width": 15.8036
+                },
+                "type": "checkbox",
+                "input": true
+              },
+              {
+                "label": "Filing Jointly",
+                "tableView": false,
+                "key": "filingJointly",
+                "overlay": {
+                  "page": 1,
+                  "left": 203.14271428571436,
+                  "top": 301.858,
+                  "height": 15.6362,
+                  "width": 16.2612
+                },
+                "type": "checkbox",
+                "input": true,
+                "defaultValue": false
+              },
+              {
+                "label": "Head Of Household",
+                "tableView": false,
+                "key": "headOfHousehold",
+                "overlay": {
+                  "page": 1,
+                  "left": 203.83333333333331,
+                  "top": 322.25,
+                  "height": 15.6771,
+                  "width": 16.4909
+                },
+                "type": "checkbox",
+                "input": true,
+                "defaultValue": false
+              },
+              {
+                "label": "Is Two Jobs Total",
+                "tableView": false,
+                "key": "isTwoJobsTotal",
+                "overlay": {
+                  "page": 1,
+                  "left": 1004.0000000000002,
+                  "top": 555.7142857142857,
+                  "height": 20,
+                  "width": 20
+                },
+                "type": "checkbox",
+                "input": true,
+                "defaultValue": false
+              }
+            ],
+            "input": false,
+            "tableView": false
+          },
+          {
+            "label": "Submit",
+            "showValidations": false,
+            "hidden": true,
+            "tableView": false,
+            "key": "submit",
+            "type": "button",
+            "input": true,
+            "saveOnEnter": false
+          },
+          {
+            "label": "Number",
+            "mask": false,
+            "tableView": false,
+            "delimiter": false,
+            "requireDecimal": false,
+            "inputFormat": "plain",
+            "key": "number",
+            "overlay": {
+              "page": 1,
+              "left": 732,
+              "top": 743,
+              "width": 100,
+              "height": 20
+            },
+            "type": "number",
+            "input": true
+          },
+          {
+            "label": "Signature",
+            "tableView": false,
+            "key": "signature",
+            "overlay": {
+              "page": 1,
+              "left": 193,
+              "top": 1137,
+              "height": 18,
+              "width": 596
+            },
+            "type": "signature",
+            "input": true
+          },
+          {
+            "label": "Date / Time",
+            "tableView": false,
+            "enableMinDateInput": false,
+            "datePicker": {
+              "disableWeekends": false,
+              "disableWeekdays": false
+            },
+            "enableMaxDateInput": false,
+            "key": "dateTime",
+            "overlay": {
+              "page": 1,
+              "left": 827.8333333333334,
+              "top": 1133.6666056315105,
+              "height": 21.5365,
+              "width": 189.805
+            },
+            "type": "datetime",
+            "input": true,
+            "widget": {
+              "type": "calendar",
+              "displayInTimezone": "viewer",
+              "locale": "en",
+              "useLocaleSettings": false,
+              "allowInput": true,
+              "mode": "single",
+              "enableTime": true,
+              "noCalendar": false,
+              "format": "yyyy-MM-dd hh:mm a",
+              "hourIncrement": 1,
+              "minuteIncrement": 1,
+              "time_24hr": false,
+              "minDate": null,
+              "disableWeekends": false,
+              "disableWeekdays": false,
+              "maxDate": null
+            }
+          }
+        ],
+        "access": [
+          {
+            "roles": [
+              "administrator",
+              "authenticated",
+              "anonymous"
+            ],
+            "type": "read_all"
+          }
+        ],
+        "submissionAccess": [],
+        "properties": {},
+        "controller": ""
+      },
+      "task-form-poc": {
+        "title": "task-form",
+        "type": "form",
+        "name": "task-form",
+        "path": "taskform",
+        "display": "form",
+        "tags": [
+          "poc"
+        ],
+        "settings": {},
+        "components": [
+          {
+            "label": "Invoice Document",
+            "autofocus": true,
+            "tableView": false,
+            "storage": "url",
+            "url": "${content-base-url}/upload",
+            "webcam": false,
+            "fileTypes": [
+              {
+                "label": "",
+                "value": ""
+              }
+            ],
+            "key": "invoiceDocument",
+            "type": "file",
+            "disabled": true,
+            "input": true
+          },
+          {
+            "label": "Creditor",
+            "description": "e.g. \"Super Awesome Pizza\"",
+            "disabled": true,
+            "tableView": true,
+            "key": "creditor",
+            "properties": {
+              "cam-variable-name": "creditor",
+              "cam-variable-type": "String"
+            },
+            "type": "textfield",
+            "input": true
+          },
+          {
+            "label": "Email",
+            "disabled": true,
+            "tableView": true,
+            "key": "email",
+            "type": "email",
+            "input": true
+          },
+          {
+            "label": "Number",
+            "description": "e.g. \"30.00\"",
+            "mask": false,
+            "spellcheck": true,
+            "tableView": false,
+            "delimiter": false,
+            "requireDecimal": false,
+            "inputFormat": "plain",
+            "key": "number",
+            "type": "number",
+            "input": true,
+            "disabled": true,
+            "decimalLimit": 2
+          },
+          {
+            "label": "Invoice Category Test",
+            "widget": "html5",
+            "tableView": true,
+            "data": {
+              "values": [
+                {
+                  "label": "Travel Expenses",
+                  "value": "Travel"
+                },
+                {
+                  "label": "Business Meals",
+                  "value": "Meals"
+                },
+                {
+                  "label": "Other",
+                  "value": "Other"
+                }
+              ]
+            },
+            "dataType": "string",
+            "selectThreshold": 0.3,
+            "key": "category",
+            "type": "select",
+            "input": true,
+            "disabled": true,
+            "defaultValue": "Travel",
+            "properties": {
+              "cam-variable-name": "category",
+              "cam-variable-type": "String"
+            }
+          },
+          {
+            "label": "Invoice Number",
+            "description": "e.g. \"I-12345\"",
+            "tableView": true,
+            "key": "invoiceID",
+            "type": "textfield",
+            "input": true,
+            "disabled": true,
+            "properties": {
+              "cam-variable-name": "invoice",
+              "cam-variable-type": "String"
+            }
+          },
+          {
+            "label": "Signature",
+            "disabled": true,
+            "tableView": false,
+            "key": "signature",
+            "type": "signature",
+            "input": true
+          },
+          {
+            "label": "Rejection reason",
+            "autoExpand": false,
+            "tableView": true,
+            "key": "rejectionReason",
+            "type": "textarea",
+            "input": true
+          },
+          {
+            "label": "I approve this Invoice",
+            "tableView": true,
+            "key": "approved",
+            "properties": {
+              "cam-variable-name": "approved",
+              "cam-variable-type": "Boolean"
+            },
+            "type": "checkbox",
+            "input": true
+          }
+        ],
+        "access": [
+          {
+            "roles": [],
+            "type": "create_own"
+          },
+          {
+            "roles": [],
+            "type": "create_all"
+          },
+          {
+            "roles": [],
+            "type": "read_own"
+          },
+          {
+            "roles": [
+              "administrator",
+              "authenticated",
+              "anonymous"
+            ],
+            "type": "read_all"
+          },
+          {
+            "roles": [],
+            "type": "update_own"
+          },
+          {
+            "roles": [],
+            "type": "update_all"
+          },
+          {
+            "roles": [],
+            "type": "delete_own"
+          },
+          {
+            "roles": [],
+            "type": "delete_all"
+          },
+          {
+            "roles": [],
+            "type": "team_read"
+          },
+          {
+            "roles": [],
+            "type": "team_write"
+          },
+          {
+            "roles": [],
+            "type": "team_admin"
+          }
+        ],
+        "submissionAccess": [
+          {
+            "roles": [],
+            "type": "create_own"
+          },
+          {
+            "roles": [],
+            "type": "create_all"
+          },
+          {
+            "roles": [],
+            "type": "read_own"
+          },
+          {
+            "roles": [],
+            "type": "read_all"
+          },
+          {
+            "roles": [],
+            "type": "update_own"
+          },
+          {
+            "roles": [],
+            "type": "update_all"
+          },
+          {
+            "roles": [],
+            "type": "delete_own"
+          },
+          {
+            "roles": [],
+            "type": "delete_all"
+          },
+          {
+            "roles": [],
+            "type": "team_read"
+          },
+          {
+            "roles": [],
+            "type": "team_write"
+          },
+          {
+            "roles": [],
+            "type": "team_admin"
+          }
+        ],
+        "properties": {},
+        "controller": ""
+      },
+      "start-form-poc": {
+        "title": "start-form",
+        "type": "form",
+        "name": "start-form",
+        "path": "startform",
+        "display": "form",
+        "tags": [
+          "poc"
+        ],
+        "settings": {},
+        "components": [
+          {
+            "label": "Invoice Document",
+            "autofocus": true,
+            "tableView": false,
+            "storage": "url",
+            "url": "${content-base-url}/upload",
+            "webcam": false,
+            "fileTypes": [
+              {
+                "label": "",
+                "value": ""
+              }
+            ],
+            "key": "invoiceDocument",
+            "type": "file",
+            "input": true
+          },
+          {
+            "label": "Creditor",
+            "description": "e.g. \"Super Awesome Pizza\"",
+            "tableView": true,
+            "redrawOn": "data",
+            "validate": {
+              "required": true
+            },
+            "key": "creditor",
+            "properties": {
+              "cam-variable-name": "creditor",
+              "cam-variable-type": "String"
+            },
+            "type": "textfield",
+            "input": true
+          },
+          {
+            "label": "Email",
+            "tableView": true,
+            "validate": {
+              "required": true
+            },
+            "key": "email",
+            "type": "email",
+            "input": true
+          },
+          {
+            "label": "Number",
+            "description": "e.g. \"30.00\"",
+            "mask": false,
+            "tableView": false,
+            "delimiter": false,
+            "decimalLimit": 2,
+            "requireDecimal": false,
+            "inputFormat": "plain",
+            "truncateMultipleSpaces": false,
+            "validate": {
+              "required": true
+            },
+            "key": "number",
+            "properties": {
+              "cam-variable-name": "amount",
+              "cam-variable-type": "Double"
+            },
+            "type": "number",
+            "spellcheck": true,
+            "input": true
+          },
+          {
+            "label": "Invoice Category Test",
+            "widget": "html5",
+            "tableView": true,
+            "data": {
+              "values": [
+                {
+                  "label": "Travel Expenses",
+                  "value": "Travel"
+                },
+                {
+                  "label": "Business Meals",
+                  "value": "Meals"
+                },
+                {
+                  "label": "Other",
+                  "value": "Other"
+                }
+              ]
+            },
+            "dataType": "string",
+            "selectThreshold": 0.3,
+            "key": "category",
+            "type": "select",
+            "input": true,
+            "defaultValue": "Travel",
+            "properties": {
+              "cam-variable-name": "category",
+              "cam-variable-type": "String"
+            }
+          },
+          {
+            "label": "Invoice Number",
+            "description": "e.g. \"I-12345\"",
+            "tableView": true,
+            "validate": {
+              "required": true
+            },
+            "key": "invoiceID",
+            "properties": {
+              "cam-variable-name": "invoice",
+              "cam-variable-type": "String"
+            },
+            "type": "textfield",
+            "input": true
+          },
+          {
+            "label": "Signature",
+            "tableView": false,
+            "validate": {
+              "required": true
+            },
+            "key": "signature",
+            "type": "signature",
+            "input": true
+          }
+        ],
+        "access": [
+          {
+            "roles": [],
+            "type": "create_own"
+          },
+          {
+            "roles": [],
+            "type": "create_all"
+          },
+          {
+            "roles": [],
+            "type": "read_own"
+          },
+          {
+            "roles": [
+              "administrator",
+              "authenticated",
+              "anonymous"
+            ],
+            "type": "read_all"
+          },
+          {
+            "roles": [],
+            "type": "update_own"
+          },
+          {
+            "roles": [],
+            "type": "update_all"
+          },
+          {
+            "roles": [],
+            "type": "delete_own"
+          },
+          {
+            "roles": [],
+            "type": "delete_all"
+          },
+          {
+            "roles": [],
+            "type": "team_read"
+          },
+          {
+            "roles": [],
+            "type": "team_write"
+          },
+          {
+            "roles": [],
+            "type": "team_admin"
+          }
+        ],
+        "submissionAccess": [
+          {
+            "roles": [],
+            "type": "create_own"
+          },
+          {
+            "roles": [],
+            "type": "create_all"
+          },
+          {
+            "roles": [],
+            "type": "read_own"
+          },
+          {
+            "roles": [],
+            "type": "read_all"
+          },
+          {
+            "roles": [],
+            "type": "update_own"
+          },
+          {
+            "roles": [],
+            "type": "update_all"
+          },
+          {
+            "roles": [],
+            "type": "delete_own"
+          },
+          {
+            "roles": [],
+            "type": "delete_all"
+          },
+          {
+            "roles": [],
+            "type": "team_read"
+          },
+          {
+            "roles": [],
+            "type": "team_write"
+          },
+          {
+            "roles": [],
+            "type": "team_admin"
+          }
+        ],
+        "properties": {},
+        "controller": ""
+      }
+    },
+    "actions": {
+      "start-form-poc:save": {
+        "title": "Save Submission",
+        "name": "save",
+        "form": "start-form-poc",
+        "priority": 10,
+        "method": [
+          "create",
+          "update"
+        ],
+        "handler": [
+          "before"
+        ]
+      },
+      "admin:role": {
+        "title": "Role Assignment",
+        "name": "role",
+        "form": "admin",
+        "settings": {
+          "association": "new",
+          "type": "add",
+          "role": "administrator"
+        },
+        "priority": 1,
+        "method": [
+          "create"
+        ],
+        "handler": [
+          "after"
+        ]
+      },
+      "admin:save": {
+        "title": "Save Submission",
+        "name": "save",
+        "form": "admin",
+        "priority": 10,
+        "method": [
+          "create",
+          "update"
+        ],
+        "handler": [
+          "before"
+        ]
+      },
+      "task-form-poc:save": {
+        "title": "Save Submission",
+        "name": "save",
+        "form": "task-form-poc",
+        "priority": 10,
+        "method": [
+          "create",
+          "update"
+        ],
+        "handler": [
+          "before"
+        ]
+      },
+      "user:role": {
+        "title": "Role Assignment",
+        "name": "role",
+        "form": "user",
+        "settings": {
+          "association": "new",
+          "type": "add",
+          "role": "authenticated"
+        },
+        "priority": 1,
+        "method": [
+          "create"
+        ],
+        "handler": [
+          "after"
+        ]
+      },
+      "user:save": {
+        "title": "Save Submission",
+        "name": "save",
+        "form": "user",
+        "priority": 10,
+        "method": [
+          "create",
+          "update"
+        ],
+        "handler": [
+          "before"
+        ]
+      },
+      "w4:save": {
+        "title": "Save Submission",
+        "name": "save",
+        "form": "w4",
+        "priority": 10,
+        "method": [
+          "create",
+          "update"
+        ],
+        "handler": [
+          "before"
+        ]
+      }
+    },
+    "resources": {
+      "admin": {
+        "title": "Admin",
+        "type": "resource",
+        "name": "admin",
+        "path": "admin",
+        "tags": [],
+        "components": [
+          {
+            "type": "email",
+            "persistent": true,
+            "unique": false,
+            "protected": false,
+            "defaultValue": "",
+            "suffix": "",
+            "prefix": "",
+            "placeholder": "Enter your email address",
+            "key": "email",
+            "label": "Email",
+            "inputType": "email",
+            "tableView": true,
+            "input": true
+          },
+          {
+            "type": "password",
+            "persistent": true,
+            "protected": true,
+            "suffix": "",
+            "prefix": "",
+            "placeholder": "Enter your password.",
+            "key": "password",
+            "label": "Password",
+            "inputType": "password",
+            "tableView": false,
+            "input": true
+          },
+          {
+            "type": "button",
+            "theme": "primary",
+            "disableOnInvalid": true,
+            "action": "submit",
+            "block": false,
+            "rightIcon": "",
+            "leftIcon": "",
+            "size": "md",
+            "key": "submit",
+            "tableView": false,
+            "label": "Submit",
+            "input": true
+          }
+        ],
+        "access": [
+          {
+            "roles": [
+              "anonymous",
+              "authenticated",
+              "administrator"
+            ],
+            "type": "read_all"
+          }
+        ],
+        "submissionAccess": [
+          {
+            "roles": [
+              "administrator"
+            ],
+            "type": "create_all"
+          },
+          {
+            "roles": [
+              "administrator"
+            ],
+            "type": "read_all"
+          },
+          {
+            "roles": [
+              "administrator"
+            ],
+            "type": "update_all"
+          },
+          {
+            "roles": [
+              "administrator"
+            ],
+            "type": "delete_all"
+          },
+          {
+            "roles": [],
+            "type": "create_own"
+          },
+          {
+            "roles": [],
+            "type": "read_own"
+          },
+          {
+            "roles": [],
+            "type": "update_own"
+          },
+          {
+            "roles": [],
+            "type": "delete_own"
+          }
+        ]
+      },
+      "user": {
+        "title": "User",
+        "type": "resource",
+        "name": "user",
+        "path": "user",
+        "tags": [],
+        "components": [
+          {
+            "type": "email",
+            "persistent": true,
+            "unique": false,
+            "protected": false,
+            "defaultValue": "",
+            "suffix": "",
+            "prefix": "",
+            "placeholder": "Enter your email address",
+            "key": "email",
+            "label": "Email",
+            "inputType": "email",
+            "tableView": true,
+            "input": true
+          },
+          {
+            "type": "password",
+            "persistent": true,
+            "protected": true,
+            "suffix": "",
+            "prefix": "",
+            "placeholder": "Enter your password.",
+            "key": "password",
+            "label": "Password",
+            "inputType": "password",
+            "tableView": false,
+            "input": true
+          },
+          {
+            "type": "button",
+            "theme": "primary",
+            "disableOnInvalid": true,
+            "action": "submit",
+            "block": false,
+            "rightIcon": "",
+            "leftIcon": "",
+            "size": "md",
+            "key": "submit",
+            "tableView": false,
+            "label": "Submit",
+            "input": true
+          }
+        ],
+        "access": [
+          {
+            "roles": [
+              "anonymous",
+              "authenticated",
+              "administrator"
+            ],
+            "type": "read_all"
+          }
+        ],
+        "submissionAccess": [
+          {
+            "roles": [
+              "administrator"
+            ],
+            "type": "create_all"
+          },
+          {
+            "roles": [
+              "administrator"
+            ],
+            "type": "read_all"
+          },
+          {
+            "roles": [
+              "administrator"
+            ],
+            "type": "update_all"
+          },
+          {
+            "roles": [
+              "administrator"
+            ],
+            "type": "delete_all"
+          },
+          {
+            "roles": [],
+            "type": "create_own"
+          },
+          {
+            "roles": [],
+            "type": "read_own"
+          },
+          {
+            "roles": [],
+            "type": "update_own"
+          },
+          {
+            "roles": [],
+            "type": "delete_own"
+          }
+        ]
+      }
+    },
+    "access": [
+      {
+        "type": "create_own",
+        "roles": []
+      },
+      {
+        "type": "create_all",
+        "roles": [
+          "administrator"
+        ]
+      },
+      {
+        "type": "read_own",
+        "roles": []
+      },
+      {
+        "type": "read_all",
+        "roles": [
+          "administrator",
+          "authenticated",
+          "anonymous"
+        ]
+      },
+      {
+        "type": "update_own",
+        "roles": []
+      },
+      {
+        "type": "update_all",
+        "roles": [
+          "administrator"
+        ]
+      },
+      {
+        "type": "delete_own",
+        "roles": []
+      },
+      {
+        "type": "delete_all",
+        "roles": [
+          "administrator"
+        ]
+      }
+    ],
+    "tag": "0.0.15"
+  },
+  "created": "2021-07-31T04:13:10.646Z",
+  "modified": "2021-07-31T04:13:10.651Z"
+}

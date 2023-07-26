@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: ${JDBC_URL:jdbc:h2:./content-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}
+    username: ${JDBC_USER:sa}
+    password: ${JDBC_PASSWORD:sa}
+
+  content:
+    url: ${SPRING_CONTENT_URL:}
+    fs:
+      filesystem-root: /tmp/${spring.application.name}/files
+
+  application:
+    name: camunda-formio-content
+
+debug: false
+
+server:
+  port: 8081
+  servlet.context-path: /content
+
+  

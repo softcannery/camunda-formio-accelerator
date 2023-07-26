@@ -1,0 +1,50 @@
+{
+  "name": "camunda-modeler-formio-designer-plugin",
+  "version": "0.1.0",
+  "description": "Design form.io form in Camunda Modeler",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/softcannery/camunda-modeler-formio-plugin"
+  },
+  "contributors": [
+    "Andrii Khoruzhenko <andrii.khoruzhenko@softcannery.com> (https://github.com/andrekh)",
+    "Igor Dianov <igor.dianov@softcannery.com> (https://github.com/igdianov)"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack -c",
+    "postbuild": "./install.sh",
+    "dev": "webpack -c -w",
+    "lint": "eslint .",
+    "test": "run-s lint build"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
+    "@bpmn-io/properties-panel": "^0.23.0",
+    "babel-loader": "^8.1.0",
+    "bpmn-js": "^8.5.0",
+    "bpmn-js-properties-panel": "^0.43.1",
+    "camunda-modeler-plugin-helpers": "^5.1.0",
+    "css-loader": "^6.8.1",
+    "eslint": "^6.8.0",
+    "eslint-plugin-bpmn-io": "^0.11.0",
+    "less": "^3.8.1",
+    "less-loader": "^4.1.0",
+    "min-dash": "^4.0.0",
+    "npm-run-all": "^4.1.5",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.8"
+  },
+  "dependencies": {
+    "ace-builds": "^1.4.12",
+    "axios": "^0.21.1",
+    "formiojs": "^4.13.4",
+    "react-formio": "^4.3.0",
+    "upath": "^2.0.1"
+  }
+}

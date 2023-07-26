@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    url: ${JDBC_URL:jdbc:h2:./camunda-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}
+    username: ${JDBC_USER:sa}
+    password: ${JDBC_PASSWORD:sa}
+  application:
+    name: camunda-formio
+  jersey:
+    application-path: /engine-rest
+
+debug: false
+
+camunda:
+  bpm:
+    generic-properties.properties:
+      telemetry-reporter-activate: false
+      initialize-telemetry: false
+    process-engine-name: default
+    history-level: full
+    admin-user:
+      id: kermit
+      password: password
+    authorization:
+      enabled: true
+    filter:
+      create: All tasks
+    eventing:
+      execution: true
+      history: true
+      task: true
+    deployment-resource-pattern: file:config/bpmn/*.bpmn,file:config/bpmn/*.formio
+
+server:
+  port: 8080
+  servlet.context-path: /
+
+content-base-url: http://localhost/content

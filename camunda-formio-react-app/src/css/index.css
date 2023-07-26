@@ -1,0 +1,24 @@
+/* @import '~font-awesome/scss/font-awesome'; */
+/* @import '~formiojs/dist/formio.full.css'; */
+@import "./bootstrap.css";
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+.header {
+  margin-bottom: 6em;
+}
+.footer {
+  margin-top: 6em;
+}
+
+.generic-form {
+  margin: 30px;
+}
+
+/* Fix for semantic ui styles, which are affected by bootstrap */
+.item a {
+  text-decoration: none;
+}

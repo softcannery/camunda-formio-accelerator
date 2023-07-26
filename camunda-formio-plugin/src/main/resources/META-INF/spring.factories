@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  org.softcannery.formio.FormioConfiguration,\
+  org.softcannery.camunda.FormioSpringBootProcessApplication
