@@ -44,7 +44,7 @@ jobs:
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           previous-version: "auto"
-          tag: false
+          tag: "false"
       - name: New tag
         id: tag
         run: |
