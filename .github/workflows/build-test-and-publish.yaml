@@ -50,10 +50,13 @@ jobs:
         run: |
           if [[ $GITHUB_REF == 'ref/head/master' ]]; then
             export TAG=$NEW_VERSION
+            export RELEASE="true"
           else
             export TAG=pr-${{ github.event.pull_request.number }}
+            export RELEASE="false"
           fi
           echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "release=$RELEASE" >> $GITHUB_OUTPUT
         env:
           NEW_VERSION: ${{ steps.version.outputs.version }}
       - name: MVN set version
@@ -75,6 +78,7 @@ jobs:
           git-token: ${{ secrets.GH_TOKEN }}
           image-name: camunda-formio-react-app
           version: ${{ steps.tag.outputs.tag }}
+          release: ${{ steps.tag.outputs.release }}
       - name: Build and push Docker image camunda-formio-example
         uses: softcannery/.github/actions/github-docker-registry@master
         with:
