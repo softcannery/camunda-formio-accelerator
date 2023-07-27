@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-22.04
     outputs:
       version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.tag.outputs.tag }}
     permissions:
       packages: write
       contents: read
@@ -44,6 +45,17 @@ jobs:
           github-token: ${{ secrets.GH_TOKEN }}
           previous-version: "auto"
           tag: false
+      - name: New tag
+        id: tag
+        run: |
+          if [[ $GITHUB_REF == 'ref/head/master' ]]; then
+            export TAG=$NEW_VERSION
+          else
+            export TAG=pr-${{ github.event.pull_request.number }}
+          fi
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+        env:
+          NEW_VERSION: ${{ steps.version.outputs.version }}
       - name: MVN set version
         run: |
           if [[ $GITHUB_REF == 'ref/head/master' ]]; then
@@ -62,7 +74,7 @@ jobs:
           git-username: ${{ github.actor }}
           git-token: ${{ secrets.GH_TOKEN }}
           image-name: camunda-formio-react-app
-          version: ${{ steps.version.outputs.version }}
+          version: ${{ steps.tag.outputs.tag }}
       - name: Build and push Docker image camunda-formio-example
         uses: softcannery/.github/actions/github-docker-registry@master
         with:
@@ -70,7 +82,7 @@ jobs:
           git-username: ${{ github.actor }}
           git-token: ${{ secrets.GH_TOKEN }}
           image-name: camunda-formio-example
-          version: ${{ steps.version.outputs.version }}
+          version: ${{ steps.tag.outputs.tag }}
       - name: Build and push Docker image camunda-formio-content
         uses: softcannery/.github/actions/github-docker-registry@master
         with:
@@ -78,7 +90,7 @@ jobs:
           git-username: ${{ github.actor }}
           git-token: ${{ secrets.GH_TOKEN }}
           image-name: camunda-formio-content
-          version: ${{ steps.version.outputs.version }}
+          version: ${{ steps.tag.outputs.tag }}
 
   build-plugin:
     name: Build Camunda Modeler Plugin
