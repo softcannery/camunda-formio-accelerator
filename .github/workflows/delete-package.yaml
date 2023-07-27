@@ -6,6 +6,9 @@ on:
 
 jobs:
   purge-image:
+    strategy:
+      matrix:
+        name: [ camunda-formio-react-app, camunda-formio-example, camunda-formio-content ]
     name: Delete image from ghcr.io
     runs-on: ubuntu-latest
     steps:
@@ -13,21 +16,18 @@ jobs:
         uses: bots-house/ghcr-delete-image-action@v1.1.0
         with:
           # NOTE: at now only orgs is supported
-          owner: bots-house
-          name: some-web-service
+          owner: softcannery
+          name:  ${{ matrix.name }}
           # NOTE: using Personal Access Token
           token: ${{ secrets.GH_TOKEN }}
           tag: pr-${{github.event.pull_request.number}}
-  delete-untagged-images:
-    name: Delete Untagged Images
-    runs-on: ubuntu-latest
-    steps:
-      - uses: bots-house/ghcr-delete-image-action@v1.1.0
+      - name: Delete Untagged Images
+        uses: bots-house/ghcr-delete-image-action@v1.1.0
         with:
           # NOTE: at now only orgs is supported
-          owner: bots-house
-          name: some-web-service
+          owner: softcannery
+          name: ${{ matrix.name }}
           # NOTE: using Personal Access Token
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.GH_TOKEN }}
           # Keep latest N untagged images
           untagged-keep-latest: 10
