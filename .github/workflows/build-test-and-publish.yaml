@@ -54,7 +54,7 @@ jobs:
           # NOTE: using Personal Access Token
           token: ${{ secrets.GH_TOKEN }}
           # Keep latest N untagged images
-          untagged-keep-latest: 10
+          untagged-keep-latest: 0
       - name: New tag
         id: tag
         run: |
