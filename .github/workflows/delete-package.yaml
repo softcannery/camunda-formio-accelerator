@@ -16,7 +16,7 @@ jobs:
         uses: bots-house/ghcr-delete-image-action@v1.1.0
         with:
           # NOTE: at now only orgs is supported
-          owner: softcannery
+          owner: ${{ github.repository }}
           name:  ${{ matrix.name }}
           # NOTE: using Personal Access Token
           token: ${{ secrets.GH_TOKEN }}
@@ -25,7 +25,7 @@ jobs:
         uses: bots-house/ghcr-delete-image-action@v1.1.0
         with:
           # NOTE: at now only orgs is supported
-          owner: softcannery
+          owner: ${{ github.repository }}
           name: ${{ matrix.name }}
           # NOTE: using Personal Access Token
           token: ${{ secrets.GH_TOKEN }}
