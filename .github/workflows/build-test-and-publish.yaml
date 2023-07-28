@@ -49,8 +49,8 @@ jobs:
         uses: bots-house/ghcr-delete-image-action@v1.1.0
         with:
           # NOTE: at now only orgs is supported
-          owner: softcannery/camunda-formio-accelerator
-          name: camunda-formio-react-app
+          owner: softcannery
+          name: camunda-formio-accelerator/camunda-formio-react-app
           # NOTE: using Personal Access Token
           token: ${{ secrets.GH_TOKEN }}
           # Keep latest N untagged images
