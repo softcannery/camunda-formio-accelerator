@@ -159,7 +159,7 @@ jobs:
         env:
           CR_PAT: ${{ secrets.GH_TOKEN }}
         run: |
-          sed -i -e "s/IMAGE_TAG=.*/IMAGE_TAG=${{ github.sha }}/" ./.env
+          sed -i -e "s/IMAGE_TAG=.*/IMAGE_TAG=${{ needs.build-maven.outputs.tag }}/" ./.env
           docker compose pull
           docker compose -f "docker-compose.yml" up -d --no-build
       - name: run cucumber tests
