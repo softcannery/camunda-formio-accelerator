@@ -1,0 +1,33 @@
+name: Cleanup PR Images
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  purge-image:
+    strategy:
+      matrix:
+        name: [ camunda-formio-react-app, camunda-formio-example, camunda-formio-content ]
+    name: Delete image from ghcr.io
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete image
+        uses: bots-house/ghcr-delete-image-action@v1.1.0
+        with:
+          # NOTE: at now only orgs is supported
+          owner: softcannery
+          name:  ${{ matrix.name }}
+          # NOTE: using Personal Access Token
+          token: ${{ secrets.GH_TOKEN }}
+          tag: pr-${{github.event.pull_request.number}}
+      - name: Delete Untagged Images
+        uses: bots-house/ghcr-delete-image-action@v1.1.0
+        with:
+          # NOTE: at now only orgs is supported
+          owner: softcannery
+          name: ${{ matrix.name }}
+          # NOTE: using Personal Access Token
+          token: ${{ secrets.GH_TOKEN }}
+          # Keep latest N untagged images
+          untagged-keep-latest: 10
