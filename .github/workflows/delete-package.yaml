@@ -17,7 +17,7 @@ jobs:
         with:
           # NOTE: at now only orgs is supported
           owner: softcannery
-          name:  ${{ matrix.name }}
+          name:  camunda-formio-accelerator/${{ matrix.name }}
           # NOTE: using Personal Access Token
           token: ${{ secrets.GH_TOKEN }}
           tag: pr-${{github.event.pull_request.number}}
@@ -26,8 +26,8 @@ jobs:
         with:
           # NOTE: at now only orgs is supported
           owner: softcannery
-          name: ${{ matrix.name }}
+          name: camunda-formio-accelerator/${{ matrix.name }}
           # NOTE: using Personal Access Token
           token: ${{ secrets.GH_TOKEN }}
           # Keep latest N untagged images
-          untagged-keep-latest: 10
+          untagged-keep-latest: 1
