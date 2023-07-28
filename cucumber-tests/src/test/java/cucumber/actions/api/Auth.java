@@ -5,9 +5,10 @@ import io.restassured.http.Cookie;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.junit.jupiter.api.Assertions;
+
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.jupiter.api.Assertions;
 
 public class Auth extends Base {
 
@@ -15,6 +16,7 @@ public class Auth extends Base {
     private Cookie JSESSIONID;
 
     private void getCsrf() {
+
         RestAssured.baseURI = this.camundaUrl;
         Map<String, String> headers = new HashMap<>();
         headers.put("referer", this.camundaUrl + "/camunda/app/tasklist/default/");

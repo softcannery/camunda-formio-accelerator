@@ -24,7 +24,7 @@ public class Methods extends Base {
         this.cookiesMap = cookiesMap;
     }
 
-    public String getProcessDefinitionId() {
+    public String getProcessDefinitionId(String processName) {
         Map<String, String> params = new HashMap<>();
         params.put("latest", "true");
         params.put("active", "true");
@@ -47,28 +47,28 @@ public class Methods extends Base {
         String rbdy = body.asString();
         JsonPath jpath = new JsonPath(rbdy);
 
-        return jpath.getString("find{it.key == 'formioExample'}.id");
+        return jpath.getString("find{it.name == '" + processName + "'}.id");
     }
 
     public String getTaskId(String processInstanceId) {
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "application/json");
-        String filterId = getFilterId();
         Map<String, String> params = new HashMap<>();
+        params.put("processInstanceId", processInstanceId);
 
         RestAssured.baseURI = this.camundaUrl;
         RequestSpecification httpRequest = RestAssured.given();
         Response res = httpRequest
             .queryParams(params)
             .headers(headers)
-            .get("/engine-rest/filter/" + filterId + "/list");
+            .cookie(this.cookiesMap.get("XSRF"))
+            .cookie(this.cookiesMap.get("JSESSIONID"))
+            .get("camunda/api/engine/engine/default/task");
         Assertions.assertEquals(200, res.statusCode(), "Get taskId: response code not 200");
 
         ResponseBody body = res.body();
         String rbdy = body.asString();
         JsonPath jpath = new JsonPath(rbdy);
 
-        return jpath.getString("find{it.processInstanceId == '" + processInstanceId + "'}.id");
+        return jpath.getString("_embedded.task.id[0]");
     }
 
     private String getFilterId() {
@@ -98,28 +98,42 @@ public class Methods extends Base {
         headers.put("Content-Type", "application/json");
         RestAssured.baseURI = this.camundaUrl;
         RequestSpecification httpRequest = RestAssured.given();
-        Response res = httpRequest.headers(headers).get("/engine-rest/process-instance/" + processInstanceId);
+        Response res = httpRequest
+                .headers(headers)
+                .get("/engine-rest/process-instance/" + processInstanceId );
         return res.statusCode();
     }
 
-    public Map<String, String> getSubmitAndActivityIds(String taskId) {
+    public void claim(String taskId) {
+        String payload = "{\"userId\":\"kermit\"}";
+        RestAssured.baseURI = this.camundaUrl;
+        RequestSpecification httpRequest = RestAssured.given();
+
+        Response res = httpRequest
+                .headers(headers)
+                .cookie(cookiesMap.get("XSRF"))
+                .cookie(cookiesMap.get("JSESSIONID"))
+                .body(payload)
+                .urlEncodingEnabled(false)
+                .post("camunda/api/engine/engine/default/task/" + taskId + "/claim");
+        Assertions.assertEquals(204, res.statusCode(), "Claim Process: response code is not 200");
+    }
+
+    public Map<String,String> getFormVariables(String taskId) {
         Map<String, String> params = new HashMap<>();
-        params.put(
-            "variableNames",
-            "Activity_15s4e00,invoiceDocument,creditor,email,number,category,invoiceID,signature,rejectionReason,approved"
-        );
         params.put("deserializeValues", "false");
 
         RestAssured.baseURI = this.camundaUrl;
         RequestSpecification httpRequest = RestAssured.given();
         Response res = httpRequest
-            .headers(this.headers)
-            .queryParams(params)
-            .get("/engine-rest/task/" + taskId + "/form-variables");
+                .headers(this.headers)
+                .cookie(this.cookiesMap.get("XSRF"))
+                .cookie(this.cookiesMap.get("JSESSIONID"))
+                .queryParams(params)
+                .get("camunda/api/engine/engine/default/task/" + taskId +"/form-variables");
         Assertions.assertEquals(200, res.statusCode(), "Get form variables: response code not 200");
 
-        ResponseBody body = res.body();
-        String rbdy = body.asString();
+        String rbdy = res.body().asString();
         Map<String, String> submitAndActivityIds = new HashMap<>();
         //extract submissionId
         String submissionId = rbdy.split("submissionId\\\\\":\\\\\"")[1].split(":")[0];
@@ -128,6 +142,7 @@ public class Methods extends Base {
 
         submitAndActivityIds.put("submissionId", submissionId);
         submitAndActivityIds.put("activityInstanceId", activityInstanceId);
+        submitAndActivityIds.put("body", rbdy);
 
         return submitAndActivityIds;
     }
