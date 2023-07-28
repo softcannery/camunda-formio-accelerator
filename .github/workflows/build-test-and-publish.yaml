@@ -44,7 +44,7 @@ jobs:
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           previous-version: "auto"
-          tag: "false"
+          tag: false
       - name: New tag
         id: tag
         run: |
@@ -87,6 +87,7 @@ jobs:
           git-token: ${{ secrets.GH_TOKEN }}
           image-name: camunda-formio-example
           version: ${{ steps.tag.outputs.tag }}
+          release: ${{ steps.tag.outputs.release }}
       - name: Build and push Docker image camunda-formio-content
         uses: softcannery/.github/actions/github-docker-registry@master
         with:
@@ -95,7 +96,7 @@ jobs:
           git-token: ${{ secrets.GH_TOKEN }}
           image-name: camunda-formio-content
           version: ${{ steps.tag.outputs.tag }}
-
+          release: ${{ steps.tag.outputs.release }}
   build-plugin:
     name: Build Camunda Modeler Plugin
     runs-on: ubuntu-latest
