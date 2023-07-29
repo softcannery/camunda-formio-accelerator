@@ -8,11 +8,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.http.Cookie;
+import io.restassured.path.json.JsonPath;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
-
-import io.restassured.path.json.JsonPath;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.ensure.Ensure;
 import org.junit.Assert;
@@ -53,8 +52,8 @@ public class SearchStepDefinitions {
         this.processInstanceId = invoiceProcess.submitForm(fileURL, processDefinitionId);
     }
 
-    @When ("{actor} starts an Simple Process via API")
-    public void startSimpleProcessPOST(Actor actor){
+    @When("{actor} starts an Simple Process via API")
+    public void startSimpleProcessPOST(Actor actor) {
         this.simpleProcess = new SimpleProcess(cookiesMap);
         this.processDefinitionId = methods.getProcessDefinitionId("Simple Formio Task Action");
         this.processInstanceId = simpleProcess.submitForm(processDefinitionId);
@@ -64,20 +63,28 @@ public class SearchStepDefinitions {
     public void completeProcessInvoicePOST(Actor actor) {
         String taskId = this.methods.getTaskId(this.processInstanceId);
         this.methods.claim(taskId);
-        Map<String,String> submitAndActivityIds = this.methods.getFormVariables(taskId);
+        Map<String, String> submitAndActivityIds = this.methods.getFormVariables(taskId);
         int respCodeGetProcessInstance = this.methods.getProcessInstance(this.processInstanceId);
         Assertions.assertEquals(200, respCodeGetProcessInstance, "process instance was not created");
         this.invoiceProcess.completeProcess(this.fileURL, taskId, submitAndActivityIds, this.processDefinitionId);
     }
 
-    @When ("{actor} completes Simple Process via API")
+    @When("{actor} completes Simple Process via API")
     public void completeSimpleProcessPOST(Actor actor) {
         String taskId = this.methods.getTaskId(this.processInstanceId);
         this.methods.claim(taskId);
-        Map<String,String> formVariables = this.methods.getFormVariables(taskId);
+        Map<String, String> formVariables = this.methods.getFormVariables(taskId);
         JsonPath jpath = new JsonPath(formVariables.get("body"));
-        Assertions.assertEquals("1.1111111E8", jpath.getString("number.value"), "expected Number value - '1.1111111E8'");
-        Assertions.assertEquals("mike test", jpath.getString("textField.value"), "expected textField value - 'mike test'");
+        Assertions.assertEquals(
+            "1.1111111E8",
+            jpath.getString("number.value"),
+            "expected Number value - '1.1111111E8'"
+        );
+        Assertions.assertEquals(
+            "mike test",
+            jpath.getString("textField.value"),
+            "expected textField value - 'mike test'"
+        );
         int respCodeGetProcessInstance = this.methods.getProcessInstance(this.processInstanceId);
         Assertions.assertEquals(200, respCodeGetProcessInstance, "process instance was not created");
         this.simpleProcess.completeProcess(taskId, formVariables, this.processDefinitionId);

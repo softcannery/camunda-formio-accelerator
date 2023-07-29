@@ -98,9 +98,7 @@ public class Methods extends Base {
         headers.put("Content-Type", "application/json");
         RestAssured.baseURI = this.camundaUrl;
         RequestSpecification httpRequest = RestAssured.given();
-        Response res = httpRequest
-                .headers(headers)
-                .get("/engine-rest/process-instance/" + processInstanceId );
+        Response res = httpRequest.headers(headers).get("/engine-rest/process-instance/" + processInstanceId);
         return res.statusCode();
     }
 
@@ -110,27 +108,27 @@ public class Methods extends Base {
         RequestSpecification httpRequest = RestAssured.given();
 
         Response res = httpRequest
-                .headers(headers)
-                .cookie(cookiesMap.get("XSRF"))
-                .cookie(cookiesMap.get("JSESSIONID"))
-                .body(payload)
-                .urlEncodingEnabled(false)
-                .post("camunda/api/engine/engine/default/task/" + taskId + "/claim");
+            .headers(headers)
+            .cookie(cookiesMap.get("XSRF"))
+            .cookie(cookiesMap.get("JSESSIONID"))
+            .body(payload)
+            .urlEncodingEnabled(false)
+            .post("camunda/api/engine/engine/default/task/" + taskId + "/claim");
         Assertions.assertEquals(204, res.statusCode(), "Claim Process: response code is not 200");
     }
 
-    public Map<String,String> getFormVariables(String taskId) {
+    public Map<String, String> getFormVariables(String taskId) {
         Map<String, String> params = new HashMap<>();
         params.put("deserializeValues", "false");
 
         RestAssured.baseURI = this.camundaUrl;
         RequestSpecification httpRequest = RestAssured.given();
         Response res = httpRequest
-                .headers(this.headers)
-                .cookie(this.cookiesMap.get("XSRF"))
-                .cookie(this.cookiesMap.get("JSESSIONID"))
-                .queryParams(params)
-                .get("camunda/api/engine/engine/default/task/" + taskId +"/form-variables");
+            .headers(this.headers)
+            .cookie(this.cookiesMap.get("XSRF"))
+            .cookie(this.cookiesMap.get("JSESSIONID"))
+            .queryParams(params)
+            .get("camunda/api/engine/engine/default/task/" + taskId + "/form-variables");
         Assertions.assertEquals(200, res.statusCode(), "Get form variables: response code not 200");
 
         String rbdy = res.body().asString();
