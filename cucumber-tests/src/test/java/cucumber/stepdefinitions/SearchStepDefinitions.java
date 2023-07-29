@@ -1,16 +1,14 @@
 package cucumber.stepdefinitions;
 
 import cucumber.actions.*;
-import cucumber.actions.api.Auth;
-import cucumber.actions.api.FileUpload;
-import cucumber.actions.api.InvoiceProcess;
-import cucumber.actions.api.Methods;
+import cucumber.actions.api.*;
 import cucumber.navigation.NavigateTo;
 import cucumber.navigation.TaskListPage;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.http.Cookie;
+import io.restassured.path.json.JsonPath;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -27,6 +25,7 @@ public class SearchStepDefinitions {
     private static Map<String, Cookie> cookiesMap;
     private static Methods methods;
     private static InvoiceProcess invoiceProcess;
+    private static SimpleProcess simpleProcess;
     private static String fileURL;
     private static String processDefinitionId;
     private static String processInstanceId;
@@ -49,18 +48,46 @@ public class SearchStepDefinitions {
         this.invoiceProcess = new InvoiceProcess(cookiesMap);
         FileUpload fileUpload = new FileUpload();
         this.fileURL = fileUpload.uploadForm("files/bot.png", cookiesMap);
-        this.processDefinitionId = methods.getProcessDefinitionId();
+        this.processDefinitionId = methods.getProcessDefinitionId("Submit Invoice for Approval");
         this.processInstanceId = invoiceProcess.submitForm(fileURL, processDefinitionId);
+    }
+
+    @When("{actor} starts an Simple Process via API")
+    public void startSimpleProcessPOST(Actor actor) {
+        this.simpleProcess = new SimpleProcess(cookiesMap);
+        this.processDefinitionId = methods.getProcessDefinitionId("Simple Formio Task Action");
+        this.processInstanceId = simpleProcess.submitForm(processDefinitionId);
     }
 
     @When("{actor} completes Invoice Process via API")
     public void completeProcessInvoicePOST(Actor actor) {
         String taskId = this.methods.getTaskId(this.processInstanceId);
-        this.invoiceProcess.claim(taskId);
-        Map<String, String> submitAndActivityIds = this.methods.getSubmitAndActivityIds(taskId);
+        this.methods.claim(taskId);
+        Map<String, String> submitAndActivityIds = this.methods.getFormVariables(taskId);
         int respCodeGetProcessInstance = this.methods.getProcessInstance(this.processInstanceId);
         Assertions.assertEquals(200, respCodeGetProcessInstance, "process instance was not created");
         this.invoiceProcess.completeProcess(this.fileURL, taskId, submitAndActivityIds, this.processDefinitionId);
+    }
+
+    @When("{actor} completes Simple Process via API")
+    public void completeSimpleProcessPOST(Actor actor) {
+        String taskId = this.methods.getTaskId(this.processInstanceId);
+        this.methods.claim(taskId);
+        Map<String, String> formVariables = this.methods.getFormVariables(taskId);
+        JsonPath jpath = new JsonPath(formVariables.get("body"));
+        Assertions.assertEquals(
+            "1.11111112E8",
+            jpath.getString("number.value"),
+            "expected Number value - '1.11111112E8'"
+        );
+        Assertions.assertEquals(
+            "mike test",
+            jpath.getString("textField.value"),
+            "expected textField value - 'mike test'"
+        );
+        int respCodeGetProcessInstance = this.methods.getProcessInstance(this.processInstanceId);
+        Assertions.assertEquals(200, respCodeGetProcessInstance, "process instance was not created");
+        this.simpleProcess.completeProcess(taskId, formVariables, this.processDefinitionId);
     }
 
     @Then("{actor} should see that process not in the list via API")

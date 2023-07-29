@@ -164,7 +164,7 @@ jobs:
           docker compose -f "docker-compose.yml" up -d --no-build
       - name: run cucumber tests
         run: |
-          sleep 25
+          sleep 60
           cd ./cucumber-tests
           mvn clean verify -ntp
       - name: save test report
