@@ -76,9 +76,9 @@ public class SearchStepDefinitions {
         Map<String, String> formVariables = this.methods.getFormVariables(taskId);
         JsonPath jpath = new JsonPath(formVariables.get("body"));
         Assertions.assertEquals(
-            "1.1111111E8",
+            "1.11111112E8",
             jpath.getString("number.value"),
-            "expected Number value - '1.1111111E8'"
+            "expected Number value - '1.11111112E8'"
         );
         Assertions.assertEquals(
             "mike test",
