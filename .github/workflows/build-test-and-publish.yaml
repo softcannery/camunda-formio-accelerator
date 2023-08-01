@@ -107,13 +107,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 17
-      - uses: actions/cache@v3
-        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
-        with:
-          path: ./camunda-modeler-formio-plugin
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
       - name: build plugin
         run: |
           cd ./camunda-modeler-formio-plugin
