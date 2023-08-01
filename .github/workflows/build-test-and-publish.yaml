@@ -48,7 +48,7 @@ jobs:
       - name: New tag
         id: tag
         run: |
-          if [[ $GITHUB_REF == 'ref/head/master' ]]; then
+          if [[ $GITHUB_REF == 'refs/heads/master' ]]; then
             export TAG=$NEW_VERSION
             export RELEASE="true"
           else
@@ -61,7 +61,7 @@ jobs:
           NEW_VERSION: ${{ steps.version.outputs.version }}
       - name: MVN set version
         run: |
-          if [[ $GITHUB_REF == 'ref/head/master' ]]; then
+          if [[ $GITHUB_REF == 'refs/heads/master' ]]; then
             mvn versions:set -DnewVersion=$NEW_VERSION
           else
             mvn versions:set -DnewVersion=$NEW_VERSION-SNAPSHOT
