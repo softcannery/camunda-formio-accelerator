@@ -43,7 +43,7 @@
 # THAT IT CANNOT BE LAWFULLY EXCLUDED OR RESTRICTED.
 #
 
-FROM node:12-alpine AS builder
+FROM node:17-alpine AS builder
 WORKDIR /opt/app
 COPY package*.json ./
 RUN npm ci
