@@ -123,6 +123,8 @@ jobs:
           npm run build
           cd ${MODELER_DIR}/resources/plugins/formio-plugin
           zip -r -l ~/formio-plugin.zip ./
+        env:
+          NODE_OPTIONS: "--openssl-legacy-provider"
       - name: Upload build results
         uses: actions/upload-artifact@v3
         with:

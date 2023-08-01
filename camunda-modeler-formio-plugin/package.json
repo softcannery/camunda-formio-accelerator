@@ -13,9 +13,9 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "webpack -c --openssl-legacy-provider",
+    "build": "webpack -c",
     "postbuild": "./install.sh",
-    "dev": "webpack -c -w --openssl-legacy-provider",
+    "dev": "webpack -c -w",
     "lint": "eslint .",
     "test": "run-s lint build"
   },
