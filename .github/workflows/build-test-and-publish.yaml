@@ -106,14 +106,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
-      - uses: actions/cache@v3
-        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
-        with:
-          path: ./camunda-modeler-formio-plugin
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version: 17
       - name: build plugin
         run: |
           cd ./camunda-modeler-formio-plugin
@@ -123,6 +116,8 @@ jobs:
           npm run build
           cd ${MODELER_DIR}/resources/plugins/formio-plugin
           zip -r -l ~/formio-plugin.zip ./
+        env:
+          NODE_OPTIONS: "--openssl-legacy-provider"
       - name: Upload build results
         uses: actions/upload-artifact@v3
         with:
