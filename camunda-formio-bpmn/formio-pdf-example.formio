@@ -179,9 +179,6 @@
                     "height": "120px",
                     "tableView": false,
                     "modalEdit": true,
-                    "validate": {
-                      "required": true
-                    },
                     "key": "signature",
                     "overlay": {
                       "page": 1,

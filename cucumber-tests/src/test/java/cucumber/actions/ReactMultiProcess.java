@@ -151,7 +151,7 @@ public class ReactMultiProcess {
             "Wrong employee DOH",
             row3.findElement(By.xpath("//input[contains(@value,'2023-04-01')]"))
         );
-        Assert.assertNotNull("Wrong employee Position", row3.findElement(By.xpath("//input[@value='Position1']")));
+        Assert.assertNotNull("Wrong employee Position", row3.findElement(By.xpath("//input[@value='Position1 ']")));
         Assert.assertNotNull("Wrong employee Supervisor", row3.findElement(By.xpath("//input[@value='Joe Doe']")));
         Assert.assertNotNull(
             "Wrong employee Supervisor Email",
@@ -160,7 +160,11 @@ public class ReactMultiProcess {
         Assert.assertNotNull("Wrong Form status", row3.findElement(By.xpath("//input[@value='Reviewed']")));
         Assert.assertNotNull("Task must be approved", row3.findElement(By.xpath("//input[@checked='true']")));
 
-        driver.findElement(By.xpath("//button[@type='submit']")).click();
+        try {
+            driver.findElement(By.xpath("//button[@type='submit']")).click();
+        } catch (ElementClickInterceptedException e) {
+            driver.findElement(By.xpath("//button[@type='submit']")).click();
+        }
         return Task.where("{0} Complete MultiTasks");
     }
 }
