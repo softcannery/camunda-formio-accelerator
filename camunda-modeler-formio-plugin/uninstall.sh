@@ -45,5 +45,5 @@
 #
 
 
-PLUGIN='~/Library/Application Support/camunda-modeler/resources/plugins/formio-plugin'
+PLUGIN="$HOME/Library/Application Support/camunda-modeler/resources/plugins/formio-plugin"
 rm -rf "${PLUGIN}"
