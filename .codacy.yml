@@ -1,0 +1,6 @@
+---
+exclude_paths:
+  - "camunda-modeler-formio-plugin/css/**"
+  - "camunda-modeler-formio-plugin/style/**"
+  - "camunda-formio-plugin/src/main/resources/META-INF/resources/webjars/camunda/app/tasklist/formio/**"
+  - "camunda-formio-plugin/src/main/resources/META-INF/resources/webjars/camunda/app/tasklist/default/**"
