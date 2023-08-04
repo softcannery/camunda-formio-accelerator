@@ -28,12 +28,12 @@ public class SimpleProcessUpgrade {
 
     public static int getSimpleProcessVersion() {
         WebDriver driver = getDriver();
-        for (int i = 0; i<20; i++) {
+        for (int i = 0; i < 20; i++) {
             try {
                 driver.findElement(By.xpath("//a[contains(text(),'Start Process')]")).click();
                 driver.findElement(By.xpath("//a[contains(text(), 'Simple Formio Task Action')]")).getText();
                 break;
-            } catch (NoSuchElementException e){
+            } catch (NoSuchElementException e) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
@@ -42,8 +42,8 @@ public class SimpleProcessUpgrade {
             }
         }
         String textInList = driver
-                .findElement(By.xpath("//a[contains(text(), 'Simple Formio Task Action')]"))
-                .getText();
+            .findElement(By.xpath("//a[contains(text(), 'Simple Formio Task Action')]"))
+            .getText();
         String[] strVersionArr = textInList.split(" ");
         String strVersion = strVersionArr[strVersionArr.length - 1];
         return Integer.parseInt(strVersion);
