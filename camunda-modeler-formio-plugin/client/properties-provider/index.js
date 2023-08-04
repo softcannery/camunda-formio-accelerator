@@ -1,4 +1,4 @@
-import FormioPropertyProvider from './FormioPropertyProvider';
+import FormioPropertyProvider from "./FormioPropertyProvider";
 
 /**
  * A bpmn-js module, defining all extension services and their dependencies.
@@ -6,6 +6,6 @@ import FormioPropertyProvider from './FormioPropertyProvider';
  *
  */
 export default {
-  __init__: ['FormioPropertyProvider'],
-  FormioPropertyProvider: ['type', FormioPropertyProvider]
+  __init__: ["FormioPropertyProvider"],
+  FormioPropertyProvider: ["type", FormioPropertyProvider],
 };

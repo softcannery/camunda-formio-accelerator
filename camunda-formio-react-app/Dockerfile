@@ -43,10 +43,10 @@
 # THAT IT CANNOT BE LAWFULLY EXCLUDED OR RESTRICTED.
 #
 
-FROM node:17-alpine AS builder
+FROM node:18-alpine AS builder
 WORKDIR /opt/app
 COPY package*.json ./
-RUN npm ci
+RUN npm ci -f
 COPY . ./
 RUN npm run build
 

@@ -1,6 +1,6 @@
 .bootstrap-iso {
   @charset "UTF-8";
-  
+
   /*!
  *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
@@ -60,13 +60,13 @@
 .bootstrap-iso .choices [hidden] {
   display: none !important;
 }
-.bootstrap-iso .choices[data-type*=select-one] {
+.bootstrap-iso .choices[data-type*="select-one"] {
   cursor: pointer;
 }
-.bootstrap-iso .choices[data-type*=select-one] .choices__inner {
+.bootstrap-iso .choices[data-type*="select-one"] .choices__inner {
   padding-bottom: 7.5px;
 }
-.bootstrap-iso .choices[data-type*=select-one] .choices__input {
+.bootstrap-iso .choices[data-type*="select-one"] .choices__input {
   display: block;
   width: 100%;
   padding: 10px;
@@ -74,7 +74,7 @@
   background-color: #fff;
   margin: 0;
 }
-.bootstrap-iso .choices[data-type*=select-one] .choices__button {
+.bootstrap-iso .choices[data-type*="select-one"] .choices__button {
   background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCAyMSAyMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0yLjU5Mi4wNDRsMTguMzY0IDE4LjM2NC0yLjU0OCAyLjU0OEwuMDQ0IDIuNTkyeiIvPjxwYXRoIGQ9Ik0wIDE4LjM2NEwxOC4zNjQgMGwyLjU0OCAyLjU0OEwyLjU0OCAyMC45MTJ6Ii8+PC9nPjwvc3ZnPg==);
   padding: 0;
   background-size: 8px;
@@ -88,18 +88,21 @@
   border-radius: 10em;
   opacity: 0.5;
 }
-.bootstrap-iso .choices[data-type*=select-one] .choices__button:focus,
-.bootstrap-iso .choices[data-type*=select-one] .choices__button:hover {
+.bootstrap-iso .choices[data-type*="select-one"] .choices__button:focus,
+.bootstrap-iso .choices[data-type*="select-one"] .choices__button:hover {
   opacity: 1;
 }
-.bootstrap-iso .choices[data-type*=select-one] .choices__button:focus {
+.bootstrap-iso .choices[data-type*="select-one"] .choices__button:focus {
   box-shadow: 0 0 0 2px #00bcd4;
 }
-.bootstrap-iso .choices[data-type*=select-one] .choices__item[data-value=''] .choices__button {
+.bootstrap-iso
+  .choices[data-type*="select-one"]
+  .choices__item[data-value=""]
+  .choices__button {
   display: none;
 }
-.bootstrap-iso .choices[data-type*=select-one]:after {
-  content: '';
+.bootstrap-iso .choices[data-type*="select-one"]:after {
+  content: "";
   height: 0;
   width: 0;
   border-style: solid;
@@ -111,26 +114,26 @@
   margin-top: -2.5px;
   pointer-events: none;
 }
-.bootstrap-iso .choices[data-type*=select-one].is-open:after {
+.bootstrap-iso .choices[data-type*="select-one"].is-open:after {
   border-color: transparent transparent #333;
   margin-top: -7.5px;
 }
-.bootstrap-iso .choices[data-type*=select-one][dir=rtl]:after {
+.bootstrap-iso .choices[data-type*="select-one"][dir="rtl"]:after {
   left: 11.5px;
   right: auto;
 }
-.bootstrap-iso .choices[data-type*=select-one][dir=rtl] .choices__button {
+.bootstrap-iso .choices[data-type*="select-one"][dir="rtl"] .choices__button {
   right: auto;
   left: 0;
   margin-left: 25px;
   margin-right: 0;
 }
-.bootstrap-iso .choices[data-type*=select-multiple] .choices__inner,
-.bootstrap-iso .choices[data-type*=text] .choices__inner {
+.bootstrap-iso .choices[data-type*="select-multiple"] .choices__inner,
+.bootstrap-iso .choices[data-type*="text"] .choices__inner {
   cursor: text;
 }
-.bootstrap-iso .choices[data-type*=select-multiple] .choices__button,
-.bootstrap-iso .choices[data-type*=text] .choices__button {
+.bootstrap-iso .choices[data-type*="select-multiple"] .choices__button,
+.bootstrap-iso .choices[data-type*="text"] .choices__button {
   position: relative;
   display: inline-block;
   margin: 0 -4px 0 8px;
@@ -143,10 +146,10 @@
   opacity: 0.75;
   border-radius: 0;
 }
-.bootstrap-iso .choices[data-type*=select-multiple] .choices__button:focus,
-.bootstrap-iso .choices[data-type*=select-multiple] .choices__button:hover,
-.bootstrap-iso .choices[data-type*=text] .choices__button:focus,
-.bootstrap-iso .choices[data-type*=text] .choices__button:hover {
+.bootstrap-iso .choices[data-type*="select-multiple"] .choices__button:focus,
+.bootstrap-iso .choices[data-type*="select-multiple"] .choices__button:hover,
+.bootstrap-iso .choices[data-type*="text"] .choices__button:focus,
+.bootstrap-iso .choices[data-type*="text"] .choices__button:hover {
   opacity: 1;
 }
 .bootstrap-iso .choices__inner {
@@ -181,7 +184,7 @@
   padding: 4px 16px 4px 4px;
   width: 100%;
 }
-.bootstrap-iso [dir=rtl] .choices__list--single {
+.bootstrap-iso [dir="rtl"] .choices__list--single {
   padding-right: 4px;
   padding-left: 16px;
 }
@@ -209,7 +212,7 @@
 .bootstrap-iso .choices__list--multiple .choices__item[data-deletable] {
   padding-right: 5px;
 }
-.bootstrap-iso [dir=rtl] .choices__list--multiple .choices__item {
+.bootstrap-iso [dir="rtl"] .choices__list--multiple .choices__item {
   margin-right: 0;
   margin-left: 3.75px;
 }
@@ -261,7 +264,7 @@
   padding: 10px;
   font-size: 14px;
 }
-.bootstrap-iso [dir=rtl] .choices__list--dropdown .choices__item {
+.bootstrap-iso [dir="rtl"] .choices__list--dropdown .choices__item {
   text-align: right;
 }
 @media (min-width: 640px) {
@@ -277,20 +280,30 @@
     top: 50%;
     transform: translateY(-50%);
   }
-  .bootstrap-iso [dir=rtl] .choices__list--dropdown .choices__item--selectable {
+  .bootstrap-iso
+    [dir="rtl"]
+    .choices__list--dropdown
+    .choices__item--selectable {
     text-align: right;
     padding-left: 100px;
     padding-right: 10px;
   }
-  .bootstrap-iso [dir=rtl] .choices__list--dropdown .choices__item--selectable:after {
+  .bootstrap-iso
+    [dir="rtl"]
+    .choices__list--dropdown
+    .choices__item--selectable:after {
     right: auto;
     left: 10px;
   }
 }
-.bootstrap-iso .choices__list--dropdown .choices__item--selectable.is-highlighted {
+.bootstrap-iso
+  .choices__list--dropdown
+  .choices__item--selectable.is-highlighted {
   background-color: #f2f2f2;
 }
-.bootstrap-iso .choices__list--dropdown .choices__item--selectable.is-highlighted:after {
+.bootstrap-iso
+  .choices__list--dropdown
+  .choices__item--selectable.is-highlighted:after {
   opacity: 0.5;
 }
 .bootstrap-iso .choices__item {
@@ -339,7 +352,7 @@
   max-width: 100%;
   padding: 4px 0 4px 2px;
 }
-.bootstrap-iso [dir=rtl] .choices__input {
+.bootstrap-iso [dir="rtl"] .choices__input {
   padding-right: 2px;
   padding-left: 0;
 }
@@ -409,9 +422,16 @@
   filter: alpha(opacity=20);
 }
 @font-face {
-  font-family: 'FontAwesome';
-  src: url('fonts/fontawesome-webfont.eot?v=4.7.0');
-  src: url('fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+  font-family: "FontAwesome";
+  src: url("fonts/fontawesome-webfont.eot?v=4.7.0");
+  src:
+    url("fonts/fontawesome-webfont.eot?#iefix&v=4.7.0")
+      format("embedded-opentype"),
+    url("fonts/fontawesome-webfont.woff2?v=4.7.0") format("woff2"),
+    url("fonts/fontawesome-webfont.woff?v=4.7.0") format("woff"),
+    url("fonts/fontawesome-webfont.ttf?v=4.7.0") format("truetype"),
+    url("fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular")
+      format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -2780,7 +2800,7 @@
 .bootstrap-iso .has-feedback .form-control {
   padding-right: 10px;
 }
-.bootstrap-iso .has-feedback .form-control[type=hidden] {
+.bootstrap-iso .has-feedback .form-control[type="hidden"] {
   padding-right: 0px;
 }
 .bootstrap-iso .has-error.bg-danger {
@@ -2849,14 +2869,14 @@
   margin-left: 5px;
 }
 .bootstrap-iso .formio-component-submit .submit-success::after {
-  content: '\2713';
+  content: "\2713";
   position: relative;
   right: -4px;
   top: 1px;
   line-height: 1;
 }
 .bootstrap-iso .formio-component-submit .submit-fail::after {
-  content: '\2717';
+  content: "\2717";
   position: relative;
   right: -4px;
   top: 1px;
@@ -2903,7 +2923,7 @@
 }
 .bootstrap-iso .signature-pad-footer {
   text-align: center;
-  color: #C3C3C3;
+  color: #c3c3c3;
 }
 .bootstrap-iso .formio-loader {
   position: relative;
@@ -2968,11 +2988,18 @@
 .bootstrap-iso .choices[dir="rtl"] > * {
   text-align: right;
 }
-.bootstrap-iso .choices[dir="rtl"] .choices__list--multiple .choices__item[data-deletable] {
+.bootstrap-iso
+  .choices[dir="rtl"]
+  .choices__list--multiple
+  .choices__item[data-deletable] {
   padding-left: 5px;
   float: right;
 }
-.bootstrap-iso .choices[dir="rtl"] .choices__list--multiple .choices__item[data-deletable] .choices__button {
+.bootstrap-iso
+  .choices[dir="rtl"]
+  .choices__list--multiple
+  .choices__item[data-deletable]
+  .choices__button {
   float: left;
   margin: 0 8px 0 -4px;
   padding-left: unset;
@@ -3062,8 +3089,12 @@
   /* end fix for Scrollbars not clickable on overflow #552 */
 }
 .bootstrap-iso .formio-dialog.formio-dialog-disabled-animation,
-.bootstrap-iso .formio-dialog.formio-dialog-disabled-animation .formio-dialog-overlay,
-.bootstrap-iso .formio-dialog.formio-dialog-disabled-animation .formio-dialog-content {
+.bootstrap-iso
+  .formio-dialog.formio-dialog-disabled-animation
+  .formio-dialog-overlay,
+.bootstrap-iso
+  .formio-dialog.formio-dialog-disabled-animation
+  .formio-dialog-content {
   -webkit-animation: none !important;
   animation: none !important;
 }
@@ -3103,8 +3134,8 @@
   animation: formio-dialog-fadeout 0.5s;
 }
 .bootstrap-iso .formio-dialog-close:before {
-  font-family: 'Helvetica', Arial, sans-serif;
-  content: '×';
+  font-family: "Helvetica", Arial, sans-serif;
+  content: "×";
   cursor: pointer;
 }
 .bootstrap-iso html.formio-dialog-open,
@@ -3169,16 +3200,20 @@
   padding-bottom: 160px;
   padding-top: 160px;
 }
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default.formio-dialog-closing .formio-dialog-content {
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default.formio-dialog-closing
+  .formio-dialog-content {
   -webkit-animation: formio-dialog-flyout 0.5s;
   animation: formio-dialog-flyout 0.5s;
 }
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-content {
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-content {
   -webkit-animation: formio-dialog-flyin 0.5s;
   animation: formio-dialog-flyin 0.5s;
   background: #f0f0f0;
   border-radius: 5px;
-  font-family: 'Helvetica', sans-serif;
+  font-family: "Helvetica", sans-serif;
   font-size: 1.1em;
   line-height: 1.5em;
   margin: 0 auto;
@@ -3202,32 +3237,55 @@
 .bootstrap-iso .component-settings .nav > li > a {
   padding: 8px 10px;
 }
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-close:before {
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-close:before {
   display: block;
   padding: 3px;
   background: transparent;
   color: #bbb;
-  content: '×';
+  content: "×";
   font-size: 26px;
   font-weight: 400;
   line-height: 26px;
   text-align: center;
 }
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-close:hover:before,
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-close:active:before {
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-close:hover:before,
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-close:active:before {
   color: #777;
 }
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-message {
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-message {
   margin-bottom: 0.5em;
 }
 .bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-input {
   margin-bottom: 1em;
 }
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-input textarea,
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-input input[type="text"],
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-input input[type="password"],
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-input input[type="email"],
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-input input[type="url"] {
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-input
+  textarea,
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-input
+  input[type="text"],
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-input
+  input[type="password"],
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-input
+  input[type="email"],
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-input
+  input[type="url"] {
   background: #fff;
   border: 0;
   border-radius: 3px;
@@ -3239,23 +3297,44 @@
   padding: 0.25em 0.67em;
   width: 100%;
 }
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-input textarea:focus,
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-input input[type="text"]:focus,
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-input input[type="password"]:focus,
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-input input[type="email"]:focus,
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-input input[type="url"]:focus {
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-input
+  textarea:focus,
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-input
+  input[type="text"]:focus,
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-input
+  input[type="password"]:focus,
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-input
+  input[type="email"]:focus,
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-input
+  input[type="url"]:focus {
   box-shadow: inset 0 0 0 2px #8dbdf1;
   outline: none;
 }
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-buttons {
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-buttons {
   *zoom: 1;
 }
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-buttons:after {
-  content: '';
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-buttons:after {
+  content: "";
   display: table;
   clear: both;
 }
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-button {
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-button {
   border: 0;
   border-radius: 3px;
   cursor: pointer;
@@ -3268,22 +3347,30 @@
   padding: 0.75em 2em;
   text-transform: uppercase;
 }
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-button:focus {
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-button:focus {
   -webkit-animation: formio-dialog-pulse 1.1s infinite;
   animation: formio-dialog-pulse 1.1s infinite;
   outline: none;
 }
 @media (max-width: 568px) {
-  .bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-button:focus {
+  .bootstrap-iso
+    .formio-dialog.formio-dialog-theme-default
+    .formio-dialog-button:focus {
     -webkit-animation: none;
     animation: none;
   }
 }
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-button.formio-dialog-button-primary {
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-button.formio-dialog-button-primary {
   background: #3288e6;
   color: #fff;
 }
-.bootstrap-iso .formio-dialog.formio-dialog-theme-default .formio-dialog-button.formio-dialog-button-secondary {
+.bootstrap-iso
+  .formio-dialog.formio-dialog-theme-default
+  .formio-dialog-button.formio-dialog-button-secondary {
   background: #e0e0e0;
   color: #777;
 }
@@ -3330,12 +3417,16 @@
   right: 5px;
   font-size: 1.5em;
 }
-.bootstrap-iso .formio-component-datetime .control-label--hidden.field-required {
+.bootstrap-iso
+  .formio-component-datetime
+  .control-label--hidden.field-required {
   right: 45px;
   z-index: 3;
 }
 .bootstrap-iso .formio-component-survey .control-label--hidden.field-required,
-.bootstrap-iso .formio-component-selectboxes .control-label--hidden.field-required {
+.bootstrap-iso
+  .formio-component-selectboxes
+  .control-label--hidden.field-required {
   top: 0;
 }
 .bootstrap-iso .formio-component-resource .control-label--hidden.field-required,
@@ -3364,7 +3455,7 @@
 .bootstrap-iso .formio-choices.form-group {
   margin-bottom: 0;
 }
-.bootstrap-iso .formio-choices[data-type=select-multiple] .form-control {
+.bootstrap-iso .formio-choices[data-type="select-multiple"] .form-control {
   height: auto;
 }
 .bootstrap-iso .form-control.formio-multiple-mask-select {
@@ -3387,7 +3478,11 @@
 .bootstrap-iso .is-disabled .choices__list--multiple .choices__item {
   padding: 5px 10px;
 }
-.bootstrap-iso .is-disabled .choices__list--multiple .choices__item .choices__button {
+.bootstrap-iso
+  .is-disabled
+  .choices__list--multiple
+  .choices__item
+  .choices__button {
   display: none;
 }
 .bootstrap-iso .formio-collapse-icon {
@@ -3398,8 +3493,14 @@
   margin-right: unset;
   margin-left: 4px;
 }
-.bootstrap-iso .formio-component-datetime .form-control[type="datetime-local"] ~ .input-group-addon,
-.bootstrap-iso .formio-component-dateTime .form-control[type="datetime-local"] ~ .input-group-addon {
+.bootstrap-iso
+  .formio-component-datetime
+  .form-control[type="datetime-local"]
+  ~ .input-group-addon,
+.bootstrap-iso
+  .formio-component-dateTime
+  .form-control[type="datetime-local"]
+  ~ .input-group-addon {
   width: auto;
 }
 .bootstrap-iso .formio-component-datagrid .formio-datagrid-remove {
@@ -3408,15 +3509,30 @@
   right: 0;
   visibility: hidden;
   opacity: 0;
-  transition: opacity 200ms linear, visibility 0ms 200ms;
+  transition:
+    opacity 200ms linear,
+    visibility 0ms 200ms;
 }
-.bootstrap-iso .formio-component-datagrid .datagrid-table > tbody > tr > td:last-child {
+.bootstrap-iso
+  .formio-component-datagrid
+  .datagrid-table
+  > tbody
+  > tr
+  > td:last-child {
   position: relative;
 }
-.bootstrap-iso .formio-component-datagrid .datagrid-table > tbody > tr:hover > td:last-child .formio-datagrid-remove {
+.bootstrap-iso
+  .formio-component-datagrid
+  .datagrid-table
+  > tbody
+  > tr:hover
+  > td:last-child
+  .formio-datagrid-remove {
   visibility: visible;
   opacity: 1;
-  transition: visibility 0ms, opacity 200ms linear;
+  transition:
+    visibility 0ms,
+    opacity 200ms linear;
 }
 .bootstrap-iso .formio-component-modaledit .formio-modaledit-view-container {
   position: relative;
@@ -3435,12 +3551,19 @@
   left: 0;
   visibility: hidden;
   opacity: 0;
-  transition: opacity 200ms linear, visibility 0ms 200ms;
+  transition:
+    opacity 200ms linear,
+    visibility 0ms 200ms;
 }
-.bootstrap-iso .formio-component-modaledit .formio-modaledit-view-container:hover .formio-modaledit-edit {
+.bootstrap-iso
+  .formio-component-modaledit
+  .formio-modaledit-view-container:hover
+  .formio-modaledit-edit {
   visibility: visible;
   opacity: 1;
-  transition: visibility 0ms, opacity 200ms linear;
+  transition:
+    visibility 0ms,
+    opacity 200ms linear;
 }
 .bootstrap-iso .formio-modaledit-dialog .formio-modaledit-close {
   position: absolute;
@@ -3537,10 +3660,12 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   text-indent: 1px;
-  text-overflow: '';
+  text-overflow: "";
 }
 .bootstrap-iso .formio-component-select div[disabled="disabled"] button,
-.bootstrap-iso .formio-component-select .choices.is-disabled[data-type*=select-one]:after {
+.bootstrap-iso
+  .formio-component-select
+  .choices.is-disabled[data-type*="select-one"]:after {
   display: none;
 }
 .bootstrap-iso .datagrid-group-label.collapsed > td {
@@ -3552,11 +3677,13 @@
 .bootstrap-iso .datagrid-group-header.clickable .datagrid-group-label:before {
   display: inline-block;
   vertical-align: middle;
-  content: '▾';
+  content: "▾";
   margin: 0 5px;
 }
-.bootstrap-iso .datagrid-group-header.clickable.collapsed .datagrid-group-label:before {
-  content: '▸';
+.bootstrap-iso
+  .datagrid-group-header.clickable.collapsed
+  .datagrid-group-label:before {
+  content: "▸";
 }
 .bootstrap-iso .formio-component.alert-danger .help-block,
 .bootstrap-iso .formio-component.alert-warning .help-block {
@@ -3600,13 +3727,17 @@
 .bootstrap-iso .table > tbody > tr > td.cell-align-right > div {
   margin-left: auto;
 }
-.bootstrap-iso .table-responsive[ref=component] {
+.bootstrap-iso .table-responsive[ref="component"] {
   overflow-x: visible;
 }
 .bootstrap-iso .formio-component-textarea .alert .ck-editor__editable {
   color: inherit;
 }
-.bootstrap-iso .formio-component-textarea .ck.ck-editor__editable .image .ck-progress-bar {
+.bootstrap-iso
+  .formio-component-textarea
+  .ck.ck-editor__editable
+  .image
+  .ck-progress-bar {
   height: 4px;
 }
 .bootstrap-iso div[data-oembed-url] {
@@ -3697,27 +3828,51 @@
   min-width: 15em;
 }
 .bootstrap-iso .formio-component-content .image-style-side:not(.image_resized),
-.bootstrap-iso .formio-component-content .image-style-align-left:not(.image_resized),
-.bootstrap-iso .formio-component-content .image-style-align-center:not(.image_resized),
-.bootstrap-iso .formio-component-content .image-style-align-right:not(.image_resized) {
+.bootstrap-iso
+  .formio-component-content
+  .image-style-align-left:not(.image_resized),
+.bootstrap-iso
+  .formio-component-content
+  .image-style-align-center:not(.image_resized),
+.bootstrap-iso
+  .formio-component-content
+  .image-style-align-right:not(.image_resized) {
   max-width: 50%;
 }
 .bootstrap-iso .formio-component-content .image-style-side:not(.image_resized),
-.bootstrap-iso .formio-component-content .image-style-align-left:not(.image_resized),
-.bootstrap-iso .formio-component-content .image-style-align-center:not(.image_resized),
-.bootstrap-iso .formio-component-content .image-style-align-right:not(.image_resized) {
+.bootstrap-iso
+  .formio-component-content
+  .image-style-align-left:not(.image_resized),
+.bootstrap-iso
+  .formio-component-content
+  .image-style-align-center:not(.image_resized),
+.bootstrap-iso
+  .formio-component-content
+  .image-style-align-right:not(.image_resized) {
   max-width: 50%;
 }
 .bootstrap-iso .formio-component-content .image-style-side:not(.image_resized),
-.bootstrap-iso .formio-component-content .image-style-align-left:not(.image_resized),
-.bootstrap-iso .formio-component-content .image-style-align-center:not(.image_resized),
-.bootstrap-iso .formio-component-content .image-style-align-right:not(.image_resized) {
+.bootstrap-iso
+  .formio-component-content
+  .image-style-align-left:not(.image_resized),
+.bootstrap-iso
+  .formio-component-content
+  .image-style-align-center:not(.image_resized),
+.bootstrap-iso
+  .formio-component-content
+  .image-style-align-right:not(.image_resized) {
   max-width: 50%;
 }
 .bootstrap-iso .formio-component-content .image-style-side:not(.image_resized),
-.bootstrap-iso .formio-component-content .image-style-align-left:not(.image_resized),
-.bootstrap-iso .formio-component-content .image-style-align-center:not(.image_resized),
-.bootstrap-iso .formio-component-content .image-style-align-right:not(.image_resized) {
+.bootstrap-iso
+  .formio-component-content
+  .image-style-align-left:not(.image_resized),
+.bootstrap-iso
+  .formio-component-content
+  .image-style-align-center:not(.image_resized),
+.bootstrap-iso
+  .formio-component-content
+  .image-style-align-right:not(.image_resized) {
   max-width: 50%;
 }
 .bootstrap-iso .formio-component-content .image-style-side {
@@ -3761,28 +3916,45 @@
 .bootstrap-iso .formio-component-content .text-huge {
   font-size: 1.8em;
 }
-.bootstrap-iso .formio-component-address.formio-component-label-hidden > label.field-required {
+.bootstrap-iso
+  .formio-component-address.formio-component-label-hidden
+  > label.field-required {
   z-index: 1;
 }
-.bootstrap-iso .formio-component-address.formio-component-label-hidden > label.field-required ~ .address-autocomplete-container .address-autocomplete-remove-value-icon {
+.bootstrap-iso
+  .formio-component-address.formio-component-label-hidden
+  > label.field-required
+  ~ .address-autocomplete-container
+  .address-autocomplete-remove-value-icon {
   right: 20px;
 }
 .bootstrap-iso .address-autocomplete-container {
   position: relative;
 }
-.bootstrap-iso .address-autocomplete-container .address-autocomplete-remove-value-icon {
+.bootstrap-iso
+  .address-autocomplete-container
+  .address-autocomplete-remove-value-icon {
   cursor: pointer;
   position: absolute;
   margin-top: -9px;
   right: 10px;
   top: 50%;
 }
-.bootstrap-iso .address-autocomplete-container .address-autocomplete-remove-value-icon--hidden {
+.bootstrap-iso
+  .address-autocomplete-container
+  .address-autocomplete-remove-value-icon--hidden {
   display: none;
 }
 .bootstrap-iso .autocomplete {
   background: white;
-  font: 14px/22px "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font:
+    14px/22px "-apple-system",
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
   overflow: auto;
   box-sizing: border-box;
   border: 1px solid rgba(50, 50, 50, 0.6);
@@ -3812,7 +3984,9 @@
 .bootstrap-iso .formio-component-modal-wrapper .component-rendering-hidden {
   visibility: hidden;
 }
-.bootstrap-iso .formio-component-textarea div.formio-editor-read-only-content[ref="input"] {
+.bootstrap-iso
+  .formio-component-textarea
+  div.formio-editor-read-only-content[ref="input"] {
   white-space: pre-wrap;
 }
 .bootstrap-iso .formio-editor-read-only-content img {
@@ -3862,8 +4036,11 @@
 .bootstrap-iso .builder-component .formio-component-htmlelement {
   border: dotted 2px #e8e8e8;
 }
-.bootstrap-iso .builder-component .formio-component-htmlelement [ref=html]:empty:before {
-  content: 'HTML Content';
+.bootstrap-iso
+  .builder-component
+  .formio-component-htmlelement
+  [ref="html"]:empty:before {
+  content: "HTML Content";
   color: #aaa;
 }
 .bootstrap-iso .builder-component:not(:hover) .component-btn-group {

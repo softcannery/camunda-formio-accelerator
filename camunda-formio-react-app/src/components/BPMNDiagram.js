@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import Viewer from 'bpmn-js/lib/NavigatedViewer';
+import Viewer from "bpmn-js/lib/NavigatedViewer";
 
 export default class BPMNDiagram extends React.Component {
   constructor(props) {
@@ -8,40 +8,48 @@ export default class BPMNDiagram extends React.Component {
 
     this.viewer = new Viewer({
       canvas: {
-        deferUpdate: false
-      }
+        deferUpdate: false,
+      },
     });
 
     this.state = {
-      loaded: false
+      loaded: false,
     };
   }
 
-  storeContainer = container => {
+  storeContainer = (container) => {
     this.container = container;
-  }
+  };
 
   render() {
-    return <div className='BPMNDiagram' style={this.props.style} ref={this.storeContainer}>
-      {this.state.loaded && this.props.children && React.cloneElement(this.props.children, { viewer: this.viewer })}
-    </div>;
+    return (
+      <div
+        className="BPMNDiagram"
+        style={this.props.style}
+        ref={this.storeContainer}
+      >
+        {this.state.loaded &&
+          this.props.children &&
+          React.cloneElement(this.props.children, { viewer: this.viewer })}
+      </div>
+    );
   }
 
   componentDidUpdate(prevProps) {
-    if(prevProps.xml !== this.props.xml) {
-      this.setState({loaded: false});
+    if (prevProps.xml !== this.props.xml) {
+      this.setState({ loaded: false });
       this.importXML(this.props.xml);
     }
   }
 
   importXML(xml) {
     this.viewer.importXML(xml, (err) => {
-      const canvas = this.viewer.get('canvas');
+      const canvas = this.viewer.get("canvas");
 
       canvas.resized();
-      canvas.zoom('fit-viewport', 'auto');
+      canvas.zoom("fit-viewport", "auto");
 
-      this.setState({loaded: true});
+      this.setState({ loaded: true });
     });
   }
 
