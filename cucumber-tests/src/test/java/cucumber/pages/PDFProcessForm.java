@@ -1,4 +1,4 @@
-package cucumber.actions;
+package cucumber.pages;
 
 import static net.serenitybdd.core.Serenity.getDriver;
 
@@ -8,14 +8,26 @@ import net.serenitybdd.screenplay.Task;
 import org.junit.Assert;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
-public class PDFFormProcess {
+public class PDFProcessForm {
 
     public static Performable startProcess() {
         WebDriver driver = getDriver();
-        driver.findElement(By.xpath("//a[contains(text(),'Start Process')]")).click();
-        driver.findElement(By.xpath("//a[contains(text(), 'Example PDF Form')]")).click();
+        for (int i = 0; i < 20; i++) {
+            try {
+                driver.findElement(By.xpath("//a[contains(text(),'Start Process')]")).click();
+                driver.findElement(By.xpath("//a[contains(text(), 'Example PDF Form')]")).click();
+                break;
+            } catch (NoSuchElementException e) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
