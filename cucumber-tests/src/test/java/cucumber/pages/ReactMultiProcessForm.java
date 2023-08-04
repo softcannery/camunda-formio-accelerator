@@ -7,16 +7,25 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import org.junit.Assert;
-import org.openqa.selenium.ElementClickInterceptedException;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 public class ReactMultiProcessForm {
 
     public static Performable startMultiProcess() {
         WebDriver driver = getDriver();
-        driver.findElement(By.xpath("//a[contains(text(),'Start Process')]")).click();
+        for (int i = 0; i < 20; i++) {
+            try {
+                driver.findElement(By.xpath("//a[contains(text(),'Start Process')]")).click();
+                driver.findElement(By.xpath("//a[contains(text(), 'Multi-Instance Sub-Process Demo')]"));
+                break;
+            } catch (NoSuchElementException e) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
         driver.findElement(By.xpath("//a[contains(text(), 'Multi-Instance Sub-Process Demo')]")).click();
         driver.findElement(By.xpath("//button[text()='Submit']")).click();
         return Task.where("{0} Start Process");
