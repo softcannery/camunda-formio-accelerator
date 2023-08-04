@@ -1,18 +1,22 @@
-package cucumber.actions;
+package cucumber.pages;
 
-import cucumber.navigation.CamundaLoginPage;
+import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
+import net.serenitybdd.screenplay.targets.Target;
+import net.thucydides.core.annotations.DefaultUrl;
 
-public class Login {
+@DefaultUrl("http://localhost/bpm/")
+public class CamundaLoginPage extends PageObject {
+
+    private static Target USER_LOGIN = Target.the("login field").locatedBy("//*[@placeholder='Username']");
+    private static Target USER_PASSWORD = Target.the("password field").locatedBy("//*[@placeholder='Password']");
+    private static Target LOGIN_BUTTON = Target.the("login button").locatedBy("//*[@type='submit']");
 
     private static Performable setLogin(String userLogin) {
-        return Task.where(
-            "{0} searches for '" + userLogin + "'",
-            Enter.theValue(userLogin).into(CamundaLoginPage.USER_LOGIN)
-        );
+        return Task.where("{0} searches for '" + userLogin + "'", Enter.theValue(userLogin).into(USER_LOGIN));
     }
 
     private static Performable setPassword(String password) {

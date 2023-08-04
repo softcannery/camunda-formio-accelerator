@@ -1,4 +1,4 @@
-package cucumber.actions.api;
+package cucumber.api;
 
 public class Base {
 

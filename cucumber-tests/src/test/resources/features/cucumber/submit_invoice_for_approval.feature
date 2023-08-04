@@ -12,7 +12,7 @@ Feature: Invoice for Approval
     Then he should see that process "Submit Invoice for Approval" is started and present in the tasks list
     When he select the first process "Submit Invoice for Approval" in the tasks list
     When he claim process
-    When he complete form
+    When he complete form - invoice
     Then he should see that task is disappeared
 
   Scenario: Start and complete process with Attachment
@@ -23,7 +23,7 @@ Feature: Invoice for Approval
     When he select the first process "Submit Invoice for Approval" in the tasks list
     When he claim process
     Then he can see attached file
-    When he complete form
+    When he complete form - invoice
     Then he should see that task is disappeared
 
   Scenario: Start and reject process
@@ -33,5 +33,5 @@ Feature: Invoice for Approval
     Then he should see that process "Submit Invoice for Approval" is started and present in the tasks list
     When he select the first process "Submit Invoice for Approval" in the tasks list
     When he claim process
-    When he reject form
+    When he reject form - invoice
     Then he should see that task is disappeared

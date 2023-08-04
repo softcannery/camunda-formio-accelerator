@@ -1,19 +1,36 @@
-package cucumber.actions;
-
-import static net.serenitybdd.core.Serenity.getDriver;
+package cucumber.pages;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cucumber.navigation.TaskListPage;
+import net.serenitybdd.core.Serenity;
 import net.serenitybdd.core.annotations.findby.By;
+import net.serenitybdd.core.annotations.findby.FindBy;
+import net.serenitybdd.core.pages.PageObject;
+import net.serenitybdd.core.pages.WebElementFacade;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.targets.Target;
+import net.thucydides.core.annotations.DefaultUrl;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class TasksList {
+@DefaultUrl("http://localhost/bpm/camunda/app/tasklist/default/")
+public class TaskListPage extends PageObject {
+
+    public static Target START_PROCESS = Target
+        .the("Start Process button")
+        .locatedBy("//*[@class='ng-scope start-process-action']");
+    public static Target TASK_LIST_FIRST_ITEM_PROCESS = Target
+        .the("First process in the list")
+        .locatedBy("(//ol[contains(@class, 'tasks-list')]/li)[1]/.//h6");
+    public static Target CLAIM_BUTTON = Target.the("Click Claim button").locatedBy("//button[text()='Claim']");
+    public static Target HIDE_TASK_LIST_BUTTON = Target
+        .the("Hide")
+        .locatedBy("//section[contains(@class,'tasks-list')]/.//button[@ng-click='toggleRegion($event)']");
+
+    @FindBy(name = "data[action]")
+    public static WebElementFacade DROPDOWN_ACTION;
 
     public static Performable clickStartProcess() {
         return Task.where("{0} starts process", Click.on(TaskListPage.START_PROCESS));
@@ -42,43 +59,12 @@ public class TasksList {
         return Task.where("{0} click Claim button", Click.on(TaskListPage.CLAIM_BUTTON));
     }
 
-    public static Performable checkApproveCheckBox() {
-        return Task.where("{0} click approve", Click.on(TaskListPage.APPROVE_CHECKBOX));
-    }
-
-    public static Performable selectActionFromDropDown(String value) {
-        TaskListPage.DROPDOWN_ACTION.selectByVisibleText(value);
-        return Task.where("{0} selects " + value);
-    }
-
-    public static Performable clickCompleteButton() {
-        return Task.where("{0} click Complete", Click.on(TaskListPage.COMPLETE_BUTTON));
-    }
-
-    public static Performable completeForm() {
-        return Task.where("{0} complete form", checkApproveCheckBox(), clickCompleteButton());
-    }
-
     public static Performable claim() {
         return Task.where("{0} complete form", hideTaskList(), clickClaimButton());
     }
 
-    public static Performable completeFormSimple(String action) {
-        return Task.where(
-            "{0} complete form",
-            hideTaskList(),
-            clickClaimButton(),
-            selectActionFromDropDown(action),
-            clickCompleteButton()
-        );
-    }
-
-    public static Performable rejectForm() {
-        return Task.where("{0} complete form", clickCompleteButton());
-    }
-
     public static boolean isElementPresent(String xPath) {
-        WebDriver driver = getDriver();
+        WebDriver driver = Serenity.getDriver();
         try {
             driver.findElement(By.xpath(xPath));
             return true;
@@ -88,7 +74,7 @@ public class TasksList {
     }
 
     public static int getTasksCount() {
-        WebDriver driver = getDriver();
+        WebDriver driver = Serenity.getDriver();
         WebElement el = driver.findElement(
             By.xpath("//div[@ng-show='totalItems']/.//span[@class='counter ng-binding']")
         );
@@ -97,7 +83,7 @@ public class TasksList {
     }
 
     public static int getCountProcesses() {
-        WebDriver driver = getDriver();
+        WebDriver driver = Serenity.getDriver();
         WebElement responseWE = driver.findElement(By.xpath("//pre"));
         String jsonString = responseWE.getText();
         int count = 0;

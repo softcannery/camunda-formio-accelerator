@@ -1,4 +1,4 @@
-package cucumber.navigation;
+package cucumber.pages;
 
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
@@ -28,9 +28,5 @@ public class NavigateTo {
 
     public static Performable theReactMainPage() {
         return Task.where("{0} opens the React main page", Open.browserOn().the(MainReactPage.class));
-    }
-
-    public static Performable theReactStartProcess() {
-        return Task.where("{0} opens the React Start Process page", Open.browserOn().the(StartProcessReactPage.class));
     }
 }

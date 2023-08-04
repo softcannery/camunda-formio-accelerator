@@ -1,4 +1,4 @@
-package cucumber.actions.api;
+package cucumber.api;
 
 import io.restassured.RestAssured;
 import io.restassured.http.Cookie;
@@ -70,28 +70,6 @@ public class Methods extends Base {
 
         return jpath.getString("_embedded.task.id[0]");
     }
-
-    //    private String getFilterId() {
-    //        Map<String, String> headers = new HashMap<>();
-    //        headers.put("Content-Type", "application/json");
-    //
-    //        Map<String, String> params = new HashMap<>();
-    //        params.put("firstResult", "0");
-    //        params.put("maxResults", "2000");
-    //        params.put("itemCount", "false");
-    //        params.put("resourceType", "Task");
-    //
-    //        RestAssured.baseURI = this.camundaUrl;
-    //        RequestSpecification httpRequest = RestAssured.given();
-    //        Response res = httpRequest.queryParams(params).headers(headers).get("/engine-rest/filter");
-    //        Assertions.assertEquals(200, res.statusCode(), "Get filterId: response code not 200");
-    //
-    //        ResponseBody body = res.body();
-    //        String rbdy = body.asString();
-    //        JsonPath jpath = new JsonPath(rbdy);
-    //
-    //        return jpath.getString("id[0]");
-    //    }
 
     public int getProcessInstance(String processInstanceId) {
         Map<String, String> headers = new HashMap<>();

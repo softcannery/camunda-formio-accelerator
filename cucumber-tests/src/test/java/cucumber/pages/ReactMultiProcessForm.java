@@ -1,8 +1,7 @@
-package cucumber.actions;
+package cucumber.pages;
 
 import static net.serenitybdd.core.Serenity.getDriver;
 
-import cucumber.navigation.NavigateTo;
 import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
@@ -13,7 +12,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class ReactMultiProcess {
+public class ReactMultiProcessForm {
 
     public static Performable startMultiProcess() {
         WebDriver driver = getDriver();

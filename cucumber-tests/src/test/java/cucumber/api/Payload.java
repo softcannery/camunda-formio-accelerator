@@ -1,4 +1,4 @@
-package cucumber.actions.api;
+package cucumber.api;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

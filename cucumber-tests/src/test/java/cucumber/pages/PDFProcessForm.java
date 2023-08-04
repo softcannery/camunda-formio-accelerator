@@ -1,4 +1,4 @@
-package cucumber.actions;
+package cucumber.pages;
 
 import static net.serenitybdd.core.Serenity.getDriver;
 
@@ -10,7 +10,7 @@ import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
-public class PDFFormProcess {
+public class PDFProcessForm {
 
     public static Performable startProcess() {
         WebDriver driver = getDriver();
