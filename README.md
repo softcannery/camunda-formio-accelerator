@@ -5,7 +5,6 @@
 [![CI](https://github.com/softcannery/camunda-formio-accelerator/actions/workflows/build-test-and-publish.yaml/badge.svg?branch=master)](https://github.com/softcannery/camunda-formio-accelerator/actions/workflows/build-test-and-publish.yaml)
 [![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://github.com/softcannery/camunda-formio-accelerator/blob/master/LICENSE)
 [![License](https://img.shields.io/badge/License-SoftCannery)](https://dependabot.com/)
-[![Slack](https://img.shields.io/badge/Slack-4A154B?logo=slack&logoColor=white&labelColor=555555)](https://join.slack.com/t/soft-cannery/shared_invite/zt-1zx0px9lf-6a5IsxJO5U~OyR9qklEWBg)
 
 
 ## Overview
@@ -37,16 +36,6 @@ The general flow of actions to develop, deploy and execute workflow implementati
 ## Getting Started
 
 Follow Wiki [Getting Started](https://github.com/softcannery/camunda-formio-accelerator/wiki/Getting-Started) to learn how to use Camunda BPM with Form.io
-
-## Slack
-
-We can be reached [on the `soft-cannery` Slack](https://soft-cannery.slack.com/)!
-
-Some important channels:
-
-* `#camunda-formio-accelerator` - user community channel for general questions, problems, etc
-
-[Use this link to join the `soft-cannery` slack!](https://join.slack.com/t/soft-cannery/shared_invite/zt-1zx0px9lf-6a5IsxJO5U~OyR9qklEWBg) We look forward to chatting with you! 😻
 
 ## License
 
