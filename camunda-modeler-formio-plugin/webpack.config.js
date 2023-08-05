@@ -8,14 +8,14 @@
  * except in compliance with the MIT License.
  */
 
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-  mode: 'development',
-  entry: './client/index.js',
+  mode: "development",
+  entry: "./client/index.js",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'client.js'
+    path: path.resolve(__dirname, "dist"),
+    filename: "client.js",
   },
   module: {
     rules: [
@@ -23,18 +23,18 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-react']
-          }
-        }
-      }
-    ]
+            presets: ["@babel/preset-react"],
+          },
+        },
+      },
+    ],
   },
   resolve: {
     alias: {
-      react: 'camunda-modeler-plugin-helpers/react'
-    }
+      react: "camunda-modeler-plugin-helpers/react",
+    },
   },
-  devtool: 'cheap-module-source-map'
+  devtool: "cheap-module-source-map",
 };

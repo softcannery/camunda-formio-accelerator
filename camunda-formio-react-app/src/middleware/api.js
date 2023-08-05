@@ -1,42 +1,48 @@
-import { normalize, schema } from 'normalizr'
-import { camelizeKeys } from 'humps'
+import { normalize, schema } from "normalizr";
+import { camelizeKeys } from "humps";
 
-const HOST_ROOT = '/'
-const API_ROOT = HOST_ROOT + 'engine-rest/'
-const BASE_URL = window._env_.CAMUNDA_BPM_URL
+const HOST_ROOT = "/";
+const API_ROOT = HOST_ROOT + "engine-rest/";
+const BASE_URL = window._env_.CAMUNDA_BPM_URL;
 
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
 const callApi = async (endpoint, schema, settings, skipCamelize = {}) => {
-    const fullUrl = BASE_URL + ((endpoint.indexOf(HOST_ROOT) === 0) ? endpoint : API_ROOT + endpoint)
-    
-    // const session = await Auth.currentSession();
-    // const accessToken = session.getAccessToken().getJwtToken();
-    const options = { ...settings }
+  const fullUrl =
+    BASE_URL +
+    (endpoint.indexOf(HOST_ROOT) === 0 ? endpoint : API_ROOT + endpoint);
 
-    options.headers = {
-      ...options.headers
-      // Authorization: 'Bearer ' + accessToken
-    }
+  // const session = await Auth.currentSession();
+  // const accessToken = session.getAccessToken().getJwtToken();
+  const options = { ...settings };
 
-    return fetch(fullUrl, options).then(response => response.json()
-    .then(json => {
-        if (!response.ok) {
-            return Promise.reject(json)
-        }
+  options.headers = {
+    ...options.headers,
+    // Authorization: 'Bearer ' + accessToken
+  };
 
-        if (schema) {
-            const camelizedJson = (skipCamelize === undefined || skipCamelize === null || skipCamelize === false) 
-              ? camelizeKeys(json)
-              : json
-            const res = Object.assign({}, normalize(camelizedJson, schema), {  })
-            return res
-        } else {
-            const res = Object.assign({}, json, {  })
-            return res
-        }
-    }))
-}
+  return fetch(fullUrl, options).then((response) =>
+    response.json().then((json) => {
+      if (!response.ok) {
+        return Promise.reject(json);
+      }
+
+      if (schema) {
+        const camelizedJson =
+          skipCamelize === undefined ||
+          skipCamelize === null ||
+          skipCamelize === false
+            ? camelizeKeys(json)
+            : json;
+        const res = Object.assign({}, normalize(camelizedJson, schema), {});
+        return res;
+      } else {
+        const res = Object.assign({}, json, {});
+        return res;
+      }
+    }),
+  );
+};
 
 // We use this Normalizr schemas to transform API responses from a nested form
 // to a flat form where repos and users are placed in `entities`, and nested
@@ -46,48 +52,72 @@ const callApi = async (endpoint, schema, settings, skipCamelize = {}) => {
 
 // Read more about Normalizr: https://github.com/paularmstrong/normalizr
 
-const processDefinitionSchema = new schema.Entity('processDefinition', {}, {
-  id: processDefinition => processDefinition.id,
-  name: processDefinition => processDefinition.name,
-})
+const processDefinitionSchema = new schema.Entity(
+  "processDefinition",
+  {},
+  {
+    id: (processDefinition) => processDefinition.id,
+    name: (processDefinition) => processDefinition.name,
+  },
+);
 
-const processDefinitionXMLSchema = new schema.Entity('processDefinitionXML', {}, {
+const processDefinitionXMLSchema = new schema.Entity(
+  "processDefinitionXML",
+  {},
+  {},
+);
 
-});
+const formKeySchema = new schema.Entity(
+  "formKey",
+  {},
+  {
+    idAttribute: "test",
+  },
+);
 
-const formKeySchema = new schema.Entity('formKey', {}, {
-  idAttribute: 'test',
-});
+const processInstanceStartedSchema = new schema.Entity(
+  "processInstanceStarted",
+  {},
+  {},
+);
 
-const processInstanceStartedSchema = new schema.Entity('processInstanceStarted', {}, {
+const taskSchema = new schema.Entity(
+  "task",
+  {},
+  {
+    id: (task) => task.id,
+  },
+);
 
-});
+const taskVariableSchema = new schema.Entity(
+  "taskVariable",
+  {},
+  {
+    processStrategy: (value, parent, key) => {
+      return {
+        values: value,
+        test: key,
+        parent: parent,
+      };
+    },
+  },
+);
+const taskVariableArraySchema = new schema.Entity(
+  "taskVariables",
+  {},
+  {
+    idAttribute: (variable) => "variables",
+    processStrategy: (value, parent, key) => {
+      let values = {};
+      Object.keys(value).forEach((item) => {
+        values[item] = value[item].value;
+      });
+      return values;
+    },
+  },
+);
 
-const taskSchema = new schema.Entity('task', {}, {
-  id: task => task.id,
-});
-
-const taskVariableSchema = new schema.Entity('taskVariable', {}, {
-  processStrategy: (value, parent, key) => {
-    return {
-      values: value,
-      test: key,
-      parent: parent
-    }
-  }
-})
-const taskVariableArraySchema = new schema.Entity('taskVariables', {}, {
-  idAttribute: variable => 'variables',
-  processStrategy: (value, parent, key) => {
-    let values = {};
-    Object.keys(value).forEach((item) => {
-      values[item] = value[item].value
-    })
-    return values
-  }
-})
-
-const processDeploymentSchema = new schema.Entity('processDeployment', {}, {})
+const processDeploymentSchema = new schema.Entity("processDeployment", {}, {});
 
 // Schemas for Github API responses.
 export const Schemas = {
@@ -100,58 +130,64 @@ export const Schemas = {
   PROCESS_INSTANCE_STARTED: processInstanceStartedSchema,
   TASK_VARIABLE: taskVariableSchema,
   TASK_VARIABLES: taskVariableArraySchema,
-  PROCESS_DEPLOYMENT: processDeploymentSchema
-}
+  PROCESS_DEPLOYMENT: processDeploymentSchema,
+};
 
 // Action key that carries API call info interpreted by this Redux middleware.
-export const CALL_API = 'Call API'
+export const CALL_API = "Call API";
 
 // A Redux middleware that interprets actions with CALL_API info specified.
 // Performs the call and promises when such actions are dispatched.
-export default store => next => action => {
-  const callAPI = action[CALL_API]
+export default (store) => (next) => (action) => {
+  const callAPI = action[CALL_API];
 
-  if (typeof callAPI === 'undefined') {
-    return next(action)
+  if (typeof callAPI === "undefined") {
+    return next(action);
   }
 
-  let { endpoint } = callAPI
-  const { schema, types, settings } = callAPI
+  let { endpoint } = callAPI;
+  const { schema, types, settings } = callAPI;
 
-  if (typeof endpoint === 'function') {
-    endpoint = endpoint(store.getState())
+  if (typeof endpoint === "function") {
+    endpoint = endpoint(store.getState());
   }
 
-  if (typeof endpoint !== 'string') {
-    throw new Error('Specify a string endpoint URL.')
+  if (typeof endpoint !== "string") {
+    throw new Error("Specify a string endpoint URL.");
   }
-//   if (!schema) {
-//     throw new Error('Specify one of the exported Schemas.')
-//   }
+  //   if (!schema) {
+  //     throw new Error('Specify one of the exported Schemas.')
+  //   }
   if (!Array.isArray(types) || types.length !== 3) {
-    throw new Error('Expected an array of three action types.')
+    throw new Error("Expected an array of three action types.");
   }
-  if (!types.every(type => typeof type === 'string')) {
-    throw new Error('Expected action types to be strings.')
-  }
-
-  const actionWith = data => {
-    const finalAction = Object.assign({}, action, data)
-    delete finalAction[CALL_API]
-    return finalAction
+  if (!types.every((type) => typeof type === "string")) {
+    throw new Error("Expected action types to be strings.");
   }
 
-  const [ requestType, successType, failureType ] = types
-  next(actionWith({ type: requestType }))
+  const actionWith = (data) => {
+    const finalAction = Object.assign({}, action, data);
+    delete finalAction[CALL_API];
+    return finalAction;
+  };
+
+  const [requestType, successType, failureType] = types;
+  next(actionWith({ type: requestType }));
 
   return callApi(endpoint, schema, settings).then(
-    response => next(actionWith({
-      response,
-      type: successType
-    })),
-    error => next(actionWith({
-      type: failureType,
-      error: error.message || 'Something bad happened'
-    }))
-  )
-}
+    (response) =>
+      next(
+        actionWith({
+          response,
+          type: successType,
+        }),
+      ),
+    (error) =>
+      next(
+        actionWith({
+          type: failureType,
+          error: error.message || "Something bad happened",
+        }),
+      ),
+  );
+};

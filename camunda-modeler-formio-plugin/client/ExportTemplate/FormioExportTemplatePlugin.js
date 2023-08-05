@@ -53,12 +53,12 @@ export default class FormioExportTemplatePlugin extends PureComponent {
       const data = await this.formioExportTemplate(
         config.apiKey,
         config.endpoint,
-        config.tag
+        config.tag,
       );
       if (data === undefined) {
         this.showMessageDialog(
           "Error",
-          `Unable download file from URL: ${config.endpoint}`
+          `Unable download file from URL: ${config.endpoint}`,
         );
         this.setState({ configOpen: false });
         return;
@@ -70,7 +70,7 @@ export default class FormioExportTemplatePlugin extends PureComponent {
       let formData = this.addProjectIdAndUrlToFormsData(
         data.data,
         config.endpoint,
-        formsList
+        formsList,
       );
       this.saveToFile(formData, fileName);
       console.info(`Project stage exported: ${fileName}`);
@@ -82,7 +82,7 @@ export default class FormioExportTemplatePlugin extends PureComponent {
     } catch (error) {
       this.showMessageDialog(
         "Error",
-        `Project export failed with error message:\n${error.message}`
+        `Project export failed with error message:\n${error.message}`,
       );
       console.error(error);
     }
@@ -107,14 +107,14 @@ export default class FormioExportTemplatePlugin extends PureComponent {
             projectUrl,
             formId: formIds[key],
           },
-          ...settings
+          ...settings,
         };
       }
     }
 
     return this.replaceResourceNamewithResourceIdInFormComponents(
       newFormsData,
-      formsList
+      formsList,
     );
   }
 
@@ -130,14 +130,14 @@ export default class FormioExportTemplatePlugin extends PureComponent {
         let templateFormsEntries = Object.entries(formsData.template.forms);
 
         let formIndex = templateFormsEntries.findIndex(
-          (element) => element[1].name === form.name
+          (element) => element[1].name === form.name,
         );
 
         if (formIndex !== -1) {
           templateFormsEntries[formIndex][1].components =
             this.setResourceIdsInFormComponents(
               templateFormsEntries[formIndex][1].components,
-              resources
+              resources,
             );
         }
 
@@ -153,7 +153,7 @@ export default class FormioExportTemplatePlugin extends PureComponent {
     for (const component of components) {
       if (component.components) {
         let innerResources = this.findResourceIdsInFormComponents(
-          component.components
+          component.components,
         );
         if (innerResources) {
           resourceIds[component.key] = innerResources;
@@ -173,7 +173,7 @@ export default class FormioExportTemplatePlugin extends PureComponent {
       if (component.components && formResourceIds[component.key]) {
         component.components = this.setResourceIdsInFormComponents(
           component.components,
-          formResourceIds[component.key]
+          formResourceIds[component.key],
         );
       } else if (formResourceIds[component.key]) {
         component.data.resource = formResourceIds[component.key];
@@ -193,13 +193,13 @@ export default class FormioExportTemplatePlugin extends PureComponent {
 
     const _tag = await axios.get(
       `${endpointURL.origin}/project/${project.data._id}/tag?tag=${tag}`,
-      options
+      options,
     );
     if (_tag.data.length === 0) return undefined;
 
     const response = await axios.get(
       `${endpointURL.origin}/project/${project.data._id}/tag/${_tag.data[0]._id}`,
-      options
+      options,
     );
     return {
       name: project.data.name,
@@ -218,7 +218,7 @@ export default class FormioExportTemplatePlugin extends PureComponent {
     const endpointURL = new URL(endpoint);
     const _formsList = await axios.get(
       `${endpointURL.origin}/project/${project.data._id}/form?type=form`,
-      options
+      options,
     );
     if (_formsList.data.length === 0) return undefined;
 
@@ -228,7 +228,7 @@ export default class FormioExportTemplatePlugin extends PureComponent {
   async getTabConfiguration(tab) {
     return await this.props.config.getForFile(
       tab.file,
-      "formio-designer-import"
+      "formio-designer-import",
     );
   }
 
@@ -236,7 +236,7 @@ export default class FormioExportTemplatePlugin extends PureComponent {
     await this.props.config.setForFile(
       tab.file,
       "formio-designer-import",
-      configuration
+      configuration,
     );
   }
 
@@ -261,7 +261,7 @@ export default class FormioExportTemplatePlugin extends PureComponent {
     if (fileName == null) {
       this.showMessageDialog(
         "Warning",
-        "Save process to file first before download forms"
+        "Save process to file first before download forms",
       );
       return;
     }

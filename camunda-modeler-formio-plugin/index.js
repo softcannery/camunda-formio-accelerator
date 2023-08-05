@@ -9,7 +9,7 @@
  */
 
 module.exports = {
-  script: './dist/client.js',
-  style: './css/style.css',
-  name: 'formio-designer-plugin'
+  script: "./dist/client.js",
+  style: "./css/style.css",
+  name: "formio-designer-plugin",
 };

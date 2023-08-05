@@ -1,3 +1,3 @@
 window._env_ = {
-CAMUNDA_BPM_URL: "http://localhost:8080",
-}
+  CAMUNDA_BPM_URL: "http://localhost:8080",
+};

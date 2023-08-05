@@ -106,13 +106,13 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
-          node-version: 17
+          node-version: 18
       - name: build plugin
         run: |
           cd ./camunda-modeler-formio-plugin
           chmod +x ./install.sh
           export MODELER_DIR=$(pwd)
-          npm install
+          npm install -f
           npm run build
           cd ${MODELER_DIR}/resources/plugins/formio-plugin
           zip -r -l ~/formio-plugin.zip ./
