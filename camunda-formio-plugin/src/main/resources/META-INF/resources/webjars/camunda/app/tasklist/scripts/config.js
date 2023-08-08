@@ -37,19 +37,17 @@ export default {
   //   // with a file called 'customScript.js' in it
   //   // 'my-custom-script/customScript'
   // ],
-  customScripts: [
-    'scripts/formio/loadFormio.js'
-  ],
+  customScripts: ["scripts/formio/loadFormio.js"],
   requireJsConfig: {
     ngDeps: [],
-  //   // AngularJS module names
-  //   ngDeps: ['ui.bootstrap'],
-  //   // RequireJS configuration for a complete configuration documentation see:
-  //   // http://requirejs.org/docs/api.html#config
-    deps: ['formio'],
+    //   // AngularJS module names
+    //   ngDeps: ['ui.bootstrap'],
+    //   // RequireJS configuration for a complete configuration documentation see:
+    //   // http://requirejs.org/docs/api.html#config
+    deps: ["formio"],
     paths: {
-      'formio': 'formio/4.15.0/formio.full'
-    }
+      formio: "formio/4.15.0/formio.full",
+    },
   },
 
   // csrfCookieName: 'XSRF-TOKEN',
@@ -57,24 +55,24 @@ export default {
 
   shortcuts: {
     claimTask: {
-      key: 'ctrl+alt+c',
-      description: 'claims the currently selected task'
+      key: "ctrl+alt+c",
+      description: "claims the currently selected task",
     },
     focusFilter: {
-      key: 'ctrl+shift+f',
-      description: 'set the focus to the first filter in the list'
+      key: "ctrl+shift+f",
+      description: "set the focus to the first filter in the list",
     },
     focusList: {
-      key: 'ctrl+alt+l',
-      description: 'sets the focus to the first task in the list'
+      key: "ctrl+alt+l",
+      description: "sets the focus to the first task in the list",
     },
     focusForm: {
-      key: 'ctrl+alt+f',
-      description: 'sets the focus to the first input field in a task form'
+      key: "ctrl+alt+f",
+      description: "sets the focus to the first input field in a task form",
     },
     startProcess: {
-      key: 'ctrl+alt+p',
-      description: 'opens the start process modal dialog'
-    }
-  }
+      key: "ctrl+alt+p",
+      description: "opens the start process modal dialog",
+    },
+  },
 };

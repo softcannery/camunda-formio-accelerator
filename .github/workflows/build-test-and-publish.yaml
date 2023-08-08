@@ -4,10 +4,10 @@ on:
     branches:
       - master
     paths-ignore:
-      - 'README.md'
-      - '.github/ISSUE_TEMPLATE/*.md'
-      - '.github/**'
-      - 'cucumber-tests/**'
+      - "README.md"
+      - ".github/ISSUE_TEMPLATE/*.md"
+      - ".github/**"
+      - "cucumber-tests/**"
   pull_request:
     branches:
       - master
@@ -29,8 +29,8 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-java@v3
         with:
-          distribution: 'temurin' # See 'Supported distributions' for available options
-          java-version: '17'
+          distribution: "temurin" # See 'Supported distributions' for available options
+          java-version: "17"
       - name: Cache local Maven repository
         uses: actions/cache@v3
         with:
@@ -126,7 +126,7 @@ jobs:
           retention-days: 1
   run-tests:
     name: Run Tests
-    needs: [build-maven]
+    needs: [ build-maven ]
     runs-on: ubuntu-22.04
     permissions:
       packages: write
@@ -135,8 +135,8 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
-          distribution: 'temurin' # See 'Supported distributions' for available options
-          java-version: '17'
+          distribution: "temurin" # See 'Supported distributions' for available options
+          java-version: "17"
       - name: Cache local Maven repository
         uses: actions/cache@v3
         with:
@@ -159,8 +159,9 @@ jobs:
           docker compose -f "docker-compose.yml" up -d --no-build
       - name: run cucumber tests
         run: |
-          sleep 60
           cd ./cucumber-tests
+          chmod +x ./healthcheck.sh
+          ./healthcheck.sh
           mvn clean verify -ntp
       - name: save test report
         if: always()
