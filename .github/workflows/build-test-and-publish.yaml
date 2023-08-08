@@ -126,7 +126,7 @@ jobs:
           retention-days: 1
   run-tests:
     name: Run Tests
-    needs: [build-maven]
+    needs: [ build-maven ]
     runs-on: ubuntu-22.04
     permissions:
       packages: write
@@ -159,8 +159,8 @@ jobs:
           docker compose -f "docker-compose.yml" up -d --no-build
       - name: run cucumber tests
         run: |
-          sleep 60
           cd ./cucumber-tests
+          ./healthcheck.sh
           mvn clean verify -ntp
       - name: save test report
         if: always()
