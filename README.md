@@ -3,8 +3,9 @@
 [![release](https://img.shields.io/github/release/softcannery/camunda-formio-accelerator.svg)](https://github.com/softcannery/camunda-formio-accelerator/releases/latest)
 [![GitHub release date](https://img.shields.io/github/release-date/softcannery/camunda-formio-accelerator.svg)](https://github.com/softcannery/camunda-formio-accelerator/releases)
 [![CI](https://github.com/softcannery/camunda-formio-accelerator/actions/workflows/build-test-and-publish.yaml/badge.svg?branch=master)](https://github.com/softcannery/camunda-formio-accelerator/actions/workflows/build-test-and-publish.yaml)
-[![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://github.com/softcannery/camunda-formio-accelerator/blob/master/LICENSE)
-[![License](https://img.shields.io/badge/License-SoftCannery)](https://dependabot.com/)
+[![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com)
+[![License](https://badgen.net/badge/licence/softcannery/green?icon=github)](https://raw.githubusercontent.com/softcannery/camunda-formio-accelerator/master/LICENSE)
+[![Join Discussions](https://badgen.net/badge/discussions/join/blue?icon=github)](https://github.com/orgs/softcannery/discussions)
 
 
 ## Overview
@@ -36,6 +37,10 @@ The general flow of actions to develop, deploy and execute workflow implementati
 ## Getting Started
 
 Follow Wiki [Getting Started](https://github.com/softcannery/camunda-formio-accelerator/wiki/Getting-Started) to learn how to use Camunda BPM with Form.io
+
+## Start a Discussion
+
+We can be reached [on the Github Discussions](https://github.com/orgs/softcannery/discussions) if you have any questions or problems!
 
 ## License
 
