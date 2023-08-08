@@ -38,9 +38,9 @@ The general flow of actions to develop, deploy and execute workflow implementati
 
 Follow Wiki [Getting Started](https://github.com/softcannery/camunda-formio-accelerator/wiki/Getting-Started) to learn how to use Camunda BPM with Form.io
 
-## Start a Discussion
+## Join Discussions
 
-We can be reached [on the Github Discussions](https://github.com/orgs/softcannery/discussions) if you have any questions or problems!
+We can be reached [on the Github Discussions](https://github.com/orgs/softcannery/discussions) if you have any questions!
 
 ## License
 
