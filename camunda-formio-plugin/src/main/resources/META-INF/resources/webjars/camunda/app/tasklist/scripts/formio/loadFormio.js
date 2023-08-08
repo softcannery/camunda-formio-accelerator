@@ -21,10 +21,10 @@
     <script src='https://cdn.form.io/formiojs/formio.full.min.js'></script>
  */
 
-const formioCSS = document.createElement('link');
+const formioCSS = document.createElement("link");
 formioCSS.crossOrigin = true;
-formioCSS.href = 'https://cdn.form.io/formiojs/formio.full.min.css'
-formioCSS.rel = 'stylesheet'
+formioCSS.href = "https://cdn.form.io/formiojs/formio.full.min.css";
+formioCSS.rel = "stylesheet";
 
 //const metaCSP = document.createElement('meta');
 //metaCSP.httpEquiv = "Content-Security-Policy";
@@ -33,4 +33,4 @@ formioCSS.rel = 'stylesheet'
 document.body.append(formioCSS);
 //document.head.appendChild(metaCSP);
 
-console.debug('loadFormio.js - loading Form.io...')
+console.debug("loadFormio.js - loading Form.io...");

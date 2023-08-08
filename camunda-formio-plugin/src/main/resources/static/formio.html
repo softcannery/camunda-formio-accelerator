@@ -1,200 +1,238 @@
 <form role="form">
-    <link rel='stylesheet' href='formio/formio.full.min.css' type="text/css">
-    <link rel="stylesheet" href="formio/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="formio/formio.full.min.css" type="text/css" />
+  <link
+    rel="stylesheet"
+    href="formio/font-awesome-4.7.0/css/font-awesome.min.css"
+  />
 
-    <div id='formio' />
+  <div id="formio" />
 
-    <!--    <script cam-script type="text/form-script">-->
-    <script cam-script type="text/javascript">
+  <!--    <script cam-script type="text/form-script">-->
+  <script cam-script type="text/javascript">
+    function getFormConfig(options) {
+      const urlParams = new URLSearchParams(
+        options.formUrl.substring(options.formUrl.indexOf("?")),
+      );
+      return {
+        processDefinitionId: options.processDefinitionId,
+        formId: urlParams.get("id"),
+        formFile: urlParams.get("file"),
+        taskId: options.taskId,
+      };
+    }
 
-        function getFormConfig(options) {
-            const urlParams = new URLSearchParams(options.formUrl.substring(options.formUrl.indexOf('?')));
-            return {
-                processDefinitionId: options.processDefinitionId,
-                formId: urlParams.get('id'),
-                formFile: urlParams.get('file'),
-                taskId: options.taskId
+    function createVariable(variableManager, name, type) {
+      if (!variableManager.variables[name]) {
+        variableManager.createVariable({
+          name: name,
+          type: type,
+        });
+      }
+    }
+
+    function buildUrl(Uri, path) {
+      const engineUrl = Uri.appUri("engine://" + path);
+      const baseUrl = engineUrl.substring(
+        engineUrl.indexOf("/camunda/api/engine"),
+        engineUrl.indexOf(camForm.client.config.apiUri + "/" + path),
+      );
+      return baseUrl + "/" + path;
+    }
+
+    function loadFormSchema(config) {
+      return new Promise((resolve) => {
+        inject([
+          "$http",
+          "Uri",
+          function ($http, Uri) {
+            const params = new URLSearchParams();
+            // params.append('file', config.formFile);
+            // if (config.formId !== null)
+            //     params.append('id', config.formId);
+
+            if (config.taskId !== null && config.taskId !== undefined)
+              params.append("taskId", config.taskId);
+
+            const path =
+              "forms/" + config.processDefinitionId + "?" + params.toString();
+            $http.get(buildUrl(Uri, path)).then(function (response) {
+              resolve(response.data);
+            });
+          },
+        ]);
+      });
+    }
+
+    if (typeof $scope !== "undefined") {
+      $scope.formConfig = getFormConfig(camForm.options);
+      $scope.submissionInVariableName = undefined;
+      $scope.submissionOutVariableName = undefined;
+
+      loadFormSchema($scope.formConfig).then(function (schema) {
+        let variableManager = camForm.variableManager;
+        $scope.submissionInVariableName = schema.submissionInVariable;
+        $scope.submissionOutVariableName = schema.submissionOutVariable;
+
+        Formio.createForm(document.getElementById("formio"), schema)
+          .then(function (form) {
+            console.log("Formio.createForm");
+            $scope.formioForm = form;
+            console.log(form);
+            return form;
+          })
+          .then(function (form) {
+            createVariable(
+              variableManager,
+              $scope.submissionInVariableName,
+              "json",
+            );
+            FormioUtils.eachComponent(
+              form.components,
+              function (c) {
+                createVariable(variableManager, c.component.key, "string");
+              },
+              true,
+            );
+
+            form.on("change", (changed) => {
+              console.debug("Data was changed!", changed);
+              $scope.$$camForm.$setDirty(true);
+            });
+
+            camForm.fetchVariables(async function (err, result) {
+              if (err) {
+                throw err;
+              } // merge the variables
+              let self = camForm;
+              self.mergeVariables(result); // retain original server values for dirty checking
+              self.storeOriginalValues(result); // fire variables fetched
+              self.restore(); // fire variables-restored
+
+              console.log("formio: variables-restored");
+              console.log(variableManager.variables);
+
+              let submission = variableManager.variableValue(
+                $scope.submissionInVariableName,
+              ) || { data: {} };
+
+              if (!submission["data"]) {
+                submission = { data: submission };
+              }
+
+              FormioUtils.eachComponent(form.components, function (c) {
+                const value = variableManager.variableValue(c.component.key);
+                if (value !== undefined && value !== null)
+                  submission.data[c.component.key] = value;
+              });
+              $scope.formioForm.submission = submission;
+            });
+          });
+        return schema;
+      });
+    }
+
+    if (typeof camForm !== "undefined") {
+      camForm.on("submit", async function (evt) {
+        let variableManager = camForm.variableManager;
+        let form = $scope.formioForm;
+        let isValid = form.checkValidity(undefined, true, undefined, false);
+
+        if (!isValid) {
+          evt.submitPrevented = true;
+        } else {
+          let submission = {
+            ...form.submission,
+            // metadata: $scope.formConfig
+          };
+          createVariable(
+            variableManager,
+            $scope.submissionOutVariableName,
+            "json",
+          );
+
+          variableManager.variableValue(
+            $scope.submissionOutVariableName,
+            submission,
+          );
+        }
+      });
+
+      camForm.on("form-loaded", function () {
+        // handle form loaded
+        console.log("form-loaded");
+      });
+
+      camForm.on("variables-fetched", function () {
+        // handle variables fetched
+        console.log("variables-fetched");
+      });
+
+      camForm.on("variables-restored", function () {
+        // handle variables restored
+        console.log("variables-restored");
+      });
+
+      camForm.on("variables-applied", function () {
+        // handle variables applied
+        console.log("variables-applied");
+      });
+
+      inject([
+        "$http",
+        "Uri",
+        function ($http, Uri) {
+          camForm.on("store", function (evt) {
+            // handle store
+            // get values from form fields
+            evt.retrieveVariables();
+
+            const varManager = evt.variableManager;
+            const vars = varManager.variables;
+
+            const value = $scope.formioForm.submission;
+            const v = $scope.submissionInVariableName;
+
+            let variableData = {};
+
+            variableData[v] = {
+              value: JSON.stringify(value),
+              type: vars[v].type,
+              valueInfo: vars[v].valueInfo,
             };
-        }
 
-        function createVariable(variableManager, name, type) {
-            if (!variableManager.variables[name]) {
-                variableManager.createVariable({
-                    name: name,
-                    type: type
-                });
-            }
-        }
+            const data = { modifications: variableData };
 
-        function buildUrl(Uri, path) {
-            const engineUrl = Uri.appUri('engine://' + path);
-            const baseUrl = engineUrl.substring(engineUrl.indexOf('/camunda/api/engine'), engineUrl.indexOf(camForm.client.config.apiUri + '/' + path));
-            return baseUrl + '/' + path;
-        }
+            $http.post(
+              Uri.appUri(
+                "engine://engine/:engine/task/" + camForm.taskId + "/variables",
+              ),
+              data,
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              },
+            );
 
-        function loadFormSchema(config) {
-            return new Promise(resolve => {
-                inject(['$http', 'Uri', function ($http, Uri) {
-                    const params = new URLSearchParams();
-                    // params.append('file', config.formFile);
-                    // if (config.formId !== null)
-                    //     params.append('id', config.formId);
+            // prevent the store from being executed
+            evt.storePrevented = true;
+          });
+        },
+      ]);
+      camForm.on("variables-stored", function () {
+        // handle variables stored
+        console.log("variables-stored");
+      });
+      camForm.on("submit-success", function () {
+        // handle submit-success
+        console.log("submit-success");
+      });
 
-                    if (config.taskId !== null && config.taskId !== undefined)
-                        params.append('taskId', config.taskId);
-
-                    const path = 'forms/' + config.processDefinitionId + '?' + params.toString();
-                    $http.get(buildUrl(Uri, path)).then(function (response) {
-                        resolve(response.data);
-                    });
-                }]);
-            });
-        }
-
-        if (typeof $scope !== 'undefined') {
-            $scope.formConfig = getFormConfig(camForm.options);
-            $scope.submissionInVariableName = undefined;
-            $scope.submissionOutVariableName = undefined;
-
-            loadFormSchema($scope.formConfig).then(function (schema) {
-                let variableManager = camForm.variableManager;
-                $scope.submissionInVariableName = schema.submissionInVariable;
-                $scope.submissionOutVariableName = schema.submissionOutVariable;
-
-                Formio.createForm(document.getElementById('formio'), schema).then(function (form) {
-                    console.log('Formio.createForm');
-                    $scope.formioForm = form
-                    console.log(form);
-                    return form;
-                }).then(function (form) {
-                    createVariable(variableManager, $scope.submissionInVariableName, 'json');
-                    FormioUtils.eachComponent(form.components, function (c) {
-                        createVariable(variableManager, c.component.key, 'string');
-                    }, true);
-
-                    form.on('change', (changed) => {
-                        console.debug('Data was changed!', changed);
-                        $scope.$$camForm.$setDirty(true);
-                    });
-
-                    camForm.fetchVariables(async function (err, result) {
-                        if (err) {
-                            throw err;
-                        } // merge the variables
-                        let self = camForm;
-                        self.mergeVariables(result); // retain original server values for dirty checking
-                        self.storeOriginalValues(result); // fire variables fetched
-                        self.restore(); // fire variables-restored
-
-                        console.log('formio: variables-restored');
-                        console.log(variableManager.variables);
-
-                        let submission = variableManager.variableValue($scope.submissionInVariableName) || {'data': {}};
-
-                        if (!submission['data']) {
-                            submission = { 'data': submission };
-                        }
-
-                        FormioUtils.eachComponent(form.components, function (c) {
-                            const value = variableManager.variableValue(c.component.key);
-                            if (value !== undefined && value !== null)
-                                submission.data[c.component.key] = value;
-                        });
-                        $scope.formioForm.submission = submission;
-                    });
-                });
-                return schema;
-            });
-        }
-
-        if (typeof camForm !== 'undefined') {
-            camForm.on('submit', async function (evt) {
-                let variableManager = camForm.variableManager;
-                let form = $scope.formioForm;
-                let isValid = form.checkValidity(undefined, true, undefined, false);
-
-                if (!isValid) {
-                    evt.submitPrevented = true;
-                } else {
-                    let submission = {
-                        ...form.submission,
-                        // metadata: $scope.formConfig
-                    }
-                    createVariable(variableManager, $scope.submissionOutVariableName, 'json');
-
-                    variableManager.variableValue($scope.submissionOutVariableName, submission);
-                }
-            });
-
-            camForm.on('form-loaded', function() {
-                // handle form loaded
-                console.log('form-loaded');
-            });
-
-            camForm.on('variables-fetched', function() {
-                // handle variables fetched
-                console.log('variables-fetched');
-            });
-
-            camForm.on('variables-restored', function() {
-                // handle variables restored
-                console.log('variables-restored');
-            });
-
-            camForm.on('variables-applied', function() {
-                // handle variables applied
-                console.log('variables-applied');
-            });
-
-            inject(['$http', 'Uri', function($http, Uri) {
-                camForm.on('store', function(evt) {
-                    // handle store
-                    // get values from form fields
-                    evt.retrieveVariables()
-
-                    const varManager = evt.variableManager;
-                    const vars = varManager.variables;
-
-                    const value = $scope.formioForm.submission;
-                    const v = $scope.submissionInVariableName;
-
-                    let variableData = {};
-
-                    variableData[v] = {
-                        value: JSON.stringify(value),
-                        type: vars[v].type,
-                        valueInfo: vars[v].valueInfo
-                    };
-
-                    const data = { modifications: variableData };
-
-                    $http.post(Uri.appUri('engine://engine/:engine/task/' + camForm.taskId + '/variables'),
-                        data,
-                        {
-                          headers : {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-
-                    // prevent the store from being executed
-                    evt.storePrevented = true;
-                });
-            }]);
-            camForm.on('variables-stored', function() {
-                // handle variables stored
-                console.log('variables-stored');
-            });
-            camForm.on('submit-success', function() {
-                // handle submit-success
-                console.log('submit-success');
-            });
-
-            camForm.on('submit-error', function(evt, res) {
-                // handle submit-error:
-                var error = res[0];
-                console.log('submit-error');
-            });
-        }
-
-    </script>
+      camForm.on("submit-error", function (evt, res) {
+        // handle submit-error:
+        var error = res[0];
+        console.log("submit-error");
+      });
+    }
+  </script>
 </form>

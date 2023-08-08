@@ -43,10 +43,9 @@
 # THAT IT CANNOT BE LAWFULLY EXCLUDED OR RESTRICTED.
 #
 
-version: '3.2'
+version: "3.2"
 
 services:
-
   nginx:
     image: nginx:latest
     container_name: proxy
@@ -107,8 +106,8 @@ services:
       SPRING_JPA_GENERATE_DDL: "true"
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_CONTENT_FS_FILESYSTEM_ROOT: /mnt/files
-      SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE: '100MB'
-      SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE: '100MB'
+      SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE: "100MB"
+      SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE: "100MB"
       SPRING_CONTENT_URL: "http://localhost/content"
       SERVER_SERVLET_CONTEXT_PATH: "/content"
 
@@ -126,4 +125,3 @@ services:
 volumes:
   postgres: {}
   files: {}
-
