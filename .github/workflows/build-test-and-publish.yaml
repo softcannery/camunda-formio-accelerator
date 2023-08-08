@@ -160,6 +160,7 @@ jobs:
       - name: run cucumber tests
         run: |
           cd ./cucumber-tests
+          chmod +x ./healthcheck.sh
           ./healthcheck.sh
           mvn clean verify -ntp
       - name: save test report
