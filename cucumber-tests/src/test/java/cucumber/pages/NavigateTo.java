@@ -8,7 +8,7 @@ public class NavigateTo {
 
     public static Performable theTaskListPage() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

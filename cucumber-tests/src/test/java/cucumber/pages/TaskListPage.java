@@ -12,6 +12,7 @@ import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.targets.Target;
 import net.thucydides.core.annotations.DefaultUrl;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -75,10 +76,23 @@ public class TaskListPage extends PageObject {
 
     public static int getTasksCount() {
         WebDriver driver = Serenity.getDriver();
-        WebElement el = driver.findElement(
-            By.xpath("//div[@ng-show='totalItems']/.//span[@class='counter ng-binding']")
-        );
-        String countTasksStr = el.getText();
+        String countTasksStr = "";
+        for (int i = 0; i < 10; i++) {
+            try {
+                WebElement el = driver.findElement(
+                    By.xpath("//div[@ng-show='totalItems']/.//span[@class='counter ng-binding']")
+                );
+                countTasksStr = el.getText();
+                if (!countTasksStr.equals("")) {
+                    break;
+                }
+            } catch (NoSuchElementException ex) {}
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         return Integer.parseInt(countTasksStr);
     }
 
