@@ -1,8 +1,6 @@
 package cucumber.pages;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.Properties;
 import org.junit.Assert;
@@ -40,10 +38,35 @@ public class CamundaModelerAppPage {
         }
 
         String camundaModelerPath = prop.getProperty("camundaModelerPath");
-        String bpmnProcessFilePath = prop.getProperty("bpmnProcessFilePath");
         String userDirPath = prop.getProperty("userDirPath");
         String browserVersion = prop.getProperty("browserVersion");
         boolean headless = Boolean.parseBoolean(prop.getProperty("headless"));
+
+        String configJosnName = "config.json";
+        URL configJSONUrl = getClass().getClassLoader().getResource(configJosnName);
+        String configJSONPath = configJSONUrl.getPath();
+        InputStream is = null;
+        OutputStream os = null;
+        File source = new File(configJSONPath);
+        File dest = new File(userDirPath + "/config.json");
+        try {
+            is = new FileInputStream(source);
+            os = new FileOutputStream(dest);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+                os.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         ChromeOptions opt = new ChromeOptions();
         opt.setBinary(camundaModelerPath);

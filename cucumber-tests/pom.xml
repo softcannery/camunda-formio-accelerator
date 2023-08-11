@@ -24,6 +24,7 @@
         <tags></tags>
         <webdriver.base.url></webdriver.base.url>
         <plugin.prettier.goal>check</plugin.prettier.goal>
+        <modeler.bpmnProcessFilePath>./../camunda-formio-bpmn/simple-task.bpmn</modeler.bpmnProcessFilePath>
     </properties>
     <dependencies>
         <dependency>
@@ -129,6 +130,12 @@
         </dependency>
     </dependencies>
     <build>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources/modeler</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
