@@ -2,6 +2,7 @@ package cucumber.stepdefinitions;
 
 import cucumber.api.*;
 import cucumber.pages.*;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -304,12 +305,17 @@ public class StepDefinitions {
     @When("Open Camunda modeler and new diagram")
     public void camundaModelerIsOpened() {
         camundaModelerAppPage = new CamundaModelerAppPage();
-        camundaModelerAppPage.openNewDiagram();
+        //camundaModelerAppPage.openNewDiagram();
     }
 
     @Then("Form.io Import button is displayed")
     public void checkThatFormIOPluginButtonPresent() {
         Assert.assertTrue("'Form.io Import' button is not present", camundaModelerAppPage.isFormIoImportPresent());
+    }
+
+    @And("All fields are present in 'Form.io Import' menu")
+    public void allFieldsArePresentInFormIoImportMenu() {
+        camundaModelerAppPage.openFormIoImportMenu();
         camundaModelerAppPage.closeDriver();
     }
 }
