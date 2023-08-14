@@ -29,6 +29,7 @@ check_service(){
   fi
 }
 
-check_service $APP &
-check_service "$CONTENT/actuator/health" &
-check_service "$CAMUNDA/actuator/health" & wait
+check_service $APP &&
+check_service "$CONTENT/actuator/health" &&
+check_service "$CAMUNDA/actuator/health" &&
+wait
