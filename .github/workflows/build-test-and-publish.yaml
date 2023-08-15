@@ -132,7 +132,7 @@ jobs:
           java-version: "17"
       - name: Run modeler test
         run: |
-          sudo apt-get install xvfb
+          sudo apt-get -y install xvfb
           Xvfb :19 -screen 0 1024x768x16
           export DISPLAY=:19
           cd ./cucumber-tests
