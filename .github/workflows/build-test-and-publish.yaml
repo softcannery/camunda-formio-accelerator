@@ -132,6 +132,9 @@ jobs:
           java-version: "17"
       - name: Run modeler test
         run: |
+          sudo apt-get install xvfb
+          Xvfb :19 -screen 0 1024x768x16
+          export DISPLAY=:19
           cd ./cucumber-tests
           mvn clean verify -ntp -Dcucumber.filter.tags="@modeler"
       - name: Upload build results
