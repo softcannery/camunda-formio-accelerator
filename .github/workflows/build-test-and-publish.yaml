@@ -124,6 +124,10 @@ jobs:
           tar -xvf camunda-modeler*.tar.gz
           mkdir -p ~/.config/camunda-modeler/plugins
           cp -R ./camunda-modeler-formio-plugin/resources/plugins/formio-plugin ~/.config/camunda-modeler/plugins
+      - uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
       - name: Run modeler test
         run: |
           cd ./cucumber-tests
