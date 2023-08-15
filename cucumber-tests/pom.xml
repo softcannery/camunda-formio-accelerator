@@ -132,7 +132,7 @@
     <build>
         <testResources>
             <testResource>
-                <directory>src/test/resources/modeler</directory>
+                <directory>src/test/resources/</directory>
                 <filtering>true</filtering>
             </testResource>
         </testResources>

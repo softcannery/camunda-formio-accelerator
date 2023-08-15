@@ -26,7 +26,7 @@ public class CamundaModelerAppPage {
 
     public CamundaModelerAppPage() {
         Properties prop = new Properties();
-        String confName = "camunda-modeler.conf";
+        String confName = "modeler/camunda-modeler.conf";
         URL confFileUrl = getClass().getClassLoader().getResource(confName);
         String confPath = confFileUrl.getPath();
         try (FileInputStream fis = new FileInputStream(confPath)) {
@@ -42,7 +42,7 @@ public class CamundaModelerAppPage {
         String browserVersion = prop.getProperty("browserVersion");
         boolean headless = Boolean.parseBoolean(prop.getProperty("headless"));
 
-        String configJosnName = "config.json";
+        String configJosnName = "modeler/config.json";
         URL configJSONUrl = getClass().getClassLoader().getResource(configJosnName);
         String configJSONPath = configJSONUrl.getPath();
         InputStream is = null;

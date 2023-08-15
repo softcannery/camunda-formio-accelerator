@@ -1,3 +1,4 @@
+@web
 Feature: Invoice for Approval
   Scenario: Start and complete process with Attachments API test
     Given kermit is logged in to Camunda via POST

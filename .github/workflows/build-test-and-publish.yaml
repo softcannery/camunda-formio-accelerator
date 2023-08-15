@@ -118,6 +118,15 @@ jobs:
           zip -r -l ~/formio-plugin.zip ./
         env:
           NODE_OPTIONS: "--openssl-legacy-provider"
+      - name: install modeller
+        run: |
+          wget https://downloads.camunda.cloud/release/camunda-modeler/5.14.0/camunda-modeler-5.14.0-linux-x64.tar.gz
+          tar -xvf camunda-modeler*.tar.gz
+          cp -R ./resources/plugins/formio-plugin ./camunda-modeler-5.14.0-linux-x64/resources/plugins/
+      - name: Run modeler test
+        run: |
+          cd ./cucumber-tests
+          mvn clean verify -ntp -Dcucumber.filter.tags="@modeler"
       - name: Upload build results
         uses: actions/upload-artifact@v3
         with:
@@ -162,7 +171,7 @@ jobs:
           cd ./cucumber-tests
           chmod +x ./healthcheck.sh
           ./healthcheck.sh
-          mvn clean verify -ntp
+          mvn clean verify -ntp -Dcucumber.filter.tags="@web"
       - name: save test report
         if: always()
         run: |

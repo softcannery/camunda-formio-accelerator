@@ -1,3 +1,4 @@
+@web
 Feature: Parallel tasks process
   Scenario: Start and complete process
     Given kermit goes to the react main page

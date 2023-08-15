@@ -1,3 +1,4 @@
+@web
 Feature: Deploy simple process
   Scenario: Deploy and test Simple process
     When kermit gets current simple process version
