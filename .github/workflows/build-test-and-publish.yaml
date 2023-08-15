@@ -122,7 +122,7 @@ jobs:
         run: |
           wget https://downloads.camunda.cloud/release/camunda-modeler/5.14.0/camunda-modeler-5.14.0-linux-x64.tar.gz
           tar -xvf camunda-modeler*.tar.gz
-          cp -R ./resources/plugins/formio-plugin ./camunda-modeler-5.14.0-linux-x64/resources/plugins/
+          cp -R ./camunda-modeler-formio-plugin/resources/plugins/formio-plugin ./camunda-modeler-5.14.0-linux-x64/resources/plugins/
       - name: Run modeler test
         run: |
           cd ./cucumber-tests
