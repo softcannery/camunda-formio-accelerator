@@ -1,3 +1,4 @@
+@web
 Feature: test PDF form
   Scenario: Start and Complete PDF form
     When kermit goes to the react main page

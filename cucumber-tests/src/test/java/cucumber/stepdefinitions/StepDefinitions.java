@@ -2,6 +2,7 @@ package cucumber.stepdefinitions;
 
 import cucumber.api.*;
 import cucumber.pages.*;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -27,6 +28,7 @@ public class StepDefinitions {
     private static String fileURL;
     private static String processDefinitionId;
     private static String processInstanceId;
+    private static CamundaModelerAppPage camundaModelerAppPage;
 
     @Given("{actor} is logged in to Camunda")
     public void loginToCamunda(Actor actor) {
@@ -108,6 +110,7 @@ public class StepDefinitions {
     @When("{actor} selects start process {string}")
     public void startProcess(Actor actor, String processName) {
         actor.wasAbleTo(NavigateTo.theTaskListPage());
+        TaskListPage.getTasksCount();
         actor.attemptsTo(TaskListPage.startProcessByName(processName));
     }
 
@@ -131,13 +134,8 @@ public class StepDefinitions {
     @Then("{actor} should see that process {string} is started and present in the tasks list")
     public void checkThatTaskInList(Actor actor, String processName) {
         actor.wasAbleTo(NavigateTo.theTaskListPage());
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        actor.attemptsTo(Ensure.that(TaskListPage.TASK_LIST_FIRST_ITEM_PROCESS).hasText(processName));
         tasksCountUI = TaskListPage.getTasksCount();
+        actor.attemptsTo(Ensure.that(TaskListPage.TASK_LIST_FIRST_ITEM_PROCESS).hasText(processName));
         actor.wasAbleTo(NavigateTo.theProcessCountAPIPage());
         processCount = TaskListPage.getCountProcesses();
         System.out.println();
@@ -146,6 +144,7 @@ public class StepDefinitions {
     @When("{actor} select the first process {string} in the tasks list")
     public void selectFirstProcessByName(Actor actor, String processName) {
         actor.wasAbleTo(NavigateTo.theTaskListPage());
+        TaskListPage.getTasksCount();
         actor.attemptsTo(Ensure.that(TaskListPage.TASK_LIST_FIRST_ITEM_PROCESS).hasText(processName));
         actor.attemptsTo(TaskListPage.selectFirstProcessFromList());
     }
@@ -180,11 +179,6 @@ public class StepDefinitions {
     @Then("{actor} should see that task is disappeared")
     public void taskIsDisappeared(Actor actor) {
         actor.wasAbleTo(NavigateTo.theTaskListPage());
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         int currentTasksCount = TaskListPage.getTasksCount();
         if (currentTasksCount == 0) {
             boolean isTaskPresent = TaskListPage.isElementPresent("(//ol[contains(@class, 'tasks-list')]/li)[1]/.//h6");
@@ -306,5 +300,22 @@ public class StepDefinitions {
         actor.wasAbleTo(NavigateTo.theProcessCountAPIPage());
         int newProcessCount = TaskListPage.getCountProcesses();
         Assert.assertEquals("process was not closed", processCount - 1, newProcessCount);
+    }
+
+    @When("Open Camunda modeler and new diagram")
+    public void camundaModelerIsOpened() {
+        camundaModelerAppPage = new CamundaModelerAppPage();
+        //camundaModelerAppPage.openNewDiagram();
+    }
+
+    @Then("Form.io Import button is displayed")
+    public void checkThatFormIOPluginButtonPresent() {
+        Assert.assertTrue("'Form.io Import' button is not present", camundaModelerAppPage.isFormIoImportPresent());
+    }
+
+    @And("All fields are present in 'Form.io Import' menu")
+    public void allFieldsArePresentInFormIoImportMenu() {
+        camundaModelerAppPage.openFormIoImportMenu();
+        camundaModelerAppPage.closeDriver();
     }
 }

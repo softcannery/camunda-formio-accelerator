@@ -1,3 +1,4 @@
+@web
 Feature: Simple Formio Task Action
   Scenario: Start and complete process API test
     Given kermit is logged in to Camunda via POST

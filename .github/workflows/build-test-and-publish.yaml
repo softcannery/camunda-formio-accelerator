@@ -118,6 +118,22 @@ jobs:
           zip -r -l ~/formio-plugin.zip ./
         env:
           NODE_OPTIONS: "--openssl-legacy-provider"
+      - name: install modeller
+        run: |
+          wget https://downloads.camunda.cloud/release/camunda-modeler/5.12.1/camunda-modeler-5.12.1-linux-x64.tar.gz
+          tar -xvf camunda-modeler*.tar.gz
+          mkdir -p ~/.config/camunda-modeler/plugins
+          cp -R ./camunda-modeler-formio-plugin/resources/plugins/formio-plugin ~/.config/camunda-modeler/plugins
+      - uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+      - name: Run Camunda Modeler test
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: mvn clean verify -ntp -Dcucumber.filter.tags="@modeler"
+          working-directory: ./cucumber-tests
+          options: #optional
       - name: Upload build results
         uses: actions/upload-artifact@v3
         with:
@@ -162,7 +178,7 @@ jobs:
           cd ./cucumber-tests
           chmod +x ./healthcheck.sh
           ./healthcheck.sh
-          mvn clean verify -ntp
+          mvn clean verify -ntp -Dcucumber.filter.tags="@web"
       - name: save test report
         if: always()
         run: |
