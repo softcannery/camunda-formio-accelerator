@@ -130,13 +130,16 @@ jobs:
         with:
           distribution: "temurin"
           java-version: "17"
-      - name: Run modeler test
-        run: |
-          sudo apt-get -y install xvfb
-          Xvfb :19 -screen 0 1024x768x16
-          export DISPLAY=:19
-          cd ./cucumber-tests
-          mvn clean verify -ntp -Dcucumber.filter.tags="@modeler"
+      - name: Run headless test
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: mvn clean verify -ntp -Dcucumber.filter.tags="@modeler"
+          working-directory: ./cucumber-tests
+          options: #optional
+#      - name: Run modeler test
+#        run: |
+#          cd ./cucumber-tests
+#          mvn clean verify -ntp -Dcucumber.filter.tags="@modeler"
       - name: Upload build results
         uses: actions/upload-artifact@v3
         with:
