@@ -68,8 +68,6 @@ public class CamundaModelerAppPage {
             }
         }
 
-        System.out.println("!!!!!!!!!!!!" + browserVersion);
-
         ChromeOptions opt = new ChromeOptions();
         opt.setBinary(camundaModelerPath);
         opt.setBrowserVersion(browserVersion);
