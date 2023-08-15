@@ -1,5 +1,6 @@
 package cucumber.pages;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import java.io.*;
 import java.net.URL;
 import java.util.Properties;
@@ -67,6 +68,8 @@ public class CamundaModelerAppPage {
                 e.printStackTrace();
             }
         }
+
+        WebDriverManager.chromedriver().driverVersion("108").setup();
 
         ChromeOptions opt = new ChromeOptions();
         opt.setBinary(camundaModelerPath);
