@@ -69,8 +69,7 @@ public class CamundaModelerAppPage {
             }
         }
 
-        WebDriverManager.chromedriver().driverVersion("108").setup();
-
+        WebDriverManager.chromedriver().driverVersion(browserVersion).setup();
         ChromeOptions opt = new ChromeOptions();
         opt.setBinary(camundaModelerPath);
         opt.setBrowserVersion(browserVersion);
