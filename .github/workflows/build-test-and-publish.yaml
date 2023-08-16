@@ -2,14 +2,14 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - main
     paths-ignore:
       - "README.md"
       - ".github/ISSUE_TEMPLATE/*.md"
       - ".github/**"
   pull_request:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
@@ -47,7 +47,7 @@ jobs:
       - name: New tag
         id: tag
         run: |
-          if [[ $GITHUB_REF == 'refs/heads/master' ]]; then
+          if [[ $GITHUB_REF == 'refs/heads/main' ]]; then
             export TAG=$NEW_VERSION
             export RELEASE="true"
           else
@@ -60,7 +60,7 @@ jobs:
           NEW_VERSION: ${{ steps.version.outputs.version }}
       - name: MVN set version
         run: |
-          if [[ $GITHUB_REF == 'refs/heads/master' ]]; then
+          if [[ $GITHUB_REF == 'refs/heads/main' ]]; then
             mvn versions:set -DnewVersion=$NEW_VERSION
           else
             mvn versions:set -DnewVersion=$NEW_VERSION-SNAPSHOT
@@ -191,7 +191,7 @@ jobs:
           path: ~/report.zip
   release:
     name: Publish Release
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     needs:
       - build-maven
       - build-plugin
