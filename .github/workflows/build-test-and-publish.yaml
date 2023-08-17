@@ -128,7 +128,7 @@ jobs:
           distribution: "temurin"
           java-version: "17"
       - name: Run Camunda Modeler test
-        uses: GabrielBB/xvfb-action@v1
+        uses: coactions/setup-xvfb@v1.0.1
         with:
           run: mvn clean verify -ntp -Dcucumber.filter.tags="@modeler"
           working-directory: ./cucumber-tests
