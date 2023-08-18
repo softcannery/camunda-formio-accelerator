@@ -1,11 +1,12 @@
 @web
 Feature: Invoice for Approval
+  @reset
   Scenario: Start and complete process with Attachments API test
     Given kermit is logged in to Camunda via POST
     When he starts an Invoice Process via API
     When he completes Invoice Process via API
     Then he should see that process not in the list via API
-
+  @reset
   Scenario: Start and complete process
     Given kermit is logged in to Camunda
     When he selects start process "Submit Invoice for Approval"
@@ -15,7 +16,7 @@ Feature: Invoice for Approval
     When he claim process
     When he complete form - invoice
     Then he should see that task is disappeared
-
+  @reset
   Scenario: Start and complete process with Attachment
     Given kermit is logged in to Camunda
     When he selects start process "Submit Invoice for Approval"
@@ -26,7 +27,7 @@ Feature: Invoice for Approval
     Then he can see attached file
     When he complete form - invoice
     Then he should see that task is disappeared
-
+  @reset
   Scenario: Start and reject process
     Given kermit is logged in to Camunda
     When he selects start process "Submit Invoice for Approval"
