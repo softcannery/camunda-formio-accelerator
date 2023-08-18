@@ -33,7 +33,7 @@ public class StepDefinitions {
     @Given("{actor} is logged in to Camunda")
     public void loginToCamunda(Actor actor) {
         actor.wasAbleTo(NavigateTo.theCamundaLoginPage());
-        actor.attemptsTo(CamundaLoginPage.loginToCamunda(actor.toString(), "password"));
+        actor.wasAbleTo(CamundaLoginPage.loginToCamunda(actor.toString(), "password"));
     }
 
     @Given("{actor} is logged in to Camunda via POST")
@@ -111,31 +111,31 @@ public class StepDefinitions {
     public void startProcess(Actor actor, String processName) {
         actor.wasAbleTo(NavigateTo.theTaskListPage());
         TaskListPage.getTasksCount();
-        actor.attemptsTo(TaskListPage.startProcessByName(processName));
+        actor.wasAbleTo(TaskListPage.startProcessByName(processName));
     }
 
     @When("{actor} fill all required fields and start")
     public void fillInvoiceForm(Actor actor) {
-        actor.attemptsTo(InvoiceForm.setCreditor("test auto"));
-        actor.attemptsTo(InvoiceForm.fillFormAndStart("test@test.com", "111", "222"));
+        actor.wasAbleTo(InvoiceForm.setCreditor("test auto"));
+        actor.wasAbleTo(InvoiceForm.fillFormAndStart("test@test.com", "111", "222"));
     }
 
     @When("{actor} fill all required fields with attachment and start")
     public void fillInvoiceFormWithAttachment(Actor actor) {
-        actor.attemptsTo(InvoiceForm.setCreditor("test auto"));
-        actor.attemptsTo(InvoiceForm.fillFormWithAttachmentAndStart("test@test.com", "111", "222"));
+        actor.wasAbleTo(InvoiceForm.setCreditor("test auto"));
+        actor.wasAbleTo(InvoiceForm.fillFormWithAttachmentAndStart("test@test.com", "111", "222"));
     }
 
     @When("{actor} fills all required fields and start for Simple task")
     public void fillSimpleForm(Actor actor) {
-        actor.attemptsTo(SimpleProcessForm.fillFormAndStartSimple("test auto", "111"));
+        actor.wasAbleTo(SimpleProcessForm.fillFormAndStartSimple("test auto", "111"));
     }
 
     @Then("{actor} should see that process {string} is started and present in the tasks list")
     public void checkThatTaskInList(Actor actor, String processName) {
         actor.wasAbleTo(NavigateTo.theTaskListPage());
         tasksCountUI = TaskListPage.getTasksCount();
-        actor.attemptsTo(Ensure.that(TaskListPage.TASK_LIST_FIRST_ITEM_PROCESS).hasText(processName));
+        actor.wasAbleTo(Ensure.that(TaskListPage.TASK_LIST_FIRST_ITEM_PROCESS).hasText(processName));
         actor.wasAbleTo(NavigateTo.theProcessCountAPIPage());
         processCount = TaskListPage.getCountProcesses();
         System.out.println();
@@ -145,35 +145,35 @@ public class StepDefinitions {
     public void selectFirstProcessByName(Actor actor, String processName) {
         actor.wasAbleTo(NavigateTo.theTaskListPage());
         TaskListPage.getTasksCount();
-        actor.attemptsTo(Ensure.that(TaskListPage.TASK_LIST_FIRST_ITEM_PROCESS).hasText(processName));
-        actor.attemptsTo(TaskListPage.selectFirstProcessFromList());
+        actor.wasAbleTo(Ensure.that(TaskListPage.TASK_LIST_FIRST_ITEM_PROCESS).hasText(processName));
+        actor.wasAbleTo(TaskListPage.selectFirstProcessFromList());
     }
 
     @Then("{actor} can see attached file")
     public void checkThatFileIsAttached(Actor actor) {
-        actor.attemptsTo(
+        actor.wasAbleTo(
             Ensure.that(TaskListPage.isElementPresent("//span[contains(text(), 'Press to open')]")).isTrue()
         );
     }
 
     @When("{actor} claim process")
     public void climeProcess(Actor actor) {
-        actor.attemptsTo(TaskListPage.claim());
+        actor.wasAbleTo(TaskListPage.claim());
     }
 
     @When("{actor} complete form - invoice")
     public void completeFormInvoice(Actor actor) {
-        actor.attemptsTo(InvoiceForm.completeForm());
+        actor.wasAbleTo(InvoiceForm.completeForm());
     }
 
     @When("{actor} completes form - Simple - {string}")
     public void completeFormSimple(Actor actor, String action) {
-        actor.attemptsTo(SimpleProcessForm.completeFormSimple(action));
+        actor.wasAbleTo(SimpleProcessForm.completeFormSimple(action));
     }
 
     @When("{actor} reject form - invoice")
     public void rejectForm(Actor actor) {
-        actor.attemptsTo(InvoiceForm.rejectForm());
+        actor.wasAbleTo(InvoiceForm.rejectForm());
     }
 
     @Then("{actor} should see that task is disappeared")
@@ -182,13 +182,13 @@ public class StepDefinitions {
         int currentTasksCount = TaskListPage.getTasksCount();
         if (currentTasksCount == 0) {
             boolean isTaskPresent = TaskListPage.isElementPresent("(//ol[contains(@class, 'tasks-list')]/li)[1]/.//h6");
-            actor.attemptsTo(Ensure.that(isTaskPresent).isFalse());
+            actor.wasAbleTo(Ensure.that(isTaskPresent).isFalse());
         } else {
-            actor.attemptsTo(Ensure.that(currentTasksCount).isEqualTo(tasksCountUI - 1));
+            actor.wasAbleTo(Ensure.that(currentTasksCount).isEqualTo(tasksCountUI - 1));
         }
         actor.wasAbleTo(NavigateTo.theProcessCountAPIPage());
         int processCountAfterComplete = TaskListPage.getCountProcesses();
-        actor.attemptsTo(Ensure.that(processCountAfterComplete).isEqualTo(processCount - 1));
+        actor.wasAbleTo(Ensure.that(processCountAfterComplete).isEqualTo(processCount - 1));
     }
 
     @When("{actor} goes to the react main page")
@@ -210,7 +210,7 @@ public class StepDefinitions {
             e.printStackTrace();
         }
 
-        actor.attemptsTo(SimpleProcessUpgrade.uploadFiles(uploadFiles));
+        actor.wasAbleTo(SimpleProcessUpgrade.uploadFiles(uploadFiles));
     }
 
     @When("{actor} gets current simple process version")
@@ -233,7 +233,7 @@ public class StepDefinitions {
 
     @When("{actor} starts simple process")
     public void startSimpleProcess(Actor actor) {
-        actor.attemptsTo(SimpleProcessUpgrade.startSimpleProcess());
+        actor.wasAbleTo(SimpleProcessUpgrade.startSimpleProcess());
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -245,7 +245,7 @@ public class StepDefinitions {
 
     @When("{actor} starts PDF process")
     public void startPDFProcess(Actor actor) {
-        actor.attemptsTo(PDFProcessForm.startProcess());
+        actor.wasAbleTo(PDFProcessForm.startProcess());
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -257,7 +257,7 @@ public class StepDefinitions {
 
     @When("{actor} starts Multi process")
     public void startMultiProcess(Actor actor) {
-        actor.attemptsTo(ReactMultiProcessForm.startMultiProcess());
+        actor.wasAbleTo(ReactMultiProcessForm.startMultiProcess());
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -269,25 +269,25 @@ public class StepDefinitions {
 
     @When("{actor} approve multi tasks")
     public void approveMultiTasks(Actor actor) {
-        actor.attemptsTo(ReactMultiProcessForm.approveMultiTasks(actor));
+        actor.wasAbleTo(ReactMultiProcessForm.approveMultiTasks(actor));
     }
 
     @When("{actor} open Show Results and complete")
     public void completeMultiResults(Actor actor) {
         actor.wasAbleTo(NavigateTo.theReactMainPage());
-        actor.attemptsTo(ReactMultiProcessForm.completeShowResults());
+        actor.wasAbleTo(ReactMultiProcessForm.completeShowResults());
     }
 
     @When("{actor} complete PDF process")
     public void completePDFProcess(Actor actor) {
         actor.wasAbleTo(NavigateTo.theReactMainPage());
-        actor.attemptsTo(PDFProcessForm.submitPdfProcess());
+        actor.wasAbleTo(PDFProcessForm.submitPdfProcess());
     }
 
     @When("{actor} complete process")
     public void completeSimpleProcess(Actor actor) {
         actor.wasAbleTo(NavigateTo.theReactMainPage());
-        actor.attemptsTo(SimpleProcessUpgrade.submitSimpleProcess());
+        actor.wasAbleTo(SimpleProcessUpgrade.submitSimpleProcess());
     }
 
     @Then("{actor} process is closed")
