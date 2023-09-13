@@ -67,6 +67,7 @@
 		<encoding>UTF-8</encoding>
 		<!-- By default just validate code with prettier -->
 		<plugin.prettier.goal>check</plugin.prettier.goal>
+		<skipPrettier>false</skipPrettier>
 	</properties>
 
 	<modules>
@@ -115,7 +116,8 @@
 				<artifactId>prettier-maven-plugin</artifactId>
 				<version>0.21</version>
 				<configuration>
-					<prettierJavaVersion>2.0.0</prettierJavaVersion>
+					<skip>${skipPrettier}</skip>
+					<prettierJavaVersion>2.2.0</prettierJavaVersion>
 					<printWidth>120</printWidth>
 					<tabWidth>4</tabWidth>
 					<useTabs>false</useTabs>
@@ -127,6 +129,7 @@
 						<inputGlob>**/src/main/java/**/*.java</inputGlob>
 						<inputGlob>**/src/test/java/**/*.java</inputGlob>
 					</inputGlobs>
+					<endOfLine>lf</endOfLine>
 				</configuration>
 				<executions>
 					<execution>
