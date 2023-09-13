@@ -25,6 +25,7 @@
         <webdriver.base.url></webdriver.base.url>
         <plugin.prettier.goal>check</plugin.prettier.goal>
         <modeler.bpmnProcessFilePath>./../camunda-formio-bpmn/simple-task.bpmn</modeler.bpmnProcessFilePath>
+        <skipPrettier>false</skipPrettier>
     </properties>
     <dependencies>
         <dependency>
@@ -214,6 +215,7 @@
                 <artifactId>prettier-maven-plugin</artifactId>
                 <version>0.21</version>
                 <configuration>
+                    <skip>${skipPrettier}</skip>
                     <prettierJavaVersion>2.0.0</prettierJavaVersion>
                     <printWidth>120</printWidth>
                     <tabWidth>4</tabWidth>
@@ -226,6 +228,7 @@
                         <inputGlob>**/src/main/java/**/*.java</inputGlob>
                         <inputGlob>**/src/test/java/**/*.java</inputGlob>
                     </inputGlobs>
+                    <endOfLine>lf</endOfLine>
                 </configuration>
                 <executions>
                     <execution>

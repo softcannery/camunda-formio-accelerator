@@ -1,6 +1,6 @@
 .PHONY: all clean install build up down package
 
-all: install build;
+all: package build up logs;
 
 clean:
 	@ mvn clean
@@ -10,11 +10,17 @@ clean:
 install:
 	@ mvn clean install
 
+verify:
+	@ mvn verify
+
+test: install up
+	@ mvn verify
+
 build:
 	@ docker compose build
 
 package:
-	@ mvn package -ntp
+	@ mvn package -ntp -DskipTests
 
 up:
 	@ docker compose up -d
