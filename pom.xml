@@ -142,4 +142,11 @@
 			</plugin>
 		</plugins>
 	</build>
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>SoftCannery</name>
+			<url>https://maven.pkg.github.com/softcannery/camunda-formio-accelerator</url>
+		</repository>
+	</distributionManagement>
 </project>

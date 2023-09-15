@@ -63,12 +63,15 @@ jobs:
           if [[ $GITHUB_REF == 'refs/heads/main' ]]; then
             mvn versions:set -DnewVersion=$NEW_VERSION
           else
-            mvn versions:set -DnewVersion=$NEW_VERSION-SNAPSHOT
+            mvn versions:set -DnewVersion=$NEW_VERSION-PR-${{ github.event.pull_request.number }}-SNAPSHOT
           fi
         env:
           NEW_VERSION: ${{ steps.version.outputs.version }}
       - name: test and build JAR
         run: mvn package -ntp
+      - name: Upload new versions in maven registry
+        run: | 
+          mvn deploy -ntp -Drepo.login=${{ github.actor }} -Drepo.pwd=${{ secrets.GH_TOKEN }} -s .m2/settings.xml -DskipTests
       - name: Build and push Docker image camunda-formio-react-app
         uses: softcannery/.github/actions/github-docker-registry@master
         with:
