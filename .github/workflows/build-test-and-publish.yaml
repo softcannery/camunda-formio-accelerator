@@ -71,8 +71,7 @@ jobs:
         run: mvn package -ntp
       - name: Upload new versions in maven registry
         run: | 
-          cp settings.xml ~/.m2/
-          mvn deploy -Drepo.login=${{ github.actor }} -Drepo.pwd=${{ secrets.GH_TOKEN }} -DskipTests
+          mvn deploy -ntp -Drepo.login=${{ github.actor }} -Drepo.pwd=${{ secrets.GH_TOKEN }} -s .m2/settings.xml -DskipTests
       - name: Build and push Docker image camunda-formio-react-app
         uses: softcannery/.github/actions/github-docker-registry@master
         with:
