@@ -63,7 +63,7 @@ jobs:
           if [[ $GITHUB_REF == 'refs/heads/main' ]]; then
             mvn versions:set -DnewVersion=$NEW_VERSION
           else
-            mvn versions:set -DnewVersion=$NEW_VERSION-SNAPSHOT
+            mvn versions:set -DnewVersion=$NEW_VERSION-PR-${{ github.event.pull_request.number }}-SNAPSHOT
           fi
         env:
           NEW_VERSION: ${{ steps.version.outputs.version }}
