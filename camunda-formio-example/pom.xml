@@ -60,7 +60,7 @@
 
   <properties>
     <camunda-formio-plugin.version>${project.version}</camunda-formio-plugin.version>
-    <groovy-jsr223.version>4.0.14</groovy-jsr223.version>
+    <groovy-jsr223.version>4.0.15</groovy-jsr223.version>
     <maven.deploy.skip>true</maven.deploy.skip>
   </properties>
 
