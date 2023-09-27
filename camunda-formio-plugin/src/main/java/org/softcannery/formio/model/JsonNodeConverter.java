@@ -48,8 +48,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import jakarta.persistence.AttributeConverter;
 import java.io.IOException;
-import javax.persistence.AttributeConverter;
 
 public class JsonNodeConverter implements AttributeConverter<JsonNode, String> {
 
