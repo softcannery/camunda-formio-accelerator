@@ -70,8 +70,10 @@ jobs:
       - name: test and build JAR
         run: mvn package -ntp
       - name: Upload new versions in maven registry
-        run: | 
-          mvn deploy -ntp -Drepo.login=${{ github.actor }} -Drepo.pwd=${{ secrets.GH_TOKEN }} -s .m2/settings.xml -DskipTests
+        run: |
+          if [[ $GITHUB_REF != 'refs/heads/main' ]]; then
+            mvn deploy -ntp -Drepo.login=${{ github.actor }} -Drepo.pwd=${{ secrets.GH_TOKEN }} -s .m2/settings.xml -DskipTests
+          fi
       - name: Build and push Docker image camunda-formio-react-app
         uses: softcannery/.github/actions/github-docker-registry@master
         with:
@@ -218,6 +220,13 @@ jobs:
         with:
           git-token: ${{ secrets.GH_TOKEN }}
           version: v${{ needs.build-maven.outputs.version }}
+      - name: test and build JAR
+        run: mvn package -ntp -Dmaven.test.skip
+      - name: Upload new versions in maven registry
+        run: |
+          if [[ $GITHUB_REF != 'refs/heads/main' ]]; then
+            mvn deploy -ntp -Drepo.login=${{ github.actor }} -Drepo.pwd=${{ secrets.GH_TOKEN }} -s .m2/settings.xml -DskipTests
+          fi
       - name: Release it
         run: |
           export PREV_VERSION=$(gh release list | grep Latest | awk '{print $3}')
