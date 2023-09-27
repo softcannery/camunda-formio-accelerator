@@ -68,7 +68,8 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<plugin.prettier.goal>check</plugin.prettier.goal>
-		<skipPrettier>false</skipPrettier>
+		<plugin.license.goal>check</plugin.license.goal>
+		<skipPrettier>true</skipPrettier>
 	</properties>
 
 	<dependencies>

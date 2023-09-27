@@ -118,7 +118,7 @@
     <dependency>
       <groupId>org.apache.groovy</groupId>
       <artifactId>groovy-jsr223</artifactId>
-      <version>${groovy-jsr223.version}</version>
+      <version>4.0.14</version>
     </dependency>
 
     <dependency>
@@ -140,6 +140,12 @@
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.14</version>
     </dependency>
 
     <!-- Required to use Spin dataformat support -->
