@@ -16,6 +16,12 @@ verify:
 test: install up
 	@ mvn verify
 
+healthcheck:
+	@ cd cucumber-tests && sh healthcheck.sh
+
+bdd: healthcheck
+	@ cd cucumber-tests && mvn verify -ntp -Dcucumber.filter.tags="@web"
+
 build:
 	@ docker compose build
 
