@@ -217,7 +217,7 @@ export default class FormioExportTemplatePlugin extends PureComponent {
     const project = await axios.get(endpoint, options);
     const endpointURL = new URL(endpoint);
     const _formsList = await axios.get(
-      `${endpointURL.origin}/project/${project.data._id}/form?type=form`,
+      `${endpointURL.origin}/project/${project.data._id}/form?type=form&limit=1000`,
       options,
     );
     if (_formsList.data.length === 0) return undefined;
