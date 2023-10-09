@@ -62,7 +62,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<camunda.version>7.19.0</camunda.version>
+		<camunda.version>7.20.0</camunda.version>
 		<java.version>17</java.version>
 		<encoding>UTF-8</encoding>
 		<!-- By default just validate code with prettier -->
