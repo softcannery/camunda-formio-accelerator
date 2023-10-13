@@ -11,7 +11,7 @@
 
     <groupId>com.softcannery.camunda-formio-accelerator</groupId>
     <artifactId>cucumber-tests</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Serenity Cucumber Tests</name>
 
