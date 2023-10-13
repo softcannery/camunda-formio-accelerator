@@ -52,23 +52,38 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.5</version>
+		<version>3.1.4</version>
 		<relativePath/>
 	</parent>
 
 	<groupId>com.softcannery</groupId>
 	<artifactId>camunda-formio-accelerator</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
-		<camunda.version>7.19.0</camunda.version>
+		<camunda.version>7.20.0</camunda.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version>
-		<encoding>UTF-8</encoding>
-		<!-- By default just validate code with prettier -->
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<plugin.prettier.goal>check</plugin.prettier.goal>
-		<skipPrettier>false</skipPrettier>
+		<plugin.license.goal>check</plugin.license.goal>
+		<skipPrettier>true</skipPrettier>
 	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>2.2.220</version>
+		</dependency>
+	</dependencies>
 
 	<modules>
 		<module>camunda-formio-plugin</module>
@@ -106,7 +121,7 @@
 					<execution>
 						<phase>validate</phase>
 						<goals>
-							<goal>check</goal>
+							<goal>${plugin.license.goal}</goal>
 						</goals>
 					</execution>
 				</executions>

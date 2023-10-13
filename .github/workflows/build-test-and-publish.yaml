@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - 0.0.x
     paths-ignore:
       - "README.md"
       - ".github/ISSUE_TEMPLATE/*.md"
@@ -10,7 +11,7 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch:
+      - 0.0.x
 
 jobs:
   build-maven:
@@ -39,15 +40,15 @@ jobs:
             ${{ runner.os }}-maven-
       - name: New version
         id: version
-        uses: softcannery/.github/actions/jx-release-version@master
-        with:
-          github-token: ${{ secrets.GH_TOKEN }}
-          previous-version: "auto"
-          tag: false
+        run: |
+          filter=$( awk -F '[.]' '{printf "v"$1"."$2".*"}' <<< $( yq -p xml '.project.version' pom.xml ) )
+          tag=$(git tag -l $filter --sort=-creatordate | head -1)
+          new_tag="$( awk -F '[.]' '{printf $1"."$2"."}' <<< $tag)$[$( awk -F '[.]' '{printf $3}' <<< $tag)+1]"
+          echo "version=$new_tag" >> $GITHUB_OUTPUT
       - name: New tag
         id: tag
         run: |
-          if [[ $GITHUB_REF == 'refs/heads/main' ]]; then
+          if [[ ${{ github.event_name }} == 'push' ]]; then
             export TAG=$NEW_VERSION
             export RELEASE="true"
           else
@@ -60,7 +61,7 @@ jobs:
           NEW_VERSION: ${{ steps.version.outputs.version }}
       - name: MVN set version
         run: |
-          if [[ $GITHUB_REF == 'refs/heads/main' ]]; then
+          if [[ ${{ github.event_name }} == 'push' ]]; then
             mvn versions:set -DnewVersion=$NEW_VERSION
           else
             mvn versions:set -DnewVersion=$NEW_VERSION-PR-${{ github.event.pull_request.number }}-SNAPSHOT
@@ -71,7 +72,7 @@ jobs:
         run: mvn package -ntp
       - name: Upload new versions in maven registry
         run: |
-          if [[ $GITHUB_REF != 'refs/heads/main' ]]; then
+          if [[ ${{ github.event_name }} == 'pull_request' ]]; then
             mvn deploy -ntp -Drepo.login=${{ github.actor }} -Drepo.pwd=${{ secrets.GH_TOKEN }} -s .m2/settings.xml -DskipTests
           fi
       - name: Build and push Docker image camunda-formio-react-app
@@ -196,7 +197,7 @@ jobs:
           path: ~/report.zip
   release:
     name: Publish Release
-    if: github.ref == 'refs/heads/main'
+    if: github.event_name == 'push'
     needs:
       - build-maven
       - build-plugin

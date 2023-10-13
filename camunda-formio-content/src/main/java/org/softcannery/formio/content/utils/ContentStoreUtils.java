@@ -45,10 +45,10 @@
 package org.softcannery.formio.content.utils;
 
 import internal.org.springframework.content.rest.links.ContentLinksResourceProcessor.StoreLinkBuilder;
+import jakarta.annotation.PostConstruct;
 import java.net.URI;
 import java.util.Collections;
 import java.util.Map;
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.content.commons.mappingcontext.ContentProperty;

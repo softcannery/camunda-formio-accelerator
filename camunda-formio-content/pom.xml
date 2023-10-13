@@ -51,18 +51,18 @@
   <parent>
     <groupId>com.softcannery</groupId>
     <artifactId>camunda-formio-accelerator</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   
   <artifactId>camunda-formio-content</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   
   <properties>
     <encoding>UTF-8</encoding>
     <failOnMissingWebXml>false</failOnMissingWebXml>
-    <spring-content.version>2.6.0</spring-content.version>
+    <spring-content.version>3.0.4</spring-content.version>
     <maven.deploy.skip>true</maven.deploy.skip>
   </properties>
 

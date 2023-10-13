@@ -47,10 +47,10 @@ package org.softcannery.camunda;
 import static org.camunda.bpm.application.ProcessApplicationInfo.PROP_SERVLET_CONTEXT_PATH;
 import static org.camunda.bpm.spring.boot.starter.util.GetProcessApplicationNameFromAnnotation.processApplicationNameFromAnnotation;
 
+import jakarta.servlet.ServletContext;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.servlet.ServletContext;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.application.PostDeploy;
 import org.camunda.bpm.application.PreUndeploy;
@@ -66,6 +66,7 @@ import org.camunda.bpm.spring.boot.starter.property.CamundaBpmProperties;
 import org.softcannery.camunda.listener.ProcessDeployedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Configuration;
@@ -74,7 +75,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.context.ServletContextAware;
 
 @Slf4j
-@Configuration
+@AutoConfiguration
 public class FormioSpringBootProcessApplication extends SpringProcessApplication {
 
     @Value("${spring.application.name:null}")
