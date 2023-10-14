@@ -7,7 +7,7 @@ on:
     paths-ignore:
       - "README.md"
       - ".github/ISSUE_TEMPLATE/*.md"
-      - ".github/**"
+
   pull_request:
     branches:
       - main
