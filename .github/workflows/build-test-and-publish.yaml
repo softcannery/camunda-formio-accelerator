@@ -43,7 +43,7 @@ jobs:
         run: |
           filter=$( awk -F '[.]' '{printf "v"$1"."$2".*"}' <<< $( yq -p xml '.project.version' pom.xml ) )
           tag=$(git tag -l $filter --sort=-creatordate | head -1)
-          new_tag="$( awk -F '[.]' '{printf $1"."$2"."}' <<< $tag)$[$( awk -F '[.]' '{printf $3}' <<< $tag)+1]"
+          new_tag=$( cut -c2- <<< "$( awk -F '[.]' '{printf $1"."$2"."}' <<< $tag)$[$( awk -F '[.]' '{printf $3}' <<< $tag)+1]" )
           echo "version=$new_tag" >> $GITHUB_OUTPUT
       - name: New tag
         id: tag
