@@ -53,7 +53,7 @@ PLUGIN="${MODELER_DIR}/resources/plugins/deploy-plugin"
 
 rm -rf "${PLUGIN}"
 
-mkdir "${PLUGIN}"
+mkdir -p "${PLUGIN}"
 
 cp -v ./index.js "${PLUGIN}"
 cp -vR ./css "${PLUGIN}"
