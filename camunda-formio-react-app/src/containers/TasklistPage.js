@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { List, Grid, Container } from "semantic-ui-react";
 import { loadTasks } from "../actions";
 import Taskform from "../components/Taskform";
@@ -13,15 +13,18 @@ class TasklistPage extends Component {
 
   renderItem(task) {
     return (
-      <List.Item key={task.id}>
-        <List.Icon name="browser" size="large" verticalAlign="middle" />
-        <List.Content>
-          <Link to={`/tasklist/${task.processDefinitionId}/${task.id}`}>
-            <List.Header>{task.name}</List.Header>
-            <List.Description>{task.created}</List.Description>
-          </Link>
-        </List.Content>
-      </List.Item>
+        <List.Item key={task.id}>
+          <List.Icon name="browser" size="large" verticalAlign="middle" />
+          <List.Content>
+            <Link
+                to={`/tasklist/${task.processDefinitionId}/${task.id}`}
+                activeClassName="active"
+            >
+              <List.Header>{task.name}</List.Header>
+              <List.Description>{task.created}</List.Description>
+            </Link>
+          </List.Content>
+        </List.Item>
     );
   }
 
@@ -39,16 +42,16 @@ class TasklistPage extends Component {
     } else {
       task = sortBy(task, "created").reverse();
       return (
-        <Grid divided>
-          <Grid.Row>
-            <Grid.Column width={4}>
-              <List divided relaxed>
-                {task.map((item) => this.renderItem(item))}
-              </List>
-            </Grid.Column>
-            <Grid.Column width={12}>{taskForm}</Grid.Column>
-          </Grid.Row>
-        </Grid>
+          <Grid divided>
+            <Grid.Row>
+              <Grid.Column width={4}>
+                <List divided relaxed>
+                  {task.map((item) => this.renderItem(item))}
+                </List>
+              </Grid.Column>
+              <Grid.Column width={12}>{taskForm}</Grid.Column>
+            </Grid.Row>
+          </Grid>
       );
     }
   }
@@ -62,8 +65,14 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default withRouter(
-  connect(mapStateToProps, {
-    loadTasks,
-  })(TasklistPage),
-);
+export default connect(mapStateToProps, {
+  loadTasks,
+})(TasklistPage);
+
+// // Wrap your root component with BrowserRouter
+// ReactDOM.render(
+//     <BrowserRouter>
+//       <App />
+//     </BrowserRouter>,
+//     document.getElementById("root")
+// );

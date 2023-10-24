@@ -13,17 +13,11 @@ const Root = ({ store }) => (
   <Provider store={store}>
     <div>
       <Header />
-      <Route path="/" component={App} exact />
-      <Route
-        path="/startprocess/key/:processDefinitionId"
-        component={StartProcessPage}
-      />
-      <Route path="/startprocess/list" component={StartProcessListPage} />
-      <Route path="/tasklist" component={TasklistPage} exact />
-      <Route
-        path="/tasklist/:processDefinitionId/:taskId"
-        component={TasklistPage}
-      />
+      <Route path="/" element={<App />} end />
+      <Route path="/startprocess/key/:processDefinitionId" element={<StartProcessPage />} />
+      <Route path="/startprocess/list" element={<StartProcessListPage />} />
+      <Route path="/tasklist" element={<TasklistPage />} end />
+      <Route path="/tasklist/:processDefinitionId/:taskId" element={<TasklistPage />} />
     </div>
   </Provider>
 );

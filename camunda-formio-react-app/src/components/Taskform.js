@@ -1,21 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter, Redirect } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import FormioGenericForm from "../components/FormioGenericForm";
 
 class TaskForm extends Component {
   render() {
-    const { taskId, processDefinitionId, redirect } = this.props;
+    const { redirect } = this.props;
+    const { taskId, processDefinitionId } = useParams();
     if (redirect) {
-      return <Redirect to={redirect} />;
+      return <Navigate to={redirect} />;
     }
     return (
-      <div>
-        <FormioGenericForm
-          taskId={taskId}
-          processDefinitionId={processDefinitionId}
-        />
-      </div>
+        <div>
+          <FormioGenericForm
+              taskId={taskId}
+              processDefinitionId={processDefinitionId}
+          />
+        </div>
     );
   }
 }
@@ -29,4 +30,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, {})(TaskForm));
+export default connect(mapStateToProps, {})(TaskForm);
