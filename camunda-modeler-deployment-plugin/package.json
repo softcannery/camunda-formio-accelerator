@@ -37,9 +37,9 @@
   "main": "index.js",
   "name": "camunda-modeler-deployment-plugin",
   "scripts": {
-    "build": "webpack -c",
+    "build": "webpack -c webpack.config.js",
     "postbuild": "./install.sh",
-    "dev": "webpack -c -w",
+    "dev": "webpack -c webpack.config.js -w",
     "lint": "eslint .",
     "test": "run-s lint build"
   },
