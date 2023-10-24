@@ -84,7 +84,10 @@ function cssLoader() {
     return {
       loader: 'css-loader',
       options: {
-        localIdentName: '[path][name]__[local]--[hash:base64:5]'
+        importLoaders: 1,
+        modules: {
+          localIdentName: '[name]__[local]___[hash:base64:5]'
+        }
       }
     };
   } else {
