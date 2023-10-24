@@ -36,6 +36,12 @@
           <camunda:property name="formio.file" value="formio-example.formio" />
           <camunda:property name="formio.form" value="start-form-poc" />
         </camunda:properties>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="groovy">execution.setVariable("startVariable", true);</camunda:script>
+        </camunda:executionListener>
+        <camunda:executionListener event="end">
+          <camunda:script scriptFormat="groovy">execution.setVariable("endVariable", true);</camunda:script>
+        </camunda:executionListener>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_11l28i0</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_1qig1ru">
