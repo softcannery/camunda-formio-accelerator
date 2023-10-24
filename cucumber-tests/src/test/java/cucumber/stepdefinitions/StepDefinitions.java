@@ -313,9 +313,23 @@ public class StepDefinitions {
         Assert.assertTrue("'Form.io Import' button is not present", camundaModelerAppPage.isFormIoImportPresent());
     }
 
+    @Then("Deploy to Camunda button is displayed")
+    public void checkThatDeployPluginButtonPresent() {
+        Assert.assertTrue(
+            "'Deploy to Camunda' button is not present",
+            camundaModelerAppPage.isDeployToCamundaPresent()
+        );
+    }
+
     @And("All fields are present in 'Form.io Import' menu")
     public void allFieldsArePresentInFormIoImportMenu() {
         camundaModelerAppPage.openFormIoImportMenu();
+        camundaModelerAppPage.closeDriver();
+    }
+
+    @And("All fields are present in 'Deploy to Camunda' menu")
+    public void allFieldsArePresentInDeployToCamundaMenu() {
+        camundaModelerAppPage.openDeployToCamundaMenu();
         camundaModelerAppPage.closeDriver();
     }
 }

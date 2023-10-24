@@ -56,5 +56,5 @@ rm -rf "${PLUGIN}"
 mkdir -p "${PLUGIN}"
 
 cp -v ./index.js "${PLUGIN}"
-cp -vR ./css "${PLUGIN}"
+#cp -vR ./css "${PLUGIN}"
 cp -vR ./dist "${PLUGIN}"

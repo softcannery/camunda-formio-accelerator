@@ -17,6 +17,8 @@ public class CamundaModelerAppPage {
     private WebDriver driver;
 
     private By formIoImportBtn = By.xpath("//button[text()='Form.io Import']");
+
+    private By deployToCamundaBtn = By.xpath("//button[text()='Deploy to Camunda']");
     private By saveBtn = By.xpath("//button[text()='Save']");
     private By bpmnDiagramBtn = By.xpath(
         "//*[@id='welcome-page-platform']/.//button[contains(text(), 'BPMN diagram')]"
@@ -24,6 +26,14 @@ public class CamundaModelerAppPage {
     private By apiKeyField = By.xpath("//label[@for='apiKey']/../input");
     private By endpointField = By.xpath("//label[@for='endpoint']/../input");
     private By versionField = By.xpath("//label[@for='tag']/../input");
+    private By deploymentNameField = By.xpath("//label[@for='deployment.name']/../input");
+    private By deploymentTenantId = By.xpath("//label[@for='deployment.tenantId']/../input");
+    private By deploymentRestEndpoint = By.xpath("//label[@for='endpoint.url']/../input");
+    private By deploymentUsername = By.xpath("//label[@for='endpoint.username']/../input");
+    private By deploymentPassword = By.xpath("//label[@for='endpoint.password']/../input");
+    private By deploymentRBHttp = By.xpath("//label[@for='radio-element-http-basic']/../input");
+    private By deploymentRBToken = By.xpath("//label[@for='radio-element-bearer-token']/../input");
+    private By deploymentAddAttachments = By.xpath("//label[@for='deployment.attachments']/../input");
 
     public CamundaModelerAppPage() {
         Properties prop = new Properties();
@@ -104,11 +114,45 @@ public class CamundaModelerAppPage {
         }
     }
 
+    public boolean isDeployToCamundaPresent() {
+        try {
+            WebElement deployToCamundaBtnEl = driver.findElement(deployToCamundaBtn);
+            return deployToCamundaBtnEl.isDisplayed();
+        } catch (NoSuchElementException ex) {
+            return false;
+        }
+    }
+
     public void openFormIoImportMenu() {
         driver.findElement(formIoImportBtn).click();
         Assert.assertTrue("Api Key field is not present", driver.findElement(apiKeyField).isDisplayed());
         Assert.assertTrue("Endpoint field is not present", driver.findElement(endpointField).isDisplayed());
         Assert.assertTrue("Version field is not present", driver.findElement(versionField).isDisplayed());
+    }
+
+    public void openDeployToCamundaMenu() {
+        driver.findElement(deployToCamundaBtn).click();
+        Assert.assertTrue(
+            "Deployment name field is not present",
+            driver.findElement(deploymentNameField).isDisplayed()
+        );
+        Assert.assertTrue("Tenant ID field is not present", driver.findElement(deploymentTenantId).isDisplayed());
+        Assert.assertTrue(
+            "REST Endpoint field is not present",
+            driver.findElement(deploymentRestEndpoint).isDisplayed()
+        );
+        Assert.assertTrue("HTTP Basic radio button is not present", driver.findElement(deploymentRBHttp).isDisplayed());
+        Assert.assertTrue(
+            "Bearer token radio button field is not present",
+            driver.findElement(deploymentRBToken).isDisplayed()
+        );
+        Assert.assertTrue("Username field is not present", driver.findElement(deploymentUsername).isDisplayed());
+        Assert.assertTrue("Password field is not present", driver.findElement(deploymentPassword).isDisplayed());
+        Assert.assertTrue("Password field is not present", driver.findElement(deploymentPassword).isDisplayed());
+        Assert.assertTrue(
+            "Include additional files is not present",
+            driver.findElement(deploymentAddAttachments).isDisplayed()
+        );
     }
 
     public void closeDriver() {
