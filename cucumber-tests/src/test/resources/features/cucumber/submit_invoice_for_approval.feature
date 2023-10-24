@@ -4,6 +4,7 @@ Feature: Invoice for Approval
   Scenario: Start and complete process with Attachments API test
     Given kermit is logged in to Camunda via POST
     When he starts an Invoice Process via API
+    Then he can get events variables
     When he completes Invoice Process via API
     Then he should see that process not in the list via API
   @reset
