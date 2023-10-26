@@ -1,14 +1,14 @@
 package cucumber.pages;
 
+import static java.lang.Thread.sleep;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import java.io.*;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Properties;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -153,6 +153,26 @@ public class CamundaModelerAppPage {
             "Include additional files is not present",
             driver.findElement(deploymentAddAttachments).isDisplayed()
         );
+        driver.findElement(deployToCamundaBtn).click();
+    }
+
+    public void deployBpmnProcess(String processName) throws URISyntaxException, InterruptedException {
+        driver.findElement(deployToCamundaBtn).click();
+        driver.findElement(By.xpath("//input[@name='deployment.name']")).sendKeys("process");
+        for (int i = 0; i < 35; i++) {
+            driver.findElement(By.xpath("//input[@name='endpoint.url']")).sendKeys(Keys.BACK_SPACE);
+        }
+        driver.findElement(By.xpath("//input[@name='endpoint.url']")).sendKeys("http://localhost/bpm/engine-rest");
+        driver.findElement(By.xpath("//input[@name='endpoint.username']")).sendKeys("test");
+        driver.findElement(By.xpath("//input[@name='endpoint.password']")).sendKeys("test");
+
+        URL resource = InvoiceForm.class.getClassLoader().getResource("files/" + processName + ".bpmn");
+        driver
+            .findElement(net.serenitybdd.core.annotations.findby.By.xpath("//input[@type='file']"))
+            .sendKeys(new String(new File(resource.toURI()).getAbsolutePath()));
+        driver.findElement(By.xpath("//button[text()='Deploy']")).click();
+        sleep(1000);
+        driver.findElement(By.xpath("//h3[text()='Deployment succeeded']"));
     }
 
     public void closeDriver() {

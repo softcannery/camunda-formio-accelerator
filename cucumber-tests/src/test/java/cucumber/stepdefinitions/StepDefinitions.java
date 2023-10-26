@@ -10,6 +10,7 @@ import io.restassured.http.Cookie;
 import io.restassured.path.json.JsonPath;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Map;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.ensure.Ensure;
@@ -330,6 +331,17 @@ public class StepDefinitions {
     @And("All fields are present in 'Deploy to Camunda' menu")
     public void allFieldsArePresentInDeployToCamundaMenu() {
         camundaModelerAppPage.openDeployToCamundaMenu();
+    }
+
+    @And("Download bpmn project {string}")
+    public void downloadBpmnProject(String processName) throws URISyntaxException, InterruptedException {
+        camundaModelerAppPage.deployBpmnProcess(processName);
         camundaModelerAppPage.closeDriver();
+    }
+
+    @Then("Check process {string} is present by ID")
+    public void processIsPresent(String processName) throws InterruptedException {
+        processDefinitionId = methods.getProcessDefinitionId(processName);
+        Assert.assertTrue(processDefinitionId.contains(processName));
     }
 }
