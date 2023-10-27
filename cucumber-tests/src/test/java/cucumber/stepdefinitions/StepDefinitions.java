@@ -244,6 +244,18 @@ public class StepDefinitions {
         processCount = TaskListPage.getCountProcesses();
     }
 
+    @Then("{actor} starts process")
+    public void startProcess(Actor actor) {
+        actor.wasAbleTo(SimpleProcessUpgrade.startProcess());
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        actor.wasAbleTo(NavigateTo.theProcessCountAPIPage());
+        processCount = TaskListPage.getCountProcesses();
+    }
+
     @When("{actor} starts PDF process")
     public void startPDFProcess(Actor actor) {
         actor.wasAbleTo(PDFProcessForm.startProcess());

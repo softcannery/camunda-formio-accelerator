@@ -167,9 +167,17 @@ public class CamundaModelerAppPage {
         driver.findElement(By.xpath("//input[@name='endpoint.password']")).sendKeys("test");
 
         URL resource = InvoiceForm.class.getClassLoader().getResource("files/" + processName + ".bpmn");
+        URL review = InvoiceForm.class.getClassLoader().getResource("files/" + processName + "-review.formio");
+        URL submit = InvoiceForm.class.getClassLoader().getResource("files/" + processName + "-submit.formio");
         driver
             .findElement(net.serenitybdd.core.annotations.findby.By.xpath("//input[@type='file']"))
             .sendKeys(new String(new File(resource.toURI()).getAbsolutePath()));
+        driver
+            .findElement(net.serenitybdd.core.annotations.findby.By.xpath("//input[@type='file']"))
+            .sendKeys(new String(new File(review.toURI()).getAbsolutePath()));
+        driver
+            .findElement(net.serenitybdd.core.annotations.findby.By.xpath("//input[@type='file']"))
+            .sendKeys(new String(new File(submit.toURI()).getAbsolutePath()));
         driver.findElement(By.xpath("//button[text()='Deploy']")).click();
         sleep(2500);
         driver.findElement(By.xpath("//h3[text()='Deployment succeeded']"));
