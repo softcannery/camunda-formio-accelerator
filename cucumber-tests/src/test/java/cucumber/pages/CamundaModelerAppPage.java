@@ -179,7 +179,7 @@ public class CamundaModelerAppPage {
             .findElement(net.serenitybdd.core.annotations.findby.By.xpath("//input[@type='file']"))
             .sendKeys(new String(new File(submit.toURI()).getAbsolutePath()));
         driver.findElement(By.xpath("//button[text()='Deploy']")).click();
-        sleep(2500);
+        sleep(4000);
         driver.findElement(By.xpath("//h3[text()='Deployment succeeded']"));
     }
 
