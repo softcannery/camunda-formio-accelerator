@@ -244,18 +244,6 @@ public class StepDefinitions {
         processCount = TaskListPage.getCountProcesses();
     }
 
-    @Then("{actor} starts process")
-    public void startProcess(Actor actor) {
-        actor.wasAbleTo(SimpleProcessUpgrade.startProcess());
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        actor.wasAbleTo(NavigateTo.theProcessCountAPIPage());
-        processCount = TaskListPage.getCountProcesses();
-    }
-
     @When("{actor} starts PDF process")
     public void startPDFProcess(Actor actor) {
         actor.wasAbleTo(PDFProcessForm.startProcess());
@@ -352,8 +340,13 @@ public class StepDefinitions {
     }
 
     @Then("Check process {string} is present by ID")
-    public void processIsPresent(String processName) throws InterruptedException {
+    public void processIsPresent(String processName) {
         processDefinitionId = methods.getProcessDefinitionId(processName);
         Assert.assertTrue(processDefinitionId.contains(processName));
+    }
+
+    @And("Check all formio files are present in process {string}")
+    public void formioFilesAdded(String processName) {
+        methods.checkFormioFiles(processName);
     }
 }

@@ -59,16 +59,6 @@ public class SimpleProcessUpgrade {
         return Task.where("{0} Start Process");
     }
 
-    public static Performable startProcess() {
-        WebDriver driver = getDriver();
-        driver.findElement(By.xpath("//a[contains(text(),'Start Process')]")).click();
-        driver.findElement(By.xpath("//a[contains(text(), 'simple-task-process')]")).click();
-        driver.findElement(By.xpath("//input[@name='data[textField]']")).sendKeys("test");
-        driver.findElement(By.xpath("//input[@name='data[number]']")).sendKeys("11111");
-        driver.findElement(By.xpath("//button[@type='submit']")).click();
-        return Task.where("{0} Start Process");
-    }
-
     public static Performable submitSimpleProcess() {
         WebDriver driver = getDriver();
         driver.findElement(By.xpath("//a[contains(text(),'Tasklist')]")).click();

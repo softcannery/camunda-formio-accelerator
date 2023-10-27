@@ -12,5 +12,4 @@ Feature: Camunda Modeler plugin
     And Download bpmn project "simple-task-process"
     Given kermit is logged in to Camunda via POST
     Then Check process "simple-task-process" is present by ID
-    When he goes to the react main page
-    Then he starts process
+    And Check all formio files are present in process "simple-task-process"
