@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { useParams, BrowserRouter } from "react-router-dom";
 import FormioGenericForm from "../components/FormioGenericForm";
 
 class StartProcessPage extends Component {
   render() {
-    const { processDefinitionId, processInstanceStarted } = this.props;
+    const { processInstanceStarted } = this.props;
+    const { processDefinitionId } = useParams();
 
     if (processInstanceStarted) {
       return <div>Process instance has been started.</div>;
     } else {
       return (
-        <div>
-          <FormioGenericForm processDefinitionId={processDefinitionId} />
-        </div>
+          <div>
+            <FormioGenericForm processDefinitionId={processDefinitionId} />
+          </div>
       );
     }
   }
@@ -26,4 +27,12 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, {})(StartProcessPage));
+export default connect(mapStateToProps, {})(StartProcessPage);
+
+// // Wrap your root component with BrowserRouter
+// ReactDOM.render(
+//     <BrowserRouter>
+//       <App />
+//     </BrowserRouter>,
+//     document.getElementById("root")
+// );

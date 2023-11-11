@@ -8,13 +8,13 @@ export default class Header extends Component {
       <header className="header">
         <Menu fixed="top" inverted fluid>
           <Menu.Item>
-            <Link to="/">Deploy Process</Link>
+            <Link to=".">Deploy Process</Link>
           </Menu.Item>
           <Menu.Item>
-            <Link to="/startProcess/list">Start Process</Link>
+            <Link to="./startProcess/list">Start Process</Link>
           </Menu.Item>
           <Menu.Item>
-            <Link to="/tasklist">Tasklist</Link>
+            <Link to="./tasklist">Tasklist</Link>
           </Menu.Item>
         </Menu>
       </header>

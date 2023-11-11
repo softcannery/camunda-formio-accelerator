@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { createDeployment } from "../actions";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { useParams, BrowserRouter } from "react-router-dom";
 import { Form, Button } from "semantic-ui-react";
 import FileReaderInput from "react-file-reader-input";
 
@@ -45,22 +45,22 @@ class DeployProcess extends Component {
   render() {
     if (!this.props.processDeployment) {
       return (
-        <Form>
-          <FileReaderInput
-            as="binary"
-            id="my-file-input"
-            onChange={this.handleFileReaderInput}
-            multiple
-          >
-            <Button primary>
-              Browse Files to Deploy BPMN and Formio forms
-            </Button>
-          </FileReaderInput>
-        </Form>
+          <Form>
+            <FileReaderInput
+                as="binary"
+                id="my-file-input"
+                onChange={this.handleFileReaderInput}
+                multiple
+            >
+              <Button primary>
+                Browse Files to Deploy BPMN and Formio forms
+              </Button>
+            </FileReaderInput>
+          </Form>
       );
     } else {
       return (
-        <p>Successfully created deployment in Camunda BPMN Runtime Engine.</p>
+          <p>Successfully created deployment in Camunda BPMN Runtime Engine.</p>
       );
     }
   }
@@ -74,8 +74,14 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default withRouter(
-  connect(mapStateToProps, {
-    createDeployment,
-  })(DeployProcess),
-);
+export default connect(mapStateToProps, {
+  createDeployment,
+})(DeployProcess);
+//
+// // Wrap your root component with BrowserRouter
+// ReactDOM.render(
+//     <BrowserRouter>
+//       <App />
+//     </BrowserRouter>,
+//     document.getElementById("root")
+// );
