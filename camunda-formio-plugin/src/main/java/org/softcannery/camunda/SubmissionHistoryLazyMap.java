@@ -46,6 +46,7 @@ package org.softcannery.camunda;
 
 import java.util.AbstractMap;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -66,7 +67,10 @@ public class SubmissionHistoryLazyMap extends AbstractMap<String, Object> {
 
         return repository
             .findByInstanceIdAndSubmissionNameAndTaskId(instanceId, submissionName, taskId)
+            .stream()
+            .sorted(Comparator.comparing(SubmissionHistoryEntity::getCreatedOn).reversed())
             .map(SubmissionHistoryEntity::getValue)
+            .findFirst()
             .orElseThrow(() ->
                 new IllegalArgumentException(
                     "Undefined submission " + submissionName + " history for taskId: " + taskId
