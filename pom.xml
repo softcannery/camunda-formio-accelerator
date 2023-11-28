@@ -58,7 +58,7 @@
 
 	<groupId>com.softcannery</groupId>
 	<artifactId>camunda-formio-accelerator</artifactId>
-	<version>0.1.1-SNAPSHOT</version>
+	<version>0.1.16</version>
 	<packaging>pom</packaging>
 
 	<properties>
