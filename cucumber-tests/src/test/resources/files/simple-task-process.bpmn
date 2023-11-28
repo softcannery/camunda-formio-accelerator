@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1c372iy" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.16.0">
-  <bpmn:process id="simpleFormioTaskAction" name="Simple Formio Task Action" isExecutable="true" camunda:historyTimeToLive="0">
+  <bpmn:process id="simple-task-process" name="simple-task-process" isExecutable="true" camunda:historyTimeToLive="0">
     <bpmn:startEvent id="start" camunda:formHandlerClass="org.softcannery.camunda.FormioStartFormHandler" camunda:formKey="embedded:app:formio.html">
       <bpmn:extensionElements>
         <camunda:properties>
           <camunda:property name="formio.variable" value="start" />
           <camunda:property name="formio.outputDataSource" value="start" />
-          <camunda:property name="formio.file" value="Submit.formio" />
+          <camunda:property name="formio.file" value="simple-task-process-submit.formio" />
           <camunda:property name="formio.form" />
         </camunda:properties>
       </bpmn:extensionElements>
@@ -30,7 +30,7 @@
           <camunda:property name="formio.variable" value="review" />
           <camunda:property name="formio.inputDataSource" value="start" />
           <camunda:property name="formio.outputDataSource" value="review" />
-          <camunda:property name="formio.file" value="Review.formio" />
+          <camunda:property name="formio.file" value="simple-task-process-review.formio" />
           <camunda:property name="formio.form" />
         </camunda:properties>
       </bpmn:extensionElements>

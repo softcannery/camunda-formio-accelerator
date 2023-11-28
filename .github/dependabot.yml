@@ -14,6 +14,24 @@ updates:
       - dependency-name: "react*"
     open-pull-requests-limit: 10
 
+  - package-ecosystem: "npm"
+    directory: "/camunda-modeler-formio-plugin"
+    schedule:
+      interval: "weekly"
+    allow:
+      # Allow updates for React and any packages starting "react"
+      - dependency-name: "react*"
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: "npm"
+    directory: "/camunda-modeler-deployment-plugin"
+    schedule:
+      interval: "weekly"
+    allow:
+      # Allow updates for React and any packages starting "react"
+      - dependency-name: "react*"
+    open-pull-requests-limit: 10
+
   - package-ecosystem: "github-actions"
     # Workflow files stored in the
     # default location of `.github/workflows`

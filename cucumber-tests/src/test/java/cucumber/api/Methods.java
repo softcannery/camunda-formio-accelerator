@@ -50,6 +50,50 @@ public class Methods extends Base {
         return jpath.getString("find{it.name == '" + processName + "'}.id");
     }
 
+    public void checkFormioFiles(String processName) {
+        Map<String, String> params = new HashMap<>();
+        params.put("latest", "true");
+        params.put("active", "true");
+        params.put("startableInTasklist", "true");
+        params.put("startablePermissionCheck", "true");
+        params.put("firstResult", "0");
+        params.put("maxResults", "15");
+
+        RestAssured.baseURI = camundaUrl;
+        RequestSpecification httpRequest = RestAssured.given();
+
+        Response res = httpRequest
+            .queryParams(params)
+            .headers(this.headers)
+            .cookie(this.cookiesMap.get("XSRF"))
+            .cookie(this.cookiesMap.get("JSESSIONID"))
+            .get("camunda/api/engine/engine/default/process-definition");
+        Assertions.assertEquals(200, res.statusCode(), "Get deploymentId: response code not 200");
+
+        JsonPath jpath = new JsonPath(res.body().asString());
+        String processDefinitionId = jpath.getString("find{it.name == '" + processName + "'}.deploymentId");
+
+        res =
+            httpRequest
+                .queryParams(params)
+                .headers(this.headers)
+                .cookie(this.cookiesMap.get("XSRF"))
+                .cookie(this.cookiesMap.get("JSESSIONID"))
+                .get("camunda/api/engine/engine/default/deployment/" + processDefinitionId + "/resources");
+        Assertions.assertEquals(200, res.statusCode(), "Get deploymentId: response code not 200");
+
+        jpath = new JsonPath(res.body().asString());
+
+        Assertions.assertEquals(
+            processName + "-review.formio",
+            jpath.getString("find{it.name == '" + processName + "-review.formio'}.name")
+        );
+        Assertions.assertEquals(
+            processName + "-submit.formio",
+            jpath.getString("find{it.name == '" + processName + "-submit.formio'}.name")
+        );
+    }
+
     public String getTaskId(String processInstanceId) {
         Map<String, String> params = new HashMap<>();
         params.put("processInstanceId", processInstanceId);

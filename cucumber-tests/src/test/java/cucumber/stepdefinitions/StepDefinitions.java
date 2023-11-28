@@ -10,6 +10,7 @@ import io.restassured.http.Cookie;
 import io.restassured.path.json.JsonPath;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Map;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.ensure.Ensure;
@@ -313,9 +314,39 @@ public class StepDefinitions {
         Assert.assertTrue("'Form.io Import' button is not present", camundaModelerAppPage.isFormIoImportPresent());
     }
 
+    @Then("Deploy to Camunda button is displayed")
+    public void checkThatDeployPluginButtonPresent() {
+        Assert.assertTrue(
+            "'Deploy to Camunda' button is not present",
+            camundaModelerAppPage.isDeployToCamundaPresent()
+        );
+    }
+
     @And("All fields are present in 'Form.io Import' menu")
     public void allFieldsArePresentInFormIoImportMenu() {
         camundaModelerAppPage.openFormIoImportMenu();
         camundaModelerAppPage.closeDriver();
+    }
+
+    @And("All fields are present in 'Deploy to Camunda' menu")
+    public void allFieldsArePresentInDeployToCamundaMenu() {
+        camundaModelerAppPage.openDeployToCamundaMenu();
+    }
+
+    @And("Download bpmn project {string}")
+    public void downloadBpmnProject(String processName) throws URISyntaxException, InterruptedException {
+        camundaModelerAppPage.deployBpmnProcess(processName);
+        camundaModelerAppPage.closeDriver();
+    }
+
+    @Then("Check process {string} is present by ID")
+    public void processIsPresent(String processName) {
+        processDefinitionId = methods.getProcessDefinitionId(processName);
+        Assert.assertTrue(processDefinitionId.contains(processName));
+    }
+
+    @And("Check all formio files are present in process {string}")
+    public void formioFilesAdded(String processName) {
+        methods.checkFormioFiles(processName);
     }
 }
