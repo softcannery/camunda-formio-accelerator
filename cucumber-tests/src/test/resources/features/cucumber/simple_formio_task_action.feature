@@ -23,5 +23,6 @@ Feature: Simple Formio Task Action
     Then he should see that process "Simple Formio Task Action" is started and present in the tasks list
     When he select the first process "Simple Formio Task Action" in the tasks list
     When he completes form - Simple - "Reject"
+    When he select the first process "Simple Formio Task Action" in the tasks list
+    When he completes form - Simple - "Approve"
     Then he should see that task is disappeared
-
