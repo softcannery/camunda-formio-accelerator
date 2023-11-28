@@ -44,10 +44,6 @@
  */
 package org.softcannery.formio.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -136,7 +132,7 @@ public class SubmissionService {
             .submissionName(submissionName)
             .activityInstanceId(activityInstanceId)
             .value(new SubmissionHistoryValue(submissionValue))
-            .createdOn(entity.getCreatedOn())
+            .createdOn(new Date())
             .createdBy(userName)
             .createdFrom(remoteAddress)
             .build();
