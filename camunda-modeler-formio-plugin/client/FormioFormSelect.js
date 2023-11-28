@@ -26,7 +26,7 @@ export default function FormioFormSelect({ config, onClose }) {
     dialogAttr: {
       class: "bootstrap-iso",
     },
-    readOnly: true,
+    readOnly: false,
     noDefaultSubmitButton: true,
   };
 
