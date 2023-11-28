@@ -19,8 +19,12 @@ export default function FormioFormSelect({ config, onClose }) {
   const [showInput] = useState(config.showInput);
 
   const [formId, setFormId] = useState(config.formId);
-  const [forms] = useState(config.forms);
-  const [fileName] = useState(config.fileName);
+  const [forms, setForms] = useState(config.forms);
+  const [fileName, setFileName] = useState(config.fileName);
+  const [selectedForm, setSelectedForm] = useState(config.forms[formId]);
+  var formSchema = config.schema;
+  const fileSystem = config.fileSystem;
+
 
   const options = {
     dialogAttr: {
@@ -28,6 +32,52 @@ export default function FormioFormSelect({ config, onClose }) {
     },
     readOnly: false,
     noDefaultSubmitButton: true,
+  };
+
+  const loadFileContent = async (filePath) => {
+    try {
+      return await fileSystem.readFile(filePath, { encoding: "utf8" });
+    } catch (error) {
+      if (error.code === "EISDIR") {
+        console.log(new Error(`Cannot open directory: ${filePath}`));
+      }
+      return undefined;
+    }
+  };
+
+  const replaceFileExt = (path, srcType, dstType) => {
+    return path ? path.substring(0, path.lastIndexOf(srcType)) + dstType : null;
+  };
+
+  const handleFileInput = async (e) => {
+    const file = e.target.files[0];
+    const fileContent = await loadFileContent(file.path);
+    formSchema = JSON.parse(fileContent.contents);
+    if (!("template" in formSchema)) {
+      alert("Invalid <form.io> file. Use form project file.");
+      return;
+    }
+    setFileName(file.name);
+
+    let items = [];
+    const forms = formSchema.template.forms;
+    for (let property in forms) {
+      items.push(
+          <option key={property} value={property}>
+            {forms[property].name}
+          </option>,
+      );
+    }
+
+    setFormItems(items);
+    setForms(forms);
+
+    const formId = Object.keys(forms).length > 0 ? Object.keys(forms)[0] : "";
+
+    if (formId) {
+      setFormId(formId);
+      setSelectedForm(forms[formId]);
+    }
   };
 
   const selectStyle = {
@@ -42,6 +92,8 @@ export default function FormioFormSelect({ config, onClose }) {
       </option>,
     );
   }
+
+  const [formItems, setFormItems] = useState(items);
 
   let sources = config.dataSources.map((ds) => (
     <option key={ds.id} value={ds.id}>
@@ -60,6 +112,21 @@ export default function FormioFormSelect({ config, onClose }) {
               <div className="form-group">
                 <table>
                   <tr>
+                    <td valign={"bottom"}>
+                      <label className="btn btn-secondary" style={{ margin: "0px" }} htmlFor="formFileInput">
+                        Browse Formio Template...
+                      </label>
+                      <div style={selectStyle}>
+                        <input
+                            type="file"
+                            className="form-control"
+                            name="formFileInput"
+                            id="formFileInput"
+                            onChange={handleFileInput}
+                            accept=".formio"
+                        />
+                      </div>
+                    </td>
                     <td>
                       <label htmlFor="formSelectControl">Pick your form</label>
                       <div style={selectStyle}>
@@ -67,9 +134,9 @@ export default function FormioFormSelect({ config, onClose }) {
                           className="form-control"
                           name="formSelectControl"
                           value={formId}
-                          onChange={(event) => setFormId(event.target.value)}
+                          onChange={(event) => {setFormId(event.target.value); setSelectedForm(forms[event.target.value]);}}
                         >
-                          {items}
+                          {formItems}
                         </select>
                       </div>
                     </td>
@@ -126,7 +193,7 @@ export default function FormioFormSelect({ config, onClose }) {
 
         <h3>Preview</h3>
         <div className="bootstrap-iso">
-          <Form form={forms[formId]} options={options} />
+          <Form form={selectedForm} options={options} />
         </div>
       </Body>
 
