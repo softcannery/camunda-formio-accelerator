@@ -1,123 +1,153 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1c372iy" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.16.0">
-  <bpmn:process id="simpleFormioTaskAction" name="Simple Formio Task Action" isExecutable="true">
-    <bpmn:startEvent id="start" camunda:formHandlerClass="org.softcannery.camunda.FormioStartFormHandler" camunda:formKey="embedded:app:formio.html">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1c372iy" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.16.0">
+  <bpmn:process id="simpleFormioTaskAction" name="Simple Formio Task Action" isExecutable="true" camunda:historyTimeToLive="0">
+    <bpmn:startEvent id="start" name="start" camunda:formHandlerClass="org.softcannery.camunda.FormioStartFormHandler" camunda:formKey="embedded:app:formio.html">
       <bpmn:extensionElements>
         <camunda:properties>
           <camunda:property name="formio.variable" value="start" />
-          <camunda:property name="formio.outputDataSource" value="start" />
+          <camunda:property name="formio.outputDataSource" value="review" />
           <camunda:property name="formio.file" value="Submit.formio" />
           <camunda:property name="formio.form" />
         </camunda:properties>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_1qzpnqv</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_0qkr1xq">
-        <bpmn:targetRef>DataStoreReference_1orxayh</bpmn:targetRef>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0zqn4un">
+        <bpmn:targetRef>DataStoreReference_0lpp5zr</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_1qzpnqv" sourceRef="start" targetRef="review" />
+    <bpmn:sequenceFlow id="Flow_1qzpnqv" sourceRef="start" targetRef="Gateway_06gaviv" />
     <bpmn:endEvent id="Event_055ff3m">
       <bpmn:incoming>Flow_00pow9o</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1xylrz4" sourceRef="review" targetRef="action" />
+    <bpmn:sequenceFlow id="Flow_1xylrz4" sourceRef="review" targetRef="Gateway_17wu0tl" />
     <bpmn:userTask id="review" name="Review" camunda:formKey="embedded:app:formio.html">
       <bpmn:extensionElements>
         <camunda:inputOutput>
-          <camunda:inputParameter name="review">${formio.start.json}</camunda:inputParameter>
-          <camunda:outputParameter name="action">${formio.review.data.action}</camunda:outputParameter>
+          <camunda:inputParameter name="review">${formio.review.history['start'].json}</camunda:inputParameter>
+          <camunda:outputParameter name="outcome">${formio.review.data.action}</camunda:outputParameter>
         </camunda:inputOutput>
         <camunda:properties>
           <camunda:property name="formio.variable" value="review" />
-          <camunda:property name="formio.inputDataSource" value="start" />
+          <camunda:property name="formio.inputDataSource" value="review" />
           <camunda:property name="formio.outputDataSource" value="review" />
           <camunda:property name="formio.file" value="Review.formio" />
           <camunda:property name="formio.form" />
         </camunda:properties>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1qzpnqv</bpmn:incoming>
+      <bpmn:incoming>Flow_0l63fwb</bpmn:incoming>
       <bpmn:outgoing>Flow_1xylrz4</bpmn:outgoing>
-      <bpmn:property id="Property_0k3kydl" name="__targetRef_placeholder" />
-      <bpmn:dataInputAssociation id="DataInputAssociation_1d6vvgp">
-        <bpmn:sourceRef>DataStoreReference_1orxayh</bpmn:sourceRef>
-        <bpmn:targetRef>Property_0k3kydl</bpmn:targetRef>
+      <bpmn:property id="Property_05evu5f" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_024xod6">
+        <bpmn:sourceRef>DataStoreReference_0lpp5zr</bpmn:sourceRef>
+        <bpmn:targetRef>Property_05evu5f</bpmn:targetRef>
       </bpmn:dataInputAssociation>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_0zqn4un">
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_18abhdk">
         <bpmn:targetRef>DataStoreReference_0lpp5zr</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_00pow9o" sourceRef="action" targetRef="Event_055ff3m" />
     <bpmn:scriptTask id="action" name="Action" scriptFormat="groovy">
-      <bpmn:incoming>Flow_1xylrz4</bpmn:incoming>
+      <bpmn:incoming>Flow_1q21l07</bpmn:incoming>
       <bpmn:outgoing>Flow_00pow9o</bpmn:outgoing>
       <bpmn:property id="Property_0jj9zej" name="__targetRef_placeholder" />
       <bpmn:dataInputAssociation id="DataInputAssociation_0q1e7xs">
         <bpmn:sourceRef>DataStoreReference_0lpp5zr</bpmn:sourceRef>
         <bpmn:targetRef>Property_0jj9zej</bpmn:targetRef>
       </bpmn:dataInputAssociation>
-      <bpmn:script>println('Formio Data: ' + formio.review.data)
+      <bpmn:script>println('Formio Data Start: ' + formio.review.history['start'].data)
+println('Formio Data Review: ' + formio.review.history['review'].data)
 
-print('Variable: ' + execution.getVariable("action"));</bpmn:script>
+println('Variable: ' + outcome);</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:dataStoreReference id="DataStoreReference_1orxayh" name="start" />
     <bpmn:dataStoreReference id="DataStoreReference_0lpp5zr" name="review" />
+    <bpmn:sequenceFlow id="Flow_1q21l07" sourceRef="Gateway_17wu0tl" targetRef="action" />
+    <bpmn:sequenceFlow id="Flow_0l63fwb" sourceRef="Gateway_06gaviv" targetRef="review" />
+    <bpmn:sequenceFlow id="Flow_1w0jg7w" sourceRef="Gateway_17wu0tl" targetRef="Gateway_06gaviv">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${formio.review.data.action !=  'approve'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="Gateway_06gaviv">
+      <bpmn:incoming>Flow_1qzpnqv</bpmn:incoming>
+      <bpmn:incoming>Flow_1w0jg7w</bpmn:incoming>
+      <bpmn:outgoing>Flow_0l63fwb</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:inclusiveGateway id="Gateway_17wu0tl">
+      <bpmn:incoming>Flow_1xylrz4</bpmn:incoming>
+      <bpmn:outgoing>Flow_1q21l07</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1w0jg7w</bpmn:outgoing>
+    </bpmn:inclusiveGateway>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="simpleFormioTaskAction">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="start">
-        <dc:Bounds x="152" y="102" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_00t2t5t_di" bpmnElement="review">
-        <dc:Bounds x="280" y="80" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0depx9m_di" bpmnElement="action">
-        <dc:Bounds x="480" y="80" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataStoreReference_1orxayh_di" bpmnElement="DataStoreReference_1orxayh">
-        <dc:Bounds x="225" y="245" width="50" height="50" />
+        <dc:Bounds x="152" y="162" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="239" y="302" width="23" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataStoreReference_0lpp5zr_di" bpmnElement="DataStoreReference_0lpp5zr">
-        <dc:Bounds x="425" y="245" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="434" y="302" width="33" height="14" />
+          <dc:Bounds x="159" y="132" width="23" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_055ff3m_di" bpmnElement="Event_055ff3m">
-        <dc:Bounds x="622" y="102" width="36" height="36" />
+        <dc:Bounds x="752" y="162" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_0qkr1xq_di" bpmnElement="DataOutputAssociation_0qkr1xq">
-        <di:waypoint x="170" y="138" />
-        <di:waypoint x="170" y="270" />
-        <di:waypoint x="225" y="270" />
+      <bpmndi:BPMNShape id="Activity_00t2t5t_di" bpmnElement="review">
+        <dc:Bounds x="350" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0depx9m_di" bpmnElement="action">
+        <dc:Bounds x="610" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_0lpp5zr_di" bpmnElement="DataStoreReference_0lpp5zr">
+        <dc:Bounds x="375" y="305" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="384" y="362" width="33" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0lsi22i_di" bpmnElement="Gateway_06gaviv" isMarkerVisible="true">
+        <dc:Bounds x="235" y="155" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0efbl7q_di" bpmnElement="Gateway_17wu0tl">
+        <dc:Bounds x="495" y="155" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0zqn4un_di" bpmnElement="DataOutputAssociation_0zqn4un">
+        <di:waypoint x="170" y="198" />
+        <di:waypoint x="170" y="330" />
+        <di:waypoint x="375" y="330" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1qzpnqv_di" bpmnElement="Flow_1qzpnqv">
-        <di:waypoint x="188" y="120" />
-        <di:waypoint x="280" y="120" />
+        <di:waypoint x="188" y="180" />
+        <di:waypoint x="235" y="180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1xylrz4_di" bpmnElement="Flow_1xylrz4">
-        <di:waypoint x="380" y="120" />
-        <di:waypoint x="480" y="120" />
+        <di:waypoint x="450" y="180" />
+        <di:waypoint x="495" y="180" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataInputAssociation_1d6vvgp_di" bpmnElement="DataInputAssociation_1d6vvgp">
-        <di:waypoint x="275" y="270" />
-        <di:waypoint x="320" y="270" />
-        <di:waypoint x="320" y="160" />
+      <bpmndi:BPMNEdge id="DataInputAssociation_024xod6_di" bpmnElement="DataInputAssociation_024xod6">
+        <di:waypoint x="380" y="305" />
+        <di:waypoint x="380" y="220" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_0zqn4un_di" bpmnElement="DataOutputAssociation_0zqn4un">
-        <di:waypoint x="350" y="160" />
-        <di:waypoint x="350" y="270" />
-        <di:waypoint x="425" y="270" />
+      <bpmndi:BPMNEdge id="DataOutputAssociation_18abhdk_di" bpmnElement="DataOutputAssociation_18abhdk">
+        <di:waypoint x="420" y="220" />
+        <di:waypoint x="420" y="305" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_00pow9o_di" bpmnElement="Flow_00pow9o">
-        <di:waypoint x="580" y="120" />
-        <di:waypoint x="622" y="120" />
+        <di:waypoint x="710" y="180" />
+        <di:waypoint x="752" y="180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataInputAssociation_0q1e7xs_di" bpmnElement="DataInputAssociation_0q1e7xs">
-        <di:waypoint x="475" y="270" />
-        <di:waypoint x="530" y="270" />
-        <di:waypoint x="530" y="160" />
+        <di:waypoint x="425" y="330" />
+        <di:waypoint x="660" y="330" />
+        <di:waypoint x="660" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1q21l07_di" bpmnElement="Flow_1q21l07">
+        <di:waypoint x="545" y="180" />
+        <di:waypoint x="610" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0l63fwb_di" bpmnElement="Flow_0l63fwb">
+        <di:waypoint x="285" y="180" />
+        <di:waypoint x="350" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1w0jg7w_di" bpmnElement="Flow_1w0jg7w">
+        <di:waypoint x="520" y="155" />
+        <di:waypoint x="520" y="80" />
+        <di:waypoint x="260" y="80" />
+        <di:waypoint x="260" y="155" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

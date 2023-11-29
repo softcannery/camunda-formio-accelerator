@@ -56,7 +56,7 @@ public interface SubmissionHistoryRepository extends CrudRepository<SubmissionHi
 
     Optional<SubmissionHistoryEntity> findByInstanceIdAndTaskId(String instanceId, String taskId);
 
-    Optional<SubmissionHistoryEntity> findByInstanceIdAndSubmissionNameAndTaskId(
+    List<SubmissionHistoryEntity> findByInstanceIdAndSubmissionNameAndTaskId(
         String instanceId,
         String submissionName,
         String taskId

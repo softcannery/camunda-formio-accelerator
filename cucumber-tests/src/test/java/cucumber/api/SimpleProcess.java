@@ -46,7 +46,7 @@ public class SimpleProcess extends Base {
 
     public void completeProcess(String taskId, Map<String, String> submitAndActivityIds, String processDefinitionId) {
         Payload payload = new Payload();
-        String payloadStr = payload.readPayloadFromFile("invoiceProcessComplete.txt");
+        String payloadStr = payload.readPayloadFromFile("simpleProcessComplete.txt");
         payloadStr = payloadStr.replace("<PROCESS_DEFINITION_ID>", processDefinitionId);
         payloadStr = payloadStr.replace("<ACTIVITY_INSTANCE_ID>", submitAndActivityIds.get("activityInstanceId"));
         payloadStr = payloadStr.replace("<SUBMISSION_ID>", submitAndActivityIds.get("submissionId"));
