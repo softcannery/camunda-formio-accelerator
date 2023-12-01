@@ -1,6 +1,8 @@
 .PHONY: all clean install build up down package
 
-all: package build up logs;
+all: package docker up logs;
+
+build: prettier package docker
 
 clean:
 	@ mvn clean
@@ -22,8 +24,11 @@ healthcheck:
 bdd: healthcheck
 	@ cd cucumber-tests && mvn verify -ntp -Dcucumber.filter.tags="@web"
 
-build:
+docker:
 	@ docker compose build
+
+prettier:
+	@ mvn prettier:write
 
 package:
 	@ mvn package -ntp -DskipTests
