@@ -47,7 +47,7 @@ package org.softcannery.formio;
 import org.softcannery.camunda.FormioContext;
 import org.softcannery.camunda.FormioPlugin;
 import org.softcannery.formio.controller.FormsController;
-import org.softcannery.formio.controller.SubmissionController;
+import org.softcannery.formio.controller.SubmissionsRestResource;
 import org.softcannery.formio.model.SubmissionEntity;
 import org.softcannery.formio.model.SubmissionHistoryEntity;
 import org.softcannery.formio.repository.SubmissionHistoryRepository;
@@ -65,9 +65,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.support.SimpleTransactionScope;
 
 @Configuration
-@EnableJpaRepositories(basePackageClasses = { SubmissionRepository.class, SubmissionHistoryRepository.class })
+@EnableJpaRepositories(
+    basePackageClasses = {
+        SubmissionsRestResource.class, SubmissionRepository.class, SubmissionHistoryRepository.class,
+    }
+)
 @EntityScan(basePackageClasses = { SubmissionEntity.class, SubmissionHistoryEntity.class })
-@Import({ FormsController.class, SubmissionController.class, SubmissionService.class, FormioPlugin.class })
+@Import({ FormsController.class, SubmissionService.class, FormioPlugin.class })
 @PropertySource("classpath:config/camunda-formio-plugin.properties")
 public class FormioConfiguration {
 
