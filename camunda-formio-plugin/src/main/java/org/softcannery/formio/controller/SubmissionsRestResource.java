@@ -44,54 +44,28 @@
  */
 package org.softcannery.formio.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.softcannery.formio.model.SubmissionEntity;
 import org.softcannery.formio.model.SubmissionHistoryEntity;
-import org.softcannery.formio.repository.SubmissionHistoryRepository;
-import org.softcannery.formio.repository.SubmissionRepository;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
-@RestController
-@RequiredArgsConstructor
 @CrossOrigin
-@RequestMapping(path = "/v1/submission", consumes = "application/json", produces = "application/json")
-public class SubmissionController {
+@Repository
+@RepositoryRestResource(path = "submissions", collectionResourceRel = "submissions", itemResourceRel = "submission")
+public interface SubmissionsRestResource
+    extends
+        org.springframework.data.repository.Repository<SubmissionHistoryEntity, String>,
+        QuerydslPredicateExecutor<SubmissionHistoryEntity> {
+    Iterable<SubmissionHistoryEntity> findAll(Sort sort);
 
-    private final SubmissionRepository submissionRepository;
-    private final SubmissionHistoryRepository historyRepository;
-    private final ObjectMapper objectMapper;
+    Page<SubmissionHistoryEntity> findAll(Pageable pageable);
 
-    @GetMapping(path = "{submissionId}")
-    public ResponseEntity<JsonNode> getSubmission(@PathVariable("submissionId") String submissionId) {
-        log.debug("getSubmission: " + submissionId);
-
-        Optional<JsonNode> submission = submissionRepository
-            .findById(submissionId)
-            .map(SubmissionEntity::getValue)
-            .map(value -> objectMapper.convertValue(value, JsonNode.class));
-        return ResponseEntity.of(submission);
-    }
-
-    @GetMapping(path = "activity-instance/{activityInstanceId}")
-    public ResponseEntity<JsonNode> getSubmissionByActivityInstanceId(
-        @PathVariable("activityInstanceId") String activityInstanceId
-    ) {
-        log.debug("getSubmissionByActivityInstanceId: {}", activityInstanceId);
-
-        Optional<JsonNode> submission = historyRepository
-            .findByActivityInstanceId(activityInstanceId)
-            .map(SubmissionHistoryEntity::getValue)
-            .map(value -> objectMapper.convertValue(value, JsonNode.class));
-        return ResponseEntity.of(submission);
-    }
+    @RestResource(path = "activity-instance", rel = "activity-instance")
+    Optional<SubmissionHistoryEntity> findByActivityInstanceId(String id);
 }
