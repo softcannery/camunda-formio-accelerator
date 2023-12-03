@@ -42,21 +42,56 @@
  * INJURY CAUSED BY THAT PARTY’S NEGLIGENCE, (B) FRAUD, OR (C) ANY OTHER LIABILITY TO THE EXTENT
  * THAT IT CANNOT BE LAWFULLY EXCLUDED OR RESTRICTED.
  */
-package org.softcannery.formio.repository;
+package org.softcannery.formio.controller;
 
-import java.util.List;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.softcannery.formio.model.SubmissionEntity;
 import org.softcannery.formio.model.SubmissionHistoryEntity;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.softcannery.formio.repository.SubmissionHistoryRepository;
+import org.softcannery.formio.repository.SubmissionRepository;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Repository
-public interface SubmissionHistoryRepository extends CrudRepository<SubmissionHistoryEntity, String> {
-    List<SubmissionHistoryEntity> findByInstanceIdAndSubmissionNameAndTaskId(
-        String instanceId,
-        String submissionName,
-        String taskId
-    );
+@Slf4j
+@RestController
+@RequiredArgsConstructor
+@CrossOrigin
+@RequestMapping(path = "/v1/submission", consumes = "application/json", produces = "application/json")
+public class SubmissionController {
 
-    Optional<SubmissionHistoryEntity> findByActivityInstanceId(String activityInstanceId);
+    private final SubmissionRepository submissionRepository;
+    private final SubmissionHistoryRepository historyRepository;
+    private final ObjectMapper objectMapper;
+
+    @GetMapping(path = "{submissionId}")
+    public ResponseEntity<JsonNode> getSubmission(@PathVariable("submissionId") String submissionId) {
+        log.debug("getSubmission: " + submissionId);
+
+        Optional<JsonNode> submission = submissionRepository
+            .findById(submissionId)
+            .map(SubmissionEntity::getValue)
+            .map(value -> objectMapper.convertValue(value, JsonNode.class));
+        return ResponseEntity.of(submission);
+    }
+
+    @GetMapping(path = "activity-instance/{activityInstanceId}")
+    public ResponseEntity<JsonNode> getSubmissionByActivityInstanceId(
+        @PathVariable("activityInstanceId") String activityInstanceId
+    ) {
+        log.debug("getSubmissionByActivityInstanceId: {}", activityInstanceId);
+
+        Optional<JsonNode> submission = historyRepository
+            .findByActivityInstanceId(activityInstanceId)
+            .map(SubmissionHistoryEntity::getValue)
+            .map(value -> objectMapper.convertValue(value, JsonNode.class));
+        return ResponseEntity.of(submission);
+    }
 }
