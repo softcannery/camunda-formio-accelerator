@@ -171,11 +171,11 @@ jobs:
         with:
           distribution: "temurin"
           java-version: "17"
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: plugin
           path: ./
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: deploy-plugin
           path: ./
@@ -289,11 +289,11 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: plugin
           path: ./
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: deploy-plugin
           path: ./
