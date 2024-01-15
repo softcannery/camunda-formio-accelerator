@@ -17,7 +17,7 @@
 
     <properties>
         <java.version>17</java.version>
-        <serenity.version>4.0.30</serenity.version>
+        <serenity.version>4.0.43</serenity.version>
         <junit-vintage-engine.version>5.10.1</junit-vintage-engine.version>
         <junit-platform-suite.version>1.10.1</junit-platform-suite.version>
         <cucumber-junit-platform-engine.version>7.15.0</cucumber-junit-platform-engine.version>
