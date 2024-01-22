@@ -208,7 +208,7 @@
             <plugin>
                 <groupId>com.hubspot.maven.plugins</groupId>
                 <artifactId>prettier-maven-plugin</artifactId>
-                <version>0.21</version>
+                <version>0.22</version>
                 <configuration>
                     <skip>${skipPrettier}</skip>
                     <prettierJavaVersion>2.2.0</prettierJavaVersion>
