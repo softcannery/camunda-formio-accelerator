@@ -32,7 +32,7 @@ jobs:
           distribution: "temurin" # See 'Supported distributions' for available options
           java-version: "17"
       - name: Cache local Maven repository
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
@@ -180,7 +180,7 @@ jobs:
           name: deploy-plugin
           path: ./
       - name: Cache local Maven repository
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
@@ -228,7 +228,7 @@ jobs:
           distribution: "temurin" # See 'Supported distributions' for available options
           java-version: "17"
       - name: Cache local Maven repository
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
@@ -283,7 +283,7 @@ jobs:
           distribution: "temurin" # See 'Supported distributions' for available options
           java-version: "17"
       - name: Cache local Maven repository
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
