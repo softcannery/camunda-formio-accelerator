@@ -7,6 +7,8 @@ import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 public class SimpleProcessUpgrade {
 
@@ -52,9 +54,16 @@ public class SimpleProcessUpgrade {
     public static Performable startSimpleProcess() {
         WebDriver driver = getDriver();
         driver.findElement(By.xpath("//a[contains(text(),'Start Process')]")).click();
-        driver.findElement(By.xpath("//a[contains(text(), 'Simple Formio Task Action')]")).click();
+        Actions actions = new Actions(driver);
+        WebElement processName = driver.findElement(By.xpath("//a[contains(text(), 'Simple Formio Task Action')]"));
+        actions.moveToElement(processName).click().build().perform();
         driver.findElement(By.xpath("//input[@name='data[textField]']")).sendKeys("test");
         driver.findElement(By.xpath("//input[@name='data[number]']")).sendKeys("11111");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         driver.findElement(By.xpath("//button[@type='submit']")).click();
         return Task.where("{0} Start Process");
     }
