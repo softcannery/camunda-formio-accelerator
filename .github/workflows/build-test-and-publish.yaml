@@ -16,7 +16,7 @@ on:
 jobs:
   build-maven:
     name: Build Maven
-    runs-on: ubuntu-22.04@20231217.2.1
+    runs-on: ubuntu-22.04
     outputs:
       version: ${{ steps.version.outputs.version }}
       tag: ${{ steps.tag.outputs.tag }}
@@ -104,7 +104,7 @@ jobs:
           release: ${{ steps.tag.outputs.release }}
   build-plugin:
     name: Build Camunda Modeler Plugin
-    runs-on: ubuntu-22.04@20231217.2.1
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -131,7 +131,7 @@ jobs:
           retention-days: 1
   build-deployment-plugin:
     name: Build Camunda Modeler Deployment Plugin
-    runs-on: ubuntu-22.04@20231217.2.1
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -162,7 +162,7 @@ jobs:
       - build-plugin
       - build-deployment-plugin
       - build-maven
-    runs-on: ubuntu-22.04@20231217.2.1
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -209,6 +209,8 @@ jobs:
           cd ./cucumber-tests
           chmod +x ./healthcheck.sh
           ./healthcheck.sh
+          wget -q -O /tmp/chrome.deb https://mirror.cs.uchicago.edu/google-chrome/pool/main/g/google-chrome-stable/google-chrome-stable_116.0.5845.96-1_amd64.deb \
+          && sudo apt install -y /tmp/chrome.deb && rm /tmp/chrome.deb
       - name: Run Camunda Modeler test
         uses: coactions/setup-xvfb@v1.0.1
         with:
@@ -217,7 +219,7 @@ jobs:
   run-tests:
     name: Run Tests
     needs: [ build-maven ]
-    runs-on: ubuntu-22.04@20231217.2.1
+    runs-on: ubuntu-22.04
     permissions:
       packages: write
       contents: read
@@ -249,6 +251,8 @@ jobs:
           docker compose -f "docker-compose.yml" up -d --no-build
       - name: run cucumber tests
         run: |
+          wget -q -O /tmp/chrome.deb https://mirror.cs.uchicago.edu/google-chrome/pool/main/g/google-chrome-stable/google-chrome-stable_116.0.5845.96-1_amd64.deb \
+          && sudo apt install -y /tmp/chrome.deb && rm /tmp/chrome.deb
           cd ./cucumber-tests
           chmod +x ./healthcheck.sh
           ./healthcheck.sh
@@ -273,7 +277,7 @@ jobs:
       - build-deployment-plugin
       - run-modeler-tests
       - run-tests
-    runs-on: ubuntu-22.04@20231217.2.1
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
