@@ -23,7 +23,7 @@
         <cucumber-junit-platform-engine.version>7.15.0</cucumber-junit-platform-engine.version>
         <tags></tags>
         <webdriver.base.url></webdriver.base.url>
-        <plugin.prettier.goal>check</plugin.prettier.goal>
+        <plugin.prettier.goal>write</plugin.prettier.goal>
         <modeler.bpmnProcessFilePath>./../camunda-formio-bpmn/simple-task.bpmn</modeler.bpmnProcessFilePath>
         <skipPrettier>false</skipPrettier>
         <maven.deploy.skip>true</maven.deploy.skip>
@@ -127,7 +127,7 @@
          <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>5.6.3</version>
+            <version>5.9.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
