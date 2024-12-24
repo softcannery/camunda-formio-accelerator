@@ -32,6 +32,47 @@ camunda:
       task: true
     deployment-resource-pattern: file:config/bpmn/*.bpmn,file:config/bpmn/*.formio
 
+    plugin:
+      mail:
+        # send mails via SMTP
+        transport:
+          protocol: smtp
+
+        smtp:
+          host: ${SMTP_HOST:localhost}
+          port: 465
+          auth: true
+          ssl:
+            enable: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+
+        # poll mails via IMAPS
+        store:
+          protocol: imap
+
+        imap:
+          host: ${IMAP_HOST:localhost}
+          port: 143
+          timeout: 10000
+          # if peek :   false then the polled mails are marked as read
+          peek: false
+
+        # additional config
+        poll.folder: INBOX
+        sender: USER@google.com
+        sender.alias: User Inc
+
+        attachment:
+          download: true
+          path: attachments
+
+        # credentials
+        user: USER@gcom
+        password: PASSWORD
+
+
 server:
   port: 8080
   servlet.context-path: /

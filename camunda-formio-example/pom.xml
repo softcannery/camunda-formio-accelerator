@@ -62,6 +62,8 @@
     <camunda-formio-plugin.version>${project.version}</camunda-formio-plugin.version>
     <groovy-jsr223.version>4.0.24</groovy-jsr223.version>
     <maven.deploy.skip>true</maven.deploy.skip>
+    <camunda-bpm-mail.version>7.22.0</camunda-bpm-mail.version>
+    <greenmail.version>2.0.1</greenmail.version>
   </properties>
 
   <dependencyManagement>
@@ -116,6 +118,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.camunda.bpm.extension</groupId>
+      <artifactId>camunda-bpm-mail-spring-boot-starter</artifactId>
+      <version>${camunda-bpm-mail.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.apache.groovy</groupId>
       <artifactId>groovy-jsr223</artifactId>
       <version>${groovy-jsr223.version}</version>
@@ -167,6 +175,19 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.icegreen</groupId>
+      <artifactId>greenmail-junit5</artifactId>
+      <version>${greenmail.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
       <scope>test</scope>
     </dependency>
 
