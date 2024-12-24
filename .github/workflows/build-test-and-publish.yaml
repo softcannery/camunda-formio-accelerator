@@ -210,7 +210,7 @@ jobs:
           chmod +x ./healthcheck.sh
           ./healthcheck.sh
           wget -q -O /tmp/chrome.deb https://mirror.cs.uchicago.edu/google-chrome/pool/main/g/google-chrome-stable/google-chrome-stable_116.0.5845.96-1_amd64.deb \
-          && sudo apt install -y /tmp/chrome.deb && rm /tmp/chrome.deb
+          && sudo apt install -y /tmp/chrome.deb --allow-downgrades && rm /tmp/chrome.deb
       - name: Run Camunda Modeler test
         uses: coactions/setup-xvfb@v1.0.1
         with:
@@ -252,7 +252,7 @@ jobs:
       - name: run cucumber tests
         run: |
           wget -q -O /tmp/chrome.deb https://mirror.cs.uchicago.edu/google-chrome/pool/main/g/google-chrome-stable/google-chrome-stable_116.0.5845.96-1_amd64.deb \
-          && sudo apt install -y /tmp/chrome.deb && rm /tmp/chrome.deb
+          && sudo apt install -y /tmp/chrome.deb --allow-downgrades && rm /tmp/chrome.deb
           cd ./cucumber-tests
           chmod +x ./healthcheck.sh
           ./healthcheck.sh
