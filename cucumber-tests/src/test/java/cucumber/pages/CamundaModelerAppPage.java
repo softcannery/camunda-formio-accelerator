@@ -84,9 +84,9 @@ public class CamundaModelerAppPage {
         opt.setBinary(camundaModelerPath);
         opt.setBrowserVersion(browserVersion);
         opt.addArguments("--user-data-dir=" + userDirPath);
-//        opt.addArguments("--disable-dev-shm-usage");
-//        opt.setExperimentalOption("useAutomationExtension", false);
-//        opt.addArguments("--no-sandbox");
+        //        opt.addArguments("--disable-dev-shm-usage");
+        //        opt.setExperimentalOption("useAutomationExtension", false);
+        //        opt.addArguments("--no-sandbox");
         if (headless) {
             opt.addArguments("--headless=new");
         }
