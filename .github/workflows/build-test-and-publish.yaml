@@ -104,7 +104,7 @@ jobs:
           release: ${{ steps.tag.outputs.release }}
   build-plugin:
     name: Build Camunda Modeler Plugin
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -131,7 +131,7 @@ jobs:
           retention-days: 1
   build-deployment-plugin:
     name: Build Camunda Modeler Deployment Plugin
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -162,7 +162,7 @@ jobs:
       - build-plugin
       - build-deployment-plugin
       - build-maven
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -209,7 +209,8 @@ jobs:
           cd ./cucumber-tests
           chmod +x ./healthcheck.sh
           ./healthcheck.sh
-          chmod +x ./src/test/resources/files/chromedriver
+          wget -q -O /tmp/chrome.deb https://mirror.cs.uchicago.edu/google-chrome/pool/main/g/google-chrome-stable/google-chrome-stable_116.0.5845.96-1_amd64.deb \
+          && sudo apt install -y /tmp/chrome.deb --allow-downgrades && rm /tmp/chrome.deb
       - name: Run Camunda Modeler test
         uses: coactions/setup-xvfb@v1.0.1
         with:
@@ -274,7 +275,7 @@ jobs:
       - build-deployment-plugin
       - run-modeler-tests
       - run-tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
