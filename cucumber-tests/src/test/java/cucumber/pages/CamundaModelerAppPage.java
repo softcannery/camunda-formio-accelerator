@@ -2,7 +2,6 @@ package cucumber.pages;
 
 import static java.lang.Thread.sleep;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -79,7 +78,10 @@ public class CamundaModelerAppPage {
             }
         }
 
-        WebDriverManager.chromedriver().driverVersion(browserVersion).setup();
+        System.setProperty(
+            "webdriver.chrome.driver",
+            getClass().getClassLoader().getResource("files/chromedriver").getPath()
+        );
         ChromeOptions opt = new ChromeOptions();
         opt.setBinary(camundaModelerPath);
         opt.setBrowserVersion(browserVersion);
