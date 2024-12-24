@@ -212,7 +212,7 @@ jobs:
       - name: Run Camunda Modeler test
         uses: coactions/setup-xvfb@v1.0.1
         with:
-          run: mvn clean verify -ntp -Dcucumber.filter.tags="@modeler"
+          run: chmod +x src/test/resources/files/chromedriver && mvn clean verify -ntp -Dcucumber.filter.tags="@modeler"
           working-directory: ./cucumber-tests
   run-tests:
     name: Run Tests
