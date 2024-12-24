@@ -16,7 +16,7 @@ on:
 jobs:
   build-maven:
     name: Build Maven
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-22.04@2023-12-17
     outputs:
       version: ${{ steps.version.outputs.version }}
       tag: ${{ steps.tag.outputs.tag }}
@@ -104,7 +104,7 @@ jobs:
           release: ${{ steps.tag.outputs.release }}
   build-plugin:
     name: Build Camunda Modeler Plugin
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04@2023-12-17
     steps:
       - uses: actions/checkout@v4
         with:
@@ -131,7 +131,7 @@ jobs:
           retention-days: 1
   build-deployment-plugin:
     name: Build Camunda Modeler Deployment Plugin
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04@2023-12-17
     steps:
       - uses: actions/checkout@v4
         with:
@@ -162,7 +162,7 @@ jobs:
       - build-plugin
       - build-deployment-plugin
       - build-maven
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04@2023-12-17
     steps:
       - uses: actions/checkout@v4
         with:
@@ -217,7 +217,7 @@ jobs:
   run-tests:
     name: Run Tests
     needs: [ build-maven ]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-22.04@2023-12-17
     permissions:
       packages: write
       contents: read
@@ -273,7 +273,7 @@ jobs:
       - build-deployment-plugin
       - run-modeler-tests
       - run-tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04@2023-12-17
     steps:
       - uses: actions/checkout@v4
         with:
