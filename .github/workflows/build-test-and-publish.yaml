@@ -209,7 +209,7 @@ jobs:
           cd ./cucumber-tests
           chmod +x ./healthcheck.sh
           ./healthcheck.sh
-          chmod +x ./cucumber-tests/src/test/resources/files/chromedriver
+          chmod +x ./src/test/resources/files/chromedriver
       - name: Run Camunda Modeler test
         uses: coactions/setup-xvfb@v1.0.1
         with:
