@@ -255,7 +255,7 @@ jobs:
           && sudo apt install -y /tmp/chrome.deb --allow-downgrades && rm /tmp/chrome.deb
           cd ./cucumber-tests
           wget -q -O /tmp/chromedriver.zip https://storage.googleapis.com/chrome-for-testing-public/116.0.5845.96/linux64/chromedriver-linux64.zip \
-          && unzip /tmp/chromedriver.zip -d /tmp && sudo mv /tmp/chromedriver /usr/local/bin/chromedriver && sudo chmod +x /usr/local/bin/chromedriver
+          && unzip /tmp/chromedriver.zip -d /tmp && sudo mv /tmp/chromedriver-linux64/chromedriver /usr/local/bin/chromedriver && sudo chmod +x /usr/local/bin/chromedriver
           chmod +x ./healthcheck.sh
           ./healthcheck.sh
           mvn clean verify -ntp -Dcucumber.filter.tags="@web"
