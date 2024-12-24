@@ -42,67 +42,75 @@
  * INJURY CAUSED BY THAT PARTY’S NEGLIGENCE, (B) FRAUD, OR (C) ANY OTHER LIABILITY TO THE EXTENT
  * THAT IT CANNOT BE LAWFULLY EXCLUDED OR RESTRICTED.
  */
-package org.softcannery.formio.content.service;
 
-import java.io.IOException;
-import java.util.Map;
-import lombok.extern.slf4j.Slf4j;
-import org.softcannery.formio.content.store.File;
-import org.softcannery.formio.content.store.FileContentStore;
-import org.softcannery.formio.content.store.FileRepository;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
+package test;
 
-@Slf4j
-@RestController
-public class UploadController {
+import static org.assertj.core.api.Assertions.*;
 
-    private final FileRepository fileRepository;
-    private final FileContentStore fileContentStore;
+import com.icegreen.greenmail.configuration.GreenMailConfiguration;
+import com.icegreen.greenmail.junit5.GreenMailExtension;
+import com.icegreen.greenmail.util.GreenMailUtil;
+import com.icegreen.greenmail.util.ServerSetup;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
+import org.camunda.bpm.extension.mail.config.MailConfiguration;
+import org.camunda.bpm.extension.mail.dto.Mail;
+import org.camunda.bpm.extension.mail.notification.MailNotificationService;
+import org.camunda.bpm.extension.mail.service.MailService;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
 
-    public UploadController(@Lazy FileRepository fileRepository, @Lazy FileContentStore fileContentStore) {
-        this.fileRepository = fileRepository;
-        this.fileContentStore = fileContentStore;
+@SpringBootTest
+public class MailConfigurationTest {
+
+    public static final List<Mail> RECEIVED_MAILS = new ArrayList<>();
+
+    @SpringBootApplication
+    static class TestApp {
+
+        public static void main(String[] args) {
+            SpringApplication.run(TestApp.class, args);
+        }
+
+        @Bean
+        public Consumer<Mail> testConsumer() {
+            return RECEIVED_MAILS::add;
+        }
     }
 
-    @CrossOrigin
-    @PostMapping(path = "/upload")
-    public UploadResponse upload(@RequestParam MultipartFile file, @RequestParam String name, @RequestParam String dir)
-        throws IOException {
-        log.debug("name: " + name);
+    @RegisterExtension
+    static GreenMailExtension greenMailExtension = new GreenMailExtension(ServerSetup.SMTP_IMAP)
+        .withConfiguration(GreenMailConfiguration.aConfig().withUser("test@camunda.com", "bpmn"))
+        .withPerMethodLifecycle(false);
 
-        File upload = File
-            .builder()
-            .name(file.getName())
-            .contentLength(file.getSize())
-            .dir(dir)
-            .contentMimeType(file.getContentType())
-            .originalFileName(file.getOriginalFilename())
-            .build();
+    @Autowired
+    MailConfiguration mailConfiguration;
 
-        fileContentStore.setContent(upload, file.getInputStream());
-        fileRepository.save(upload);
+    @Autowired
+    MailService mailService;
 
-        return UploadResponse
-            .builder()
-            .name(file.getOriginalFilename())
-            .dir(dir)
-            .size(file.getSize())
-            .url(upload.getUrl())
-            .metadata(
-                Map.of(
-                    "contentUrl",
-                    upload.getContentUrl(),
-                    "contentId",
-                    upload.getContentId(),
-                    "contentMimeType",
-                    upload.getContentMimeType()
-                )
-            )
-            .build();
+    @Autowired
+    MailNotificationService mailNotificationService;
+
+    @Test
+    public void shouldMapConfigValue() {
+        assertThat(mailConfiguration.getSender()).isEqualTo("from@camunda.com");
+    }
+
+    @Test
+    public void shouldNotifyForReceivedMail() throws InterruptedException {
+        final CountDownLatch countDownLatch = new CountDownLatch(1);
+        assertThat(mailNotificationService.isRunning()).isTrue();
+        GreenMailUtil.sendTextEmail("test@camunda.com", "from@camunda.com", "mail-1", "body", ServerSetup.SMTP);
+        countDownLatch.await(10, TimeUnit.SECONDS);
+        assertThat(RECEIVED_MAILS.size()).isEqualTo(1);
     }
 }
