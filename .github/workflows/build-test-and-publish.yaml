@@ -201,7 +201,7 @@ jobs:
           docker compose -f "docker-compose.yml" up -d --no-build
       - name: install modeller
         run: |
-          wget https://downloads.camunda.cloud/release/camunda-modeler/5.30.0/camunda-modeler-5.30.0-linux-x64.tar.gz
+          wget https://downloads.camunda.cloud/release/camunda-modeler/5.16.0/camunda-modeler-5.16.0-linux-x64.tar.gz
           tar -xvf camunda-modeler*.tar.gz
           mkdir -p ~/.config/camunda-modeler/plugins
           unzip formio-plugin.zip -d ~/.config/camunda-modeler/plugins/formio-plugin
