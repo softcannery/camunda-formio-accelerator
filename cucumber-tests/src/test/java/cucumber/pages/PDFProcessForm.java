@@ -6,15 +6,14 @@ import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import org.junit.Assert;
-import org.openqa.selenium.ElementClickInterceptedException;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 
 public class PDFProcessForm {
 
     public static Performable startProcess() {
         WebDriver driver = getDriver();
+        Actions actions = new Actions(driver);
         for (int i = 0; i < 20; i++) {
             try {
                 driver.findElement(By.xpath("//a[contains(text(),'Start Process')]")).click();
@@ -40,13 +39,11 @@ public class PDFProcessForm {
         driver.findElement(By.xpath("//input[@name='data[date2]']/../input[@type='text']")).sendKeys("2023-11-11");
         driver.findElement(By.xpath("//input[@name='data[printName1]']/../input[@type='text']")).sendKeys("print name");
         driver.switchTo().defaultContent();
+
+        WebElement submitButton = driver.findElement(By.xpath("//button[@type='submit']"));
+        actions.moveToElement(submitButton).click().build().perform();
         try {
-            driver.findElement(By.xpath("//button[@type='submit']")).click();
-        } catch (ElementClickInterceptedException e) {
-            e.getMessage();
-        }
-        try {
-            driver.findElement(By.xpath("//button[@type='submit']")).click();
+            actions.moveToElement(submitButton).click().build().perform();
         } catch (ElementClickInterceptedException e) {
             e.getMessage();
         }
@@ -78,13 +75,11 @@ public class PDFProcessForm {
         Assert.assertEquals("The Facility/Site/Program field is incorrect", "site test", actualFacilitySiteProgram);
         Assert.assertEquals("The Date field is incorrect", "2023-11-11T00:00:00", actualDate);
         driver.switchTo().defaultContent();
+        Actions actions = new Actions(driver);
+        WebElement submitButton = driver.findElement(By.xpath("//button[@type='submit']"));
+        actions.moveToElement(submitButton).click().build().perform();
         try {
-            driver.findElement(By.xpath("//button[@type='submit']")).click();
-        } catch (ElementClickInterceptedException e) {
-            e.getMessage();
-        }
-        try {
-            driver.findElement(By.xpath("//button[@type='submit']")).click();
+            actions.moveToElement(submitButton).click().build().perform();
         } catch (ElementClickInterceptedException e) {
             e.getMessage();
         }

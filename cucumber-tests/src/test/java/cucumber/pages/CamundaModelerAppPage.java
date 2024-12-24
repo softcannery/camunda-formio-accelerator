@@ -2,7 +2,6 @@ package cucumber.pages;
 
 import static java.lang.Thread.sleep;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -79,11 +78,18 @@ public class CamundaModelerAppPage {
             }
         }
 
-        WebDriverManager.chromedriver().driverVersion(browserVersion).setup();
+        System.setProperty(
+            "webdriver.chrome.driver",
+            getClass().getClassLoader().getResource("files/chromedriver").getPath()
+        );
         ChromeOptions opt = new ChromeOptions();
         opt.setBinary(camundaModelerPath);
         opt.setBrowserVersion(browserVersion);
         opt.addArguments("--user-data-dir=" + userDirPath);
+        opt.addArguments("--no-sandbox");
+        opt.addArguments("disable-infobars");
+        opt.addArguments("--disable-extensions");
+        opt.addArguments("--disable-dev-shm-usage");
         if (headless) {
             opt.addArguments("--headless=new");
         }
