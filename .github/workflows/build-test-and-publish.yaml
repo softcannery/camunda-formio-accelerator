@@ -275,7 +275,7 @@ jobs:
       - build-deployment-plugin
       - run-modeler-tests
       - run-tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
