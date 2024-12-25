@@ -8,6 +8,7 @@ import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import org.junit.Assert;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 
 public class ReactMultiProcessForm {
 
@@ -32,6 +33,7 @@ public class ReactMultiProcessForm {
     }
 
     public static Performable approveMultiTasks(Actor actor) {
+        Actions actions = new Actions(getDriver());
         String[] multiTaskUsers = { "Chris", "Tyler", "Edward" };
         for (String user : multiTaskUsers) {
             actor.wasAbleTo(NavigateTo.theReactMainPage());
@@ -86,17 +88,10 @@ public class ReactMultiProcessForm {
                 Assert.assertEquals("Wrong supervisor name", supervisorName, "Joe Doe");
                 Assert.assertEquals("Wrong supervisor Email", supervisorEmail, "joe@example.com");
             }
-            try {
-                driver.findElement(By.xpath("//input[@name='data[approved]']")).click();
-            } catch (ElementClickInterceptedException e) {
-                driver.findElement(By.xpath("//input[@name='data[approved]']")).click();
-            }
-
-            try {
-                driver.findElement(By.xpath("//button[@type='submit']")).click();
-            } catch (ElementClickInterceptedException e) {
-                driver.findElement(By.xpath("//button[@type='submit']")).click();
-            }
+            WebElement approvedField = driver.findElement(By.xpath("//input[@name='data[approved]']"));
+            actions.moveToElement(approvedField).click().build().perform();
+            WebElement submitButton = driver.findElement(By.xpath("//button[@type='submit']"));
+            actions.moveToElement(submitButton).click().build().perform();
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
