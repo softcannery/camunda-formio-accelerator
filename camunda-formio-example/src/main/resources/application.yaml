@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ${JDBC_URL:jdbc:h2:./camunda-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}
+    url: ${JDBC_URL:jdbc:h2:./camunda-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;NON_KEYWORDS=value}
     username: ${JDBC_USER:sa}
     password: ${JDBC_PASSWORD:sa}
   application:
@@ -12,9 +12,11 @@ debug: false
 
 camunda:
   bpm:
-    generic-properties.properties:
-      telemetry-reporter-activate: false
-      initialize-telemetry: false
+    generic-properties:
+      properties:
+        telemetry-reporter-activate: false
+        initialize-telemetry: false
+      ignore-unknown-fields: true
     process-engine-name: default
     history-level: full
     admin-user:
@@ -29,6 +31,47 @@ camunda:
       history: true
       task: true
     deployment-resource-pattern: file:config/bpmn/*.bpmn,file:config/bpmn/*.formio
+
+    plugin:
+      mail:
+        # send mails via SMTP
+        transport:
+          protocol: smtp
+
+        smtp:
+          host: ${SMTP_HOST:localhost}
+          port: 465
+          auth: true
+          ssl:
+            enable: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+
+        # poll mails via IMAPS
+        store:
+          protocol: imap
+
+        imap:
+          host: ${IMAP_HOST:localhost}
+          port: 143
+          timeout: 10000
+          # if peek :   false then the polled mails are marked as read
+          peek: false
+
+        # additional config
+        poll.folder: INBOX
+        sender: USER@google.com
+        sender.alias: User Inc
+
+        attachment:
+          download: true
+          path: attachments
+
+        # credentials
+        user: USER@gcom
+        password: PASSWORD
+
 
 server:
   port: 8080

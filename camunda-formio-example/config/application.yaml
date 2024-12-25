@@ -61,3 +61,5 @@ camunda:
       id: kermit
       password: password
     deployment-resource-pattern: file:../camunda-formio-bpmn/*.bpmn,file:../camunda-formio-bpmn/*.formio
+
+content-base-url: http://localhost:8081/content
