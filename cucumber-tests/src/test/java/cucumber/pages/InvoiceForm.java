@@ -60,7 +60,7 @@ public class InvoiceForm extends PageObject {
         WebDriver driver = Serenity.getDriver();
         Actions actions = new Actions(driver);
         WebElement signatureField = driver.findElement(By.xpath("//*[@class='signature-pad-canvas']"));
-        actions.moveToElement(signatureField, 10, 10).clickAndHold().moveByOffset(20, 3).release().perform();
+        actions.moveToElement(signatureField, 10, 3).clickAndHold().moveByOffset(20, 6).release().perform();
         return Task.where("{0} set signature");
     }
 
