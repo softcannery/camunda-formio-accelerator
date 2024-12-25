@@ -43,8 +43,9 @@ public class PDFProcessForm {
         WebElement submitButton = driver.findElement(By.xpath("//button[@type='submit']"));
         actions.moveToElement(submitButton).click().build().perform();
         try {
+            Thread.sleep( 2000 );
             actions.moveToElement(submitButton).click().build().perform();
-        } catch (ElementClickInterceptedException e) {
+        } catch (ElementClickInterceptedException | InterruptedException e) {
             e.getMessage();
         }
         return Task.where("{0} Start Process");
