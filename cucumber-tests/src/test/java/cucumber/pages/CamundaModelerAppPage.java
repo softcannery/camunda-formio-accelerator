@@ -84,10 +84,6 @@ public class CamundaModelerAppPage {
         opt.setBinary(camundaModelerPath);
         opt.setBrowserVersion(browserVersion);
         opt.addArguments("--user-data-dir=" + userDirPath);
-        opt.addArguments("--no-sandbox");
-        opt.addArguments("disable-infobars");
-        opt.addArguments("--disable-extensions");
-        opt.addArguments("--disable-dev-shm-usage");
         if (headless) {
             opt.addArguments("--headless=new");
         }
