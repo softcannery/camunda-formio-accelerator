@@ -93,68 +93,68 @@
 	</modules>
 	<build>
 		<plugins>
-<!--			<plugin>-->
-<!--				<groupId>com.mycila</groupId>-->
-<!--				<artifactId>license-maven-plugin</artifactId>-->
-<!--				<version>4.3</version>-->
-<!--				<configuration>-->
-<!--					<properties>-->
-<!--						<owner>SoftCannery LTD</owner>-->
-<!--					</properties>-->
-<!--					<licenseSets>-->
-<!--						<licenseSet>-->
-<!--							<header>LICENSE</header>-->
-<!--							<excludes>-->
-<!--								<exclude>**/README</exclude>-->
-<!--								<exclude>**/src/test/resources/**</exclude>-->
-<!--								<exclude>**/src/main/resources/**</exclude>-->
-<!--								<exclude>**/*.html</exclude>-->
-<!--								<exclude>**/*.css</exclude>-->
-<!--								<exclude>**/*.js</exclude>-->
-<!--								<exclude>**/.codacy.yml</exclude>-->
-<!--								<exclude>**/.jshintrc</exclude>-->
-<!--							</excludes>-->
-<!--						</licenseSet>-->
-<!--					</licenseSets>-->
-<!--				</configuration>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<phase>validate</phase>-->
-<!--						<goals>-->
-<!--							<goal>${plugin.license.goal}</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--			</plugin>-->
-<!--			<plugin>-->
-<!--				<groupId>com.hubspot.maven.plugins</groupId>-->
-<!--				<artifactId>prettier-maven-plugin</artifactId>-->
-<!--				<version>0.21</version>-->
-<!--				<configuration>-->
-<!--					<skip>${skipPrettier}</skip>-->
-<!--					<prettierJavaVersion>2.2.0</prettierJavaVersion>-->
-<!--					<printWidth>120</printWidth>-->
-<!--					<tabWidth>4</tabWidth>-->
-<!--					<useTabs>false</useTabs>-->
-<!--					<ignoreConfigFile>true</ignoreConfigFile>-->
-<!--					<ignoreEditorConfig>true</ignoreEditorConfig>-->
-<!--					&lt;!&ndash; Use <inputGlobs> to override the default input patterns &ndash;&gt;-->
-<!--					<inputGlobs>-->
-<!--						&lt;!&ndash; These are the default patterns, you can omit <inputGlobs> entirely unless you want to override them &ndash;&gt;-->
-<!--						<inputGlob>**/src/main/java/**/*.java</inputGlob>-->
-<!--						<inputGlob>**/src/test/java/**/*.java</inputGlob>-->
-<!--					</inputGlobs>-->
-<!--					<endOfLine>lf</endOfLine>-->
-<!--				</configuration>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<phase>validate</phase>-->
-<!--						<goals>-->
-<!--							<goal>${plugin.prettier.goal}</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--			</plugin>-->
+			<plugin>
+				<groupId>com.mycila</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>4.3</version>
+				<configuration>
+					<properties>
+						<owner>SoftCannery LTD</owner>
+					</properties>
+					<licenseSets>
+						<licenseSet>
+							<header>LICENSE</header>
+							<excludes>
+								<exclude>**/README</exclude>
+								<exclude>**/src/test/resources/**</exclude>
+								<exclude>**/src/main/resources/**</exclude>
+								<exclude>**/*.html</exclude>
+								<exclude>**/*.css</exclude>
+								<exclude>**/*.js</exclude>
+								<exclude>**/.codacy.yml</exclude>
+								<exclude>**/.jshintrc</exclude>
+							</excludes>
+						</licenseSet>
+					</licenseSets>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>${plugin.license.goal}</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.hubspot.maven.plugins</groupId>
+				<artifactId>prettier-maven-plugin</artifactId>
+				<version>0.22</version>
+				<configuration>
+					<skip>${skipPrettier}</skip>
+					<prettierJavaVersion>2.2.0</prettierJavaVersion>
+					<printWidth>120</printWidth>
+					<tabWidth>4</tabWidth>
+					<useTabs>false</useTabs>
+					<ignoreConfigFile>true</ignoreConfigFile>
+					<ignoreEditorConfig>true</ignoreEditorConfig>
+					<!-- Use <inputGlobs> to override the default input patterns -->
+					<inputGlobs>
+						<!-- These are the default patterns, you can omit <inputGlobs> entirely unless you want to override them -->
+						<inputGlob>**/src/main/java/**/*.java</inputGlob>
+						<inputGlob>**/src/test/java/**/*.java</inputGlob>
+					</inputGlobs>
+					<endOfLine>lf</endOfLine>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>${plugin.prettier.goal}</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 	<distributionManagement>
