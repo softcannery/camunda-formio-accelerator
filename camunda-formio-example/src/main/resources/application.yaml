@@ -12,9 +12,11 @@ debug: false
 
 camunda:
   bpm:
-    generic-properties.properties:
-      telemetry-reporter-activate: false
-      initialize-telemetry: false
+    generic-properties:
+      properties:
+        telemetry-reporter-activate: false
+        initialize-telemetry: false
+      ignore-unknown-fields: true
     process-engine-name: default
     history-level: full
     admin-user:

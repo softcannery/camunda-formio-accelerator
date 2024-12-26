@@ -47,6 +47,7 @@ package org.softcannery.formio.content.service;
 import java.util.Map;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Singular;
 
 @Data
 @Builder
@@ -56,5 +57,7 @@ public class UploadResponse {
     private String name;
     private long size;
     private String dir;
+
+    @Singular("entry")
     private Map<String, String> metadata;
 }
