@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ${JDBC_URL:jdbc:h2:./camunda-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}
+    url: ${JDBC_URL:jdbc:h2:./camunda-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;NON_KEYWORDS=value}
     username: ${JDBC_USER:sa}
     password: ${JDBC_PASSWORD:sa}
   application:
