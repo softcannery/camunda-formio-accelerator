@@ -23,7 +23,7 @@
         <cucumber-junit-platform-engine.version>7.15.0</cucumber-junit-platform-engine.version>
         <tags></tags>
         <webdriver.base.url></webdriver.base.url>
-        <plugin.prettier.goal>write</plugin.prettier.goal>
+        <plugin.prettier.goal>check</plugin.prettier.goal>
         <modeler.bpmnProcessFilePath>./../camunda-formio-bpmn/simple-task.bpmn</modeler.bpmnProcessFilePath>
         <skipPrettier>false</skipPrettier>
         <maven.deploy.skip>true</maven.deploy.skip>
