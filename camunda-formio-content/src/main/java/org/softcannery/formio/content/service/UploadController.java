@@ -93,11 +93,16 @@ public class UploadController {
             .dir(dir)
             .size(file.getSize())
             .url(upload.getUrl())
-            .metadata(Map.of(
-                "contentUrl", upload.getContentUrl(),
-                "contentId", upload.getContentId(),
-                "contentMimeType", upload.getContentMimeType()
-            ))
+            .metadata(
+                Map.of(
+                    "contentUrl",
+                    upload.getContentUrl(),
+                    "contentId",
+                    upload.getContentId(),
+                    "contentMimeType",
+                    upload.getContentMimeType()
+                )
+            )
             .build();
     }
 }
