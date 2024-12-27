@@ -72,12 +72,12 @@ services:
     image: greenmail/standalone:2.1.2
     container_name: greenmail
     ports:
-      - "25:25/tcp"
-      - "110:110/tcp"
-      - "143:143/tcp"
-      - "465:465/tcp"
-      - "993:993/tcp"
-      - "995:995/tcp"
+      - "3025:25/tcp"
+      - "3110:110/tcp"
+      - "3143:143/tcp"
+      - "3465:465/tcp"
+      - "3993:993/tcp"
+      - "3995:995/tcp"
       - "8088:8080/tcp"
     environment:
       GREENMAIL_OPTS: -Dgreenmail.setup.all -Dgreenmail.hostname=0.0.0.0 -Dgreenmail.auth.disabled
@@ -104,7 +104,9 @@ services:
       SERVER_SERVLET_CONTEXT_PATH: "/bpm"
       SPRING_CONTENT_URL: "http://localhost/bpm"
       IMAP_HOST: greenmail
+      IMAP_PORT: 3143
       SMTP_HOST: greenmail
+      SMTP_PORT: 3465
 
   spring-content:
     image: ${IMG_REPO}camunda-formio-content:${IMAGE_TAG}

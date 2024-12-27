@@ -51,6 +51,7 @@ import com.icegreen.greenmail.configuration.GreenMailConfiguration;
 import com.icegreen.greenmail.junit5.GreenMailExtension;
 import com.icegreen.greenmail.util.GreenMailUtil;
 import com.icegreen.greenmail.util.ServerSetup;
+import com.icegreen.greenmail.util.ServerSetupTest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -87,7 +88,7 @@ public class MailConfigurationTest {
     }
 
     @RegisterExtension
-    static GreenMailExtension greenMailExtension = new GreenMailExtension(ServerSetup.SMTP_IMAP)
+    static GreenMailExtension greenMailExtension = new GreenMailExtension(ServerSetupTest.SMTP_IMAP)
         .withConfiguration(GreenMailConfiguration.aConfig().withUser("test@camunda.com", "bpmn"))
         .withPerMethodLifecycle(false);
 
@@ -109,7 +110,7 @@ public class MailConfigurationTest {
     public void shouldNotifyForReceivedMail() throws InterruptedException {
         final CountDownLatch countDownLatch = new CountDownLatch(1);
         assertThat(mailNotificationService.isRunning()).isTrue();
-        GreenMailUtil.sendTextEmail("test@camunda.com", "from@camunda.com", "mail-1", "body", ServerSetup.SMTP);
+        GreenMailUtil.sendTextEmail("test@camunda.com", "from@camunda.com", "mail-1", "body", ServerSetupTest.SMTP);
         countDownLatch.await(10, TimeUnit.SECONDS);
         assertThat(RECEIVED_MAILS.size()).isEqualTo(1);
     }

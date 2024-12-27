@@ -40,12 +40,12 @@ camunda:
 
         smtp:
           host: ${SMTP_HOST:localhost}
-          port: 465
+          port: ${SMTP_PORT:465}
           auth: true
           ssl:
             enable: true
           socketFactory:
-            port: 465
+            port: ${SMTP_PORT:465}
             class: javax.net.ssl.SSLSocketFactory
 
         # poll mails via IMAPS
@@ -54,7 +54,7 @@ camunda:
 
         imap:
           host: ${IMAP_HOST:localhost}
-          port: 143
+          port: ${IMAP_PORT:143)
           timeout: 10000
           # if peek :   false then the polled mails are marked as read
           peek: false

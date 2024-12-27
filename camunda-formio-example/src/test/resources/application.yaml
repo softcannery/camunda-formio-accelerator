@@ -1,7 +1,7 @@
 camunda.bpm.plugin:
   mail:
     smtp.host: localhost
-    smtp.port: 25
+    smtp.port: 3025
     smtp.auth: true
     smtp.ssl.enable: false
     smtp.socketFactory.port: 3025
@@ -10,7 +10,7 @@ camunda.bpm.plugin:
     transport.protocol: smtp
 
     imap.host: localhost
-    imap.port: 143
+    imap.port: 3143
     imap.timeout: 10000
     store.protocol: imap
 
