@@ -113,7 +113,7 @@ public class InvoiceForm extends PageObject {
     }
 
     public static Performable clickCompleteButton() {
-        return Task.where("{0} click Complete", Click.on(COMPLETE_BUTTON));
+        return Task.where("{0} click Complete", Scroll.to(COMPLETE_BUTTON), Click.on(COMPLETE_BUTTON));
     }
 
     public static Performable completeForm() {
