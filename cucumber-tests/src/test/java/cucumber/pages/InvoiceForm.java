@@ -10,6 +10,7 @@ import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
+import net.serenitybdd.screenplay.actions.Scroll;
 import net.serenitybdd.screenplay.targets.Target;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -112,7 +113,7 @@ public class InvoiceForm extends PageObject {
     }
 
     public static Performable clickCompleteButton() {
-        return Task.where("{0} click Complete", Click.on(COMPLETE_BUTTON));
+        return Task.where("{0} click Complete", Scroll.to(COMPLETE_BUTTON), Click.on(COMPLETE_BUTTON));
     }
 
     public static Performable completeForm() {
@@ -124,6 +125,6 @@ public class InvoiceForm extends PageObject {
     }
 
     public static Performable checkApproveCheckBox() {
-        return Task.where("{0} click approve", Click.on(APPROVE_CHECKBOX));
+        return Task.where("{0} click approve", Scroll.to(APPROVE_CHECKBOX), Click.on(APPROVE_CHECKBOX));
     }
 }

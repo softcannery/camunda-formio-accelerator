@@ -52,7 +52,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.6</version>
+		<version>3.4.1</version>
 		<relativePath/>
 	</parent>
 
@@ -62,7 +62,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<camunda.version>7.20.0</camunda.version>
+		<camunda.version>7.22.0</camunda.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>

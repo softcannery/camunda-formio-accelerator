@@ -8,6 +8,7 @@ import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
+import net.serenitybdd.screenplay.actions.Scroll;
 import net.serenitybdd.screenplay.targets.Target;
 
 public class SimpleProcessForm extends PageObject {
@@ -24,7 +25,7 @@ public class SimpleProcessForm extends PageObject {
     }
 
     public static Performable clickCompleteButton() {
-        return Task.where("{0} click Complete", Click.on(COMPLETE_BUTTON));
+        return Task.where("{0} click Complete", Scroll.to(COMPLETE_BUTTON), Click.on(COMPLETE_BUTTON));
     }
 
     public static Performable completeFormSimple(String action) {
