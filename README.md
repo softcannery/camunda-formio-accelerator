@@ -2,7 +2,7 @@
 
 [![release](https://img.shields.io/github/release/softcannery/camunda-formio-accelerator.svg)](https://github.com/softcannery/camunda-formio-accelerator/releases/latest)
 [![GitHub release date](https://img.shields.io/github/release-date/softcannery/camunda-formio-accelerator.svg)](https://github.com/softcannery/camunda-formio-accelerator/releases)
-[![CI](https://github.com/softcannery/camunda-formio-accelerator/actions/workflows/CI.yaml/badge.svg?branch=main)](https://github.com/softcannery/camunda-formio-accelerator/actions/workflows/build-test-and-publish.yaml)
+[![CI](https://github.com/softcannery/camunda-formio-accelerator/actions/workflows/build-test-and-publish.yaml/badge.svg?branch=main)](https://github.com/softcannery/camunda-formio-accelerator/actions/workflows/build-test-and-publish.yaml)
 [![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com)
 [![License](https://badgen.net/badge/licence/softcannery/green?icon=github)](https://raw.githubusercontent.com/softcannery/camunda-formio-accelerator/main/LICENSE)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
