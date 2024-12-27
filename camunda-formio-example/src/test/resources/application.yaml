@@ -1,34 +1,45 @@
 spring:
   datasource:
     url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
 
 camunda.bpm:
   plugin:
     mail:
-      smtp.host: localhost
-      smtp.port: 3025
-      smtp.auth: true
-      smtp.ssl.enable: false
-      smtp.socketFactory.port: 3025
-      smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+      smtp:
+        host: localhost
+        port: 3025
+        auth: true
+        ssl.enable: false
+        socketFactory:
+          port: 3025
+          class: javax.net.ssl.SSLSocketFactory
 
       transport.protocol: smtp
 
-      imap.host: localhost
-      imap.port: 3143
-      imap.timeout: 10000
-      store.protocol: imap
+      imap:
+        host: localhost
+        port: 3143
+        timeout: 10000
+        partialfetch: false
 
-      # disable partial fetching or increase the fetch size for large attachments
-      imap.partialfetch: false
+      store.protocol: imap
 
       poll.folder: INBOX
 
       sender: from@camunda.com
       sender.alias: test
 
-      attachment.download: true
-      attachment.path: target/attachments
+      attachment:
+        download: true
+        path: target/attachments
       # is used if IDLE is not supported
       notification.lookup.time: PT1S
 
