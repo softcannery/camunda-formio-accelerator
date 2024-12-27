@@ -1,34 +1,39 @@
-camunda.bpm.plugin:
-  mail:
-    smtp.host: localhost
-    smtp.port: 3025
-    smtp.auth: true
-    smtp.ssl.enable: false
-    smtp.socketFactory.port: 3025
-    smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
 
-    transport.protocol: smtp
+camunda.bpm:
+  plugin:
+    mail:
+      smtp.host: localhost
+      smtp.port: 3025
+      smtp.auth: true
+      smtp.ssl.enable: false
+      smtp.socketFactory.port: 3025
+      smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
 
-    imap.host: localhost
-    imap.port: 3143
-    imap.timeout: 10000
-    store.protocol: imap
+      transport.protocol: smtp
 
-    # disable partial fetching or increase the fetch size for large attachments
-    imap.partialfetch: false
+      imap.host: localhost
+      imap.port: 3143
+      imap.timeout: 10000
+      store.protocol: imap
 
-    poll.folder: INBOX
+      # disable partial fetching or increase the fetch size for large attachments
+      imap.partialfetch: false
 
-    sender: from@camunda.com
-    sender.alias: test
+      poll.folder: INBOX
 
-    attachment.download: true
-    attachment.path: target/attachments
-    # is used if IDLE is not supported
-    notification.lookup.time: PT1S
+      sender: from@camunda.com
+      sender.alias: test
 
-    user: test@camunda.com
-    password: bpmn
+      attachment.download: true
+      attachment.path: target/attachments
+      # is used if IDLE is not supported
+      notification.lookup.time: PT1S
+
+      user: test@camunda.com
+      password: bpmn
 
 logging:
   level:
