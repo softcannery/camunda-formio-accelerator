@@ -10,41 +10,43 @@ spring:
     hibernate:
       ddl-auto: update
 
-camunda.bpm:
-  plugin:
-    mail:
-      smtp:
-        host: localhost
-        port: 3025
-        auth: true
-        ssl.enable: false
-        socketFactory:
+camunda:
+  bpm:
+    deployment-resource-pattern: resource:processes/*.bpmn,resource:processes/*.formio
+    plugin:
+      mail:
+        smtp:
+          host: localhost
           port: 3025
-          class: javax.net.ssl.SSLSocketFactory
+          auth: true
+          ssl.enable: false
+          socketFactory:
+            port: 3025
+            class: javax.net.ssl.SSLSocketFactory
 
-      transport.protocol: smtp
+        transport.protocol: smtp
 
-      imap:
-        host: localhost
-        port: 3143
-        timeout: 10000
-        partialfetch: false
+        imap:
+          host: localhost
+          port: 3143
+          timeout: 10000
+          partialfetch: false
 
-      store.protocol: imap
+        store.protocol: imap
 
-      poll.folder: INBOX
+        poll.folder: INBOX
 
-      sender: from@camunda.com
-      sender.alias: test
+        sender: from@camunda.com
+        sender.alias: test
 
-      attachment:
-        download: true
-        path: target/attachments
-      # is used if IDLE is not supported
-      notification.lookup.time: PT1S
+        attachment:
+          download: true
+          path: target/attachments
+        # is used if IDLE is not supported
+        notification.lookup.time: PT1S
 
-      user: test@camunda.com
-      password: bpmn
+        user: test@camunda.com
+        password: bpmn
 
 logging:
   level:

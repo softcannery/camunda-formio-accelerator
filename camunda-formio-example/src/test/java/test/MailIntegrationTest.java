@@ -50,38 +50,39 @@ import static org.assertj.core.api.Assertions.*;
 import com.icegreen.greenmail.configuration.GreenMailConfiguration;
 import com.icegreen.greenmail.junit5.GreenMailExtension;
 import com.icegreen.greenmail.util.GreenMailUtil;
-import com.icegreen.greenmail.util.ServerSetup;
 import com.icegreen.greenmail.util.ServerSetupTest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+import org.camunda.bpm.engine.ManagementService;
+import org.camunda.bpm.engine.RepositoryService;
+import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.TaskService;
+import org.camunda.bpm.engine.runtime.JobQuery;
+import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.extension.mail.config.MailConfiguration;
 import org.camunda.bpm.extension.mail.dto.Mail;
 import org.camunda.bpm.extension.mail.notification.MailNotificationService;
 import org.camunda.bpm.extension.mail.service.MailService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.softcannery.example.EmbeddedTaskFormio;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("test")
-@SpringBootTest
-public class MailConfigurationTest {
+@SpringBootTest(classes = { EmbeddedTaskFormio.class, MailIntegrationTest.TestConsumer.class })
+public class MailIntegrationTest {
 
     public static final List<Mail> RECEIVED_MAILS = new ArrayList<>();
 
-    @SpringBootApplication
-    static class TestApp {
-
-        public static void main(String[] args) {
-            SpringApplication.run(TestApp.class, args);
-        }
+    @TestConfiguration
+    static class TestConsumer {
 
         @Bean
         public Consumer<Mail> testConsumer() {
@@ -103,6 +104,18 @@ public class MailConfigurationTest {
     @Autowired
     MailNotificationService mailNotificationService;
 
+    @Autowired
+    private RuntimeService runtimeService;
+
+    @Autowired
+    private TaskService taskService;
+
+    @Autowired
+    private ManagementService managementService;
+
+    @Autowired
+    private RepositoryService repositoryService;
+
     @Test
     public void shouldMapConfigValue() {
         assertThat(mailConfiguration.getSender()).isEqualTo("from@camunda.com");
@@ -116,4 +129,40 @@ public class MailConfigurationTest {
         countDownLatch.await(10, TimeUnit.SECONDS);
         assertThat(RECEIVED_MAILS.size()).isEqualTo(1);
     }
+
+    @Test
+    public void testPizzaOrderProcess() throws Exception {
+        GreenMailUtil.sendTextEmail("test@camunda.com", "from@camunda.com", "Pizza Order 1", "1 x Pepperoni", ServerSetupTest.SMTP);
+
+        runtimeService.startProcessInstanceByKey("pizzaOrderProcess");
+
+        waitForAsyncJobs();
+
+        List<Task> tasks = taskService.createTaskQuery().taskName("make the pizza").list();
+        assertThat(tasks).isNotEmpty();
+
+        for (Task task : tasks) {
+            taskService.complete(task.getId());
+        }
+
+        tasks = taskService.createTaskQuery().taskName("deliver the pizza").list();
+        assertThat(tasks).isNotEmpty();
+
+        for (Task task : tasks) {
+            taskService.complete(task.getId());
+        }
+
+        waitForAsyncJobs();
+
+        assertThat(runtimeService.createProcessInstanceQuery().list()).isEmpty();
+    }
+
+    private void waitForAsyncJobs() throws InterruptedException {
+        JobQuery jobQuery = managementService.createJobQuery().executable();
+
+        while (jobQuery.count() > 0) {
+            Thread.sleep(500);
+        }
+    }
+
 }
