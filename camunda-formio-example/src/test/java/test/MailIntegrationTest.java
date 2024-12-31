@@ -132,7 +132,13 @@ public class MailIntegrationTest {
 
     @Test
     public void testPizzaOrderProcess() throws Exception {
-        GreenMailUtil.sendTextEmail("test@camunda.com", "from@camunda.com", "Pizza Order 1", "1 x Pepperoni", ServerSetupTest.SMTP);
+        GreenMailUtil.sendTextEmail(
+            "test@camunda.com",
+            "from@camunda.com",
+            "Pizza Order 1",
+            "1 x Pepperoni",
+            ServerSetupTest.SMTP
+        );
 
         runtimeService.startProcessInstanceByKey("pizzaOrderProcess");
 
@@ -164,5 +170,4 @@ public class MailIntegrationTest {
             Thread.sleep(500);
         }
     }
-
 }
