@@ -205,6 +205,7 @@
         <configuration>
           <resourceBundles>
             <resourceBundle>com.softcannery:camunda-formio-plugin:${camunda-formio-plugin.version}</resourceBundle>
+            <resourceBundle>com.softcannery:camunda-mini-history-plugin:${camunda-formio-plugin.version}</resourceBundle>
           </resourceBundles>
         </configuration>
         <executions>
