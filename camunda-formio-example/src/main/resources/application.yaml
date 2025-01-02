@@ -36,16 +36,16 @@ camunda:
       mail:
         # send mails via SMTP
         transport:
-          protocol: smtp
+          protocol: ${MAIL_TRANSPORT_PROTOCOL:smtp}
 
         smtp:
           host: ${SMTP_HOST:localhost}
-          port: ${SMTP_PORT:465}
-          auth: true
+          port: ${SMTP_PORT:25}
+          auth: ${SMTP_AUTH:true}
           ssl:
-            enable: true
+            enable: ${SMTP_SSL_ENABLE:false}
           socketFactory:
-            port: ${SMTP_PORT:465}
+            port: ${SMTP_PORT:25}
             class: javax.net.ssl.SSLSocketFactory
 
         # poll mails via IMAPS
@@ -54,23 +54,23 @@ camunda:
 
         imap:
           host: ${IMAP_HOST:localhost}
-          port: ${IMAP_PORT:143)
-          timeout: 10000
+          port: ${IMAP_PORT:143}
+          timeout: ${IMAP_TIMEOUT:10000}
           # if peek :   false then the polled mails are marked as read
-          peek: false
+          peek: ${IMAP_PEEK:false}
 
         # additional config
         poll.folder: INBOX
-        sender: USER@google.com
-        sender.alias: User Inc
+        sender: ${MAIL_SENDER:softcannery@greenmail}
+        sender.alias: ${MAIL_SENDER_ALIAS:SoftCannery Inc.}
 
         attachment:
           download: true
           path: attachments
 
         # credentials
-        user: USER@gcom
-        password: PASSWORD
+        user: ${MAIL_USER:softcannery@greenmail}
+        password: ${MAIL_PASSWORD:greenmail}
 
 
 server:
