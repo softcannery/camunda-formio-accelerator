@@ -166,4 +166,33 @@ public class Methods extends Base {
 
         return submitAndActivityIds;
     }
+
+    private String getInstanceVariables(String processInstanceId) {
+        String payload =
+            "{\"processInstanceIdIn\":[\"" +
+            processInstanceId +
+            "\"],\"sorting\":[{\"sortBy\":\"variableName\",\"sortOrder\":\"asc\"}]}";
+        Map<String, String> params = new HashMap<>();
+        params.put("deserializeValues", "false");
+        params.put("maxResults", "50");
+        params.put("firstResult", "0");
+
+        RestAssured.baseURI = this.camundaUrl;
+        RequestSpecification httpRequest = RestAssured.given();
+
+        Response res = httpRequest
+            .headers(headers)
+            .cookie(cookiesMap.get("XSRF"))
+            .cookie(cookiesMap.get("JSESSIONID"))
+            .body(payload)
+            .urlEncodingEnabled(false)
+            .post("camunda/api/engine/engine/default/variable-instance");
+        return res.getBody().asString();
+    }
+
+    public String getVariableValueByKey(String processInstanceId, String variableKey) {
+        String valiables = getInstanceVariables(processInstanceId);
+        JsonPath jpath = new JsonPath(valiables);
+        return jpath.getString("find{it.name == '" + variableKey + "'}.value");
+    }
 }

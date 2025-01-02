@@ -108,6 +108,14 @@ public class StepDefinitions {
         Assertions.assertEquals(404, respCodeResult, "process instance was not completed");
     }
 
+    @Then("{actor} can get events variables")
+    public void checkEventVariables(Actor actor) {
+        String startVar = methods.getVariableValueByKey(processInstanceId, "startVariable");
+        Assertions.assertEquals("true", startVar, "variable on start event was not created");
+        String endVar = methods.getVariableValueByKey(processInstanceId, "endVariable");
+        Assertions.assertEquals("true", endVar, "variable on end event was not created");
+    }
+
     @When("{actor} selects start process {string}")
     public void startProcess(Actor actor, String processName) {
         actor.wasAbleTo(NavigateTo.theTaskListPage());
