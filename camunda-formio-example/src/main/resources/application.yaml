@@ -40,12 +40,12 @@ camunda:
 
         smtp:
           host: ${SMTP_HOST:localhost}
-          port: ${SMTP_PORT:465}
+          port: ${SMTP_PORT:25}
           auth: ${SMTP_AUTH:true}
           ssl:
-            enable: ${SMTP_SSL_ENABLE:true}
+            enable: ${SMTP_SSL_ENABLE:false}
           socketFactory:
-            port: ${SMTP_PORT:465}
+            port: ${SMTP_PORT:25}
             class: javax.net.ssl.SSLSocketFactory
 
         # poll mails via IMAPS

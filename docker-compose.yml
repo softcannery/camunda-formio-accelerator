@@ -118,7 +118,7 @@ services:
       IMAP_HOST: greenmail
       IMAP_PORT: 143
       SMTP_HOST: greenmail
-      SMTP_PORT: 465
+      SMTP_PORT: 25
 
   spring-content:
     image: ${IMG_REPO}camunda-formio-content:${IMAGE_TAG}
