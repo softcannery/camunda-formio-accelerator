@@ -116,9 +116,9 @@ services:
       SERVER_SERVLET_CONTEXT_PATH: "/bpm"
       SPRING_CONTENT_URL: "http://localhost/bpm"
       IMAP_HOST: greenmail
-      IMAP_PORT: 3143
+      IMAP_PORT: 143
       SMTP_HOST: greenmail
-      SMTP_PORT: 3465
+      SMTP_PORT: 465
 
   spring-content:
     image: ${IMG_REPO}camunda-formio-content:${IMAGE_TAG}
