@@ -40,17 +40,17 @@ camunda:
 
         smtp:
           host: ${SMTP_HOST:localhost}
-          port: ${SMTP_PORT:25}
+          port: ${SMTP_PORT:465}
           auth: ${SMTP_AUTH:true}
           ssl:
-            enable: ${SMTP_SSL_ENABLE:false}
+            enable: ${SMTP_SSL_ENABLE:true}
           socketFactory:
-            port: ${SMTP_PORT:25}
+            port: ${SMTP_PORT:465}
             class: javax.net.ssl.SSLSocketFactory
 
         # poll mails via IMAPS
         store:
-          protocol: imap
+          protocol: ${MAIL_STORE_PROTOCOL:imap}
 
         imap:
           host: ${IMAP_HOST:localhost}
@@ -60,16 +60,16 @@ camunda:
           peek: ${IMAP_PEEK:false}
 
         # additional config
-        poll.folder: INBOX
-        sender: ${MAIL_SENDER:softcannery@greenmail}
-        sender.alias: ${MAIL_SENDER_ALIAS:SoftCannery Inc.}
+        poll.folder: ${MAIL_POLL_FOLDER:INBOX}
+        sender: ${MAIL_SENDER:camunda@greenmail.com}
+        sender.alias: ${MAIL_SENDER_ALIAS:Camunda Bpm}
 
         attachment:
-          download: true
-          path: attachments
+          download: ${MAIL_ATTACHMENT_DOWNLOAD:true}
+          path: ${MAIL_ATTACHMENT_PATH:attachments}
 
         # credentials
-        user: ${MAIL_USER:softcannery@greenmail}
+        user: ${MAIL_USER:camunda@greenmail.com}
         password: ${MAIL_PASSWORD:greenmail}
 
 

@@ -82,6 +82,18 @@ services:
     environment:
       GREENMAIL_OPTS: -Dgreenmail.setup.all -Dgreenmail.hostname=0.0.0.0 -Dgreenmail.auth.disabled
 
+  roundcube:
+    image: roundcube/roundcubemail:latest
+    depends_on:
+      - greenmail
+    ports:
+      - 8000:80
+    environment:
+      - ROUNDCUBEMAIL_DEFAULT_HOST=greenmail  # IMAP server - tls:// prefix for STARTTLS, ssl:// for SSL/TLS
+      - ROUNDCUBEMAIL_DEFAULT_PORT=143       # IMAP port
+      - ROUNDCUBEMAIL_SMTP_SERVER=greenmail   # SMTP server - tls:// prefix for STARTTLS, ssl:// for SSL/TLS
+      - ROUNDCUBEMAIL_SMTP_PORT=25          # SMTP port
+
   camunda-bpm:
     image: ${IMG_REPO}camunda-formio-example:${IMAGE_TAG}
     build:

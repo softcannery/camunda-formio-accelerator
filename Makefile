@@ -28,6 +28,8 @@ build:
 package:
 	@ mvn package -ntp -DskipTests
 
+docker: package build
+
 up:
 	@ docker compose up -d
 
