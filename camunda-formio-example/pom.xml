@@ -126,7 +126,11 @@
       <artifactId>camunda-formio-plugin</artifactId>
       <version>${camunda-formio-plugin.version}</version>
     </dependency>
-
+<!--    <dependency>-->
+<!--      <groupId>com.datakurre</groupId>-->
+<!--      <artifactId>mini-history-plugin</artifactId>-->
+<!--      <version>0.0.3</version>-->
+<!--    </dependency>-->
     <!-- Database -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -205,7 +209,7 @@
         <configuration>
           <resourceBundles>
             <resourceBundle>com.softcannery:camunda-formio-plugin:${camunda-formio-plugin.version}</resourceBundle>
-            <resourceBundle>com.softcannery:camunda-mini-history-plugin:${camunda-formio-plugin.version}</resourceBundle>
+            <resourceBundle>com.datakurre:mini-history-plugin:0.0.3</resourceBundle>
           </resourceBundles>
         </configuration>
         <executions>
@@ -224,6 +228,11 @@
       <id>camunda-bpm-nexus</id>
       <name>camunda-bpm-nexus</name>
       <url>https://artifacts.camunda.com/artifactory/public</url>
+    </repository>
+    <repository>
+      <id>datakurre</id>
+      <name>datakurre</name>
+      <url>https://maven.pkg.github.com/datakurre/operaton-cockpit-plugins</url>
     </repository>
   </repositories>
 </project>
