@@ -126,12 +126,6 @@
       <artifactId>camunda-formio-plugin</artifactId>
       <version>${camunda-formio-plugin.version}</version>
     </dependency>
-<!--    <dependency>-->
-<!--      <groupId>com.datakurre</groupId>-->
-<!--      <artifactId>mini-history-plugin</artifactId>-->
-<!--      <version>0.0.3</version>-->
-<!--    </dependency>-->
-    <!-- Database -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -209,7 +203,7 @@
         <configuration>
           <resourceBundles>
             <resourceBundle>com.softcannery:camunda-formio-plugin:${camunda-formio-plugin.version}</resourceBundle>
-            <resourceBundle>com.datakurre:mini-history-plugin:0.0.3</resourceBundle>
+            <resourceBundle>org.operaton.bpm.extension:mini-history-plugin:1.0.1</resourceBundle>
           </resourceBundles>
         </configuration>
         <executions>
