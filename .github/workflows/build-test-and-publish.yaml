@@ -311,7 +311,7 @@ jobs:
         run: mvn package -ntp -Dmaven.test.skip
       - name: Upload new versions in maven registry
         run: |
-          mvn deploy -ntp -Drepo.login=${{ github.actor }} -Drepo.pwd=${{ secrets.GH_TOKEN }} -s .m2/settings.xml -DskipTests
+          mvn deploy -ntp -Drepo.login=${{ github.actor }} -Drepo.pwd=${{ secrets.GT_TOKEN_VK }} -s .m2/settings.xml -DskipTests
       - name: Release it
         run: |
           export PREV_VERSION=$(gh release list | grep Latest | awk '{print $3}')
