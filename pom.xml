@@ -86,7 +86,6 @@
 	</dependencies>
 
 	<modules>
-		<module>camunda-mini-history-plugin</module>
 		<module>camunda-formio-plugin</module>
 		<module>camunda-formio-content</module>
 		<module>camunda-formio-example</module>
@@ -108,7 +107,6 @@
 							<excludes>
 								<exclude>**/README</exclude>
 								<exclude>**/src/test/resources/**</exclude>
-								<exclude>**/camunda-mini-history-plugin/**</exclude>
 								<exclude>**/src/main/resources/**</exclude>
 								<exclude>**/*.html</exclude>
 								<exclude>**/*.css</exclude>
