@@ -24,6 +24,8 @@ public class Methods extends Base {
         this.cookiesMap = cookiesMap;
     }
 
+    public Methods(){};
+
     public String getProcessDefinitionId(String processName) {
         Map<String, String> params = new HashMap<>();
         params.put("latest", "true");
@@ -124,7 +126,7 @@ public class Methods extends Base {
         return res.statusCode();
     }
 
-    public void claim(String taskId) {
+    public int claim(String taskId) {
         String payload = "{\"userId\":\"kermit\"}";
         RestAssured.baseURI = this.camundaUrl;
         RequestSpecification httpRequest = RestAssured.given();
@@ -136,7 +138,7 @@ public class Methods extends Base {
             .body(payload)
             .urlEncodingEnabled(false)
             .post("camunda/api/engine/engine/default/task/" + taskId + "/claim");
-        Assertions.assertEquals(204, res.statusCode(), "Claim Process: response code is not 200");
+        return res.statusCode();
     }
 
     public Map<String, String> getFormVariables(String taskId) {
@@ -165,5 +167,20 @@ public class Methods extends Base {
         submitAndActivityIds.put("body", rbdy);
 
         return submitAndActivityIds;
+    }
+
+    public JsonPath getMailFromInbox( String emailAddress ){
+        RestAssured.baseURI = mailApiUrl;
+        RequestSpecification httpRequest = RestAssured.given();
+        Response res = httpRequest.get("api/user/" + emailAddress + "/messages");
+        ResponseBody body = res.body();
+        String rbdy = body.asString();
+        return new JsonPath(rbdy);
+    }
+
+    public void getDeleteAllMails( String emailAddress ){
+        RestAssured.baseURI = mailApiUrl;
+        RequestSpecification httpRequest = RestAssured.given();
+        httpRequest.delete("api/user/" + emailAddress );
     }
 }
