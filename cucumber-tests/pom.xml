@@ -57,7 +57,7 @@
         <dependency>
             <groupId>net.serenity-bdd</groupId>
             <artifactId>serenity-ensure</artifactId>
-            <version>${serenity.version}</version>
+            <version>4.2.9</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -146,6 +146,11 @@
             <artifactId>greenmail-junit5</artifactId>
             <version>${greenmail.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna-platform</artifactId>
+            <version>5.16.0</version>
         </dependency>
     </dependencies>
     <build>
