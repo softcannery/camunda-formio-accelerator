@@ -27,6 +27,7 @@
         <modeler.bpmnProcessFilePath>./../camunda-formio-bpmn/simple-task.bpmn</modeler.bpmnProcessFilePath>
         <skipPrettier>false</skipPrettier>
         <maven.deploy.skip>true</maven.deploy.skip>
+        <greenmail.version>2.0.1</greenmail.version>
     </properties>
     <dependencies>
         <dependency>
@@ -128,6 +129,12 @@
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>5.9.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.icegreen</groupId>
+            <artifactId>greenmail-junit5</artifactId>
+            <version>${greenmail.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

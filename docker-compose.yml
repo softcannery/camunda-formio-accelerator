@@ -68,6 +68,32 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: postgres
 
+  greenmail:
+    image: greenmail/standalone:2.1.2
+    container_name: greenmail
+    ports:
+      - "3025:25/tcp"
+      - "3110:110/tcp"
+      - "3143:143/tcp"
+      - "3465:465/tcp"
+      - "3993:993/tcp"
+      - "3995:995/tcp"
+      - "8088:8080/tcp"
+    environment:
+      GREENMAIL_OPTS: -Dgreenmail.setup.all -Dgreenmail.hostname=0.0.0.0 -Dgreenmail.auth.disabled
+
+  roundcube:
+    image: roundcube/roundcubemail:latest
+    depends_on:
+      - greenmail
+    ports:
+      - 8000:80
+    environment:
+      - ROUNDCUBEMAIL_DEFAULT_HOST=greenmail  # IMAP server - tls:// prefix for STARTTLS, ssl:// for SSL/TLS
+      - ROUNDCUBEMAIL_DEFAULT_PORT=143       # IMAP port
+      - ROUNDCUBEMAIL_SMTP_SERVER=greenmail   # SMTP server - tls:// prefix for STARTTLS, ssl:// for SSL/TLS
+      - ROUNDCUBEMAIL_SMTP_PORT=25          # SMTP port
+
   camunda-bpm:
     image: ${IMG_REPO}camunda-formio-example:${IMAGE_TAG}
     build:
@@ -89,6 +115,10 @@ services:
       CAMUNDA_BPM_ADMIN_USER_PASSWORD: password
       SERVER_SERVLET_CONTEXT_PATH: "/bpm"
       SPRING_CONTENT_URL: "http://localhost/bpm"
+      IMAP_HOST: greenmail
+      IMAP_PORT: 143
+      SMTP_HOST: greenmail
+      SMTP_PORT: 25
 
   spring-content:
     image: ${IMG_REPO}camunda-formio-content:${IMAGE_TAG}

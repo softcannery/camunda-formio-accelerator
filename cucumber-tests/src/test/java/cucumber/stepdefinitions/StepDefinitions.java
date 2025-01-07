@@ -1,5 +1,7 @@
 package cucumber.stepdefinitions;
 
+import com.icegreen.greenmail.util.GreenMailUtil;
+import com.icegreen.greenmail.util.ServerSetupTest;
 import cucumber.api.*;
 import cucumber.pages.*;
 import io.cucumber.java.en.And;
@@ -12,8 +14,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.ensure.Ensure;
+import org.awaitility.Awaitility;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 
@@ -25,6 +29,7 @@ public class StepDefinitions {
     private static Map<String, Cookie> cookiesMap;
     private static Methods methods;
     private static InvoiceProcess invoiceProcess;
+    private static PizzaProcess pizzaProcess;
     private static SimpleProcess simpleProcess;
     private static String fileURL;
     private static String processDefinitionId;
@@ -42,6 +47,12 @@ public class StepDefinitions {
         Auth auth = new Auth();
         this.cookiesMap = auth.loginPost();
         this.methods = new Methods(cookiesMap);
+    }
+
+    @Given("delete mails for user {string}")
+    public void deleteMailsFromUser(String userEmail) {
+        this.methods = new Methods();
+        methods.getDeleteAllMails(userEmail);
     }
 
     @When("{actor} starts an Invoice Process via API")
@@ -348,5 +359,42 @@ public class StepDefinitions {
     @And("Check all formio files are present in process {string}")
     public void formioFilesAdded(String processName) {
         methods.checkFormioFiles(processName);
+    }
+
+    @When("{actor} starts an Pizza Process via API")
+    public void startProcessPizzaPOST(Actor actor) {
+        pizzaProcess = new PizzaProcess(cookiesMap);
+        processDefinitionId = methods.getProcessDefinitionId("Pizza Order Process");
+        processInstanceId = pizzaProcess.submitForm(processDefinitionId);
+    }
+
+    @When("{actor} claim and complete Pizza forms for make and deliver via API")
+    public void makeThePizzaPOST(Actor actor) {
+        for (int i = 0; i < 2; i++) {
+            Awaitility.await().atMost(15, TimeUnit.SECONDS).until(() -> methods.getTaskId(processInstanceId) != null);
+            String taskId = methods.getTaskId(processInstanceId);
+            Awaitility.await().atMost(15, TimeUnit.SECONDS).until(() -> methods.claim(taskId) == 204);
+            int respCodeGetProcessInstance = methods.getProcessInstance(processInstanceId);
+            Assertions.assertEquals(200, respCodeGetProcessInstance, "process instance was not created");
+            pizzaProcess.completeForm(taskId);
+        }
+    }
+
+    @When("mail for pizza order")
+    public void sendMail() {
+        GreenMailUtil.sendTextEmail(
+            "camunda@greenmail.com",
+            "from@greenmail.com",
+            "Pizza Order 1",
+            "1 x Hawaii",
+            ServerSetupTest.SMTP
+        );
+    }
+
+    @Then("Mail about order is received from user {string}")
+    public void checkThatMailIsReceived(String userEmail) {
+        JsonPath mailJson = methods.getMailFromInbox(userEmail);
+        Assert.assertTrue(mailJson.get("subject[0]").toString().contains("RE: Pizza Order 1"));
+        Assert.assertTrue(mailJson.get("mimeMessage[0]").toString().contains("Cheers!"));
     }
 }

@@ -1,0 +1,53 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;NON_KEYWORDS=value
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
+camunda:
+  bpm:
+    deployment-resource-pattern: resource:processes/*.bpmn,resource:processes/*.formio
+    plugin:
+      mail:
+        smtp:
+          host: localhost
+          port: 3025
+          auth: true
+          ssl.enable: false
+          socketFactory:
+            port: 3025
+            class: javax.net.ssl.SSLSocketFactory
+
+        transport.protocol: smtp
+
+        imap:
+          host: localhost
+          port: 3143
+          timeout: 10000
+          partialfetch: false
+
+        store.protocol: imap
+
+        poll.folder: INBOX
+
+        sender: from@camunda.com
+        sender.alias: test
+
+        attachment:
+          download: true
+          path: target/attachments
+        # is used if IDLE is not supported
+        notification.lookup.time: PT1S
+
+        user: test@camunda.com
+        password: bpmn
+
+logging:
+  level:
+    root: INFO

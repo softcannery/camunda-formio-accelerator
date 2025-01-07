@@ -32,6 +32,47 @@ camunda:
       task: true
     deployment-resource-pattern: file:config/bpmn/*.bpmn,file:config/bpmn/*.formio
 
+    plugin:
+      mail:
+        # send mails via SMTP
+        transport:
+          protocol: ${MAIL_TRANSPORT_PROTOCOL:smtp}
+
+        smtp:
+          host: ${SMTP_HOST:localhost}
+          port: ${SMTP_PORT:25}
+          auth: ${SMTP_AUTH:true}
+          ssl:
+            enable: ${SMTP_SSL_ENABLE:false}
+          socketFactory:
+            port: ${SMTP_PORT:25}
+            class: javax.net.ssl.SSLSocketFactory
+
+        # poll mails via IMAPS
+        store:
+          protocol: ${MAIL_STORE_PROTOCOL:imap}
+
+        imap:
+          host: ${IMAP_HOST:localhost}
+          port: ${IMAP_PORT:143}
+          timeout: ${IMAP_TIMEOUT:10000}
+          # if peek :   false then the polled mails are marked as read
+          peek: ${IMAP_PEEK:false}
+
+        # additional config
+        poll.folder: ${MAIL_POLL_FOLDER:INBOX}
+        sender: ${MAIL_SENDER:camunda@greenmail.com}
+        sender.alias: ${MAIL_SENDER_ALIAS:Camunda Bpm}
+
+        attachment:
+          download: ${MAIL_ATTACHMENT_DOWNLOAD:true}
+          path: ${MAIL_ATTACHMENT_PATH:attachments}
+
+        # credentials
+        user: ${MAIL_USER:camunda@greenmail.com}
+        password: ${MAIL_PASSWORD:greenmail}
+
+
 server:
   port: 8080
   servlet.context-path: /
