@@ -64,8 +64,8 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${PSSWRD}
+      POSTGRES_USER: ${POSTGRES_ADMIN}
 
   greenmail:
     image: greenmail/standalone:2.1.2
@@ -107,14 +107,14 @@ services:
       - ${BPMN_DIR}:/opt/config/bpmn
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_ADMIN}
+      SPRING_DATASOURCE_PASSWORD: ${PSSWRD}
       SPRING_JPA_GENERATE_DDL: "true"
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      CAMUNDA_BPM_ADMIN_USER_ID: kermit
-      CAMUNDA_BPM_ADMIN_USER_PASSWORD: password
-      SERVER_SERVLET_CONTEXT_PATH: "/"
-      SPRING_CONTENT_URL: "http://localhost/"
+      CAMUNDA_BPM_ADMIN_USER_ID: ${CAMUNDA_ADMIN}
+      CAMUNDA_BPM_ADMIN_USER_PASSWORD: ${PSSWRD}
+      SERVER_SERVLET_CONTEXT_PATH: "/bpm"
+      SPRING_CONTENT_URL: "http://localhost/bpm"
       IMAP_HOST: greenmail
       IMAP_PORT: 143
       SMTP_HOST: greenmail
@@ -131,8 +131,8 @@ services:
       - files:/mnt/files
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_ADMIN}
+      SPRING_DATASOURCE_PASSWORD: ${PSSWRD}
       SPRING_JPA_GENERATE_DDL: "true"
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_CONTENT_FS_FILESYSTEM_ROOT: /mnt/files
@@ -150,9 +150,15 @@ services:
       - start-dev
       - --import-realm
     environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${PSSWRD}
       KEYCLOAK_FRONTEND_URL: "http://localhost/auth"
+      PROXY_ADDRESS_FORWARDING: "true"
+      KC_HTTP_RELATIVE_PATH: "/auth"
+      KC_DB: "postgres"
+      KC_DB_URL: "jdbc:postgresql://postgres:5432/postgres"
+      KC_DB_USERNAME: ${POSTGRES_ADMIN}
+      KC_DB_PASSWORD: ${PSSWRD}
     volumes:
       - ./nginx/camunda-realm.json:/opt/keycloak/data/import/camunda-realm.json
 
