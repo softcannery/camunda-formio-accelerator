@@ -14,5 +14,5 @@ Feature: Process with Emails integration
     And kermit is logged in to Camunda via POST
     When he starts an Pizza Process via API
     Then kermit claim and complete Pizza forms for make and deliver via API
-    Then Mail about order is received from user "from@greenmail.com"
     Then he should see that process not in the list via API
+    Then Mail about order is received from user "from@greenmail.com"
