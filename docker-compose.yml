@@ -84,6 +84,7 @@ services:
 
   roundcube:
     image: roundcube/roundcubemail:latest
+    container_name: roundcube
     depends_on:
       - greenmail
     ports:
