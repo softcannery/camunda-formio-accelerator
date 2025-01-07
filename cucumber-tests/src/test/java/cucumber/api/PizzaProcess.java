@@ -5,17 +5,16 @@ import io.restassured.http.Cookie;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.Assertions;
-
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.jupiter.api.Assertions;
 
 public class PizzaProcess extends Base {
 
     private final Map<String, String> headers = new HashMap<>();
     private final Map<String, Cookie> cookiesMap;
 
-    public PizzaProcess( Map<String, Cookie> cookiesMap) {
+    public PizzaProcess(Map<String, Cookie> cookiesMap) {
         this.headers.put("Accept", "application/hal+json, application/json; q=0.5");
         this.headers.put("Content-Type", "application/json");
         this.headers.put("Origin", camundaUrl);
@@ -41,17 +40,17 @@ public class PizzaProcess extends Base {
         return jpath.getString("id");
     }
 
-    public void completeForm( String taskId ) {
+    public void completeForm(String taskId) {
         RestAssured.baseURI = camundaUrl;
         RequestSpecification httpRequest = RestAssured.given();
 
         Response res = httpRequest
-                .headers(headers)
-                .cookie(cookiesMap.get("XSRF"))
-                .cookie(cookiesMap.get("JSESSIONID"))
-                .body("{\"variables\":{}}")
-                .urlEncodingEnabled(false)
-                .post("camunda/api/engine/engine/default/task/" + taskId + "/submit-form");
+            .headers(headers)
+            .cookie(cookiesMap.get("XSRF"))
+            .cookie(cookiesMap.get("JSESSIONID"))
+            .body("{\"variables\":{}}")
+            .urlEncodingEnabled(false)
+            .post("camunda/api/engine/engine/default/task/" + taskId + "/submit-form");
         Assertions.assertEquals(204, res.statusCode(), "Complete Process: response code is not 204");
     }
 }

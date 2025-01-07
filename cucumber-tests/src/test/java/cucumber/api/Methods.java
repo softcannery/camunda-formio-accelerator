@@ -24,7 +24,7 @@ public class Methods extends Base {
         this.cookiesMap = cookiesMap;
     }
 
-    public Methods(){};
+    public Methods() {}
 
     public String getProcessDefinitionId(String processName) {
         Map<String, String> params = new HashMap<>();
@@ -169,7 +169,7 @@ public class Methods extends Base {
         return submitAndActivityIds;
     }
 
-    public JsonPath getMailFromInbox( String emailAddress ){
+    public JsonPath getMailFromInbox(String emailAddress) {
         RestAssured.baseURI = mailApiUrl;
         RequestSpecification httpRequest = RestAssured.given();
         Response res = httpRequest.get("api/user/" + emailAddress + "/messages");
@@ -178,9 +178,9 @@ public class Methods extends Base {
         return new JsonPath(rbdy);
     }
 
-    public void getDeleteAllMails( String emailAddress ){
+    public void getDeleteAllMails(String emailAddress) {
         RestAssured.baseURI = mailApiUrl;
         RequestSpecification httpRequest = RestAssured.given();
-        httpRequest.delete("api/user/" + emailAddress );
+        httpRequest.delete("api/user/" + emailAddress);
     }
 }
