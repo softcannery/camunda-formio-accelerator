@@ -1,13 +1,16 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { createDeployment } from "../actions";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Form, Button } from "semantic-ui-react";
 import FileReaderInput from "react-file-reader-input";
 
-class DeployProcess extends Component {
-  handleFileReaderInput = (e, results) => {
-    const files = results.map((result) => this.readFile(result));
+const DeployProcess = ({ processDeployment, createDeployment }) => {
+  const navigate = useNavigate();
+  const params = useParams();
+
+  const handleFileReaderInput = (e, results) => {
+    const files = results.map((result) => readFile(result));
 
     console.info("Selected files", files);
 
@@ -23,59 +26,50 @@ class DeployProcess extends Component {
         files: files,
       };
 
-      this.uploadDeployment(deployment);
+      uploadDeployment(deployment);
     } else {
       console.error("Bpmn process diagram is required for deployment.");
     }
   };
 
-  readFile(result) {
+  const readFile = (result) => {
     const [e, file] = result;
 
     return {
       name: file.name,
       contents: new File([e.target.result], file.name),
     };
-  }
+  };
 
-  uploadDeployment(deployment) {
-    this.props.createDeployment(deployment);
-  }
+  const uploadDeployment = (deployment) => {
+    createDeployment(deployment);
+  };
 
-  render() {
-    if (!this.props.processDeployment) {
-      return (
-        <Form>
-          <FileReaderInput
-            as="binary"
-            id="my-file-input"
-            onChange={this.handleFileReaderInput}
-            multiple
-          >
-            <Button primary>
-              Browse Files to Deploy BPMN and Formio forms
-            </Button>
-          </FileReaderInput>
-        </Form>
-      );
-    } else {
-      return (
-        <p>Successfully created deployment in Camunda BPMN Runtime Engine.</p>
-      );
-    }
-  }
-}
+  return (
+      !processDeployment ? (
+          <Form>
+            <FileReaderInput
+                as="binary"
+                id="my-file-input"
+                onChange={handleFileReaderInput}
+                multiple
+            >
+              <Button primary>
+                Browse Files to Deploy BPMN and Formio forms
+              </Button>
+            </FileReaderInput>
+          </Form>
+      ) : (
+          <p>Successfully created deployment in Camunda BPMN Runtime Engine.</p>
+      )
+  );
+};
 
 const mapStateToProps = (state, ownProps) => {
-  const params = ownProps.match.params;
   return {
-    ...params,
+    ...useParams(),
     ...state.entities,
   };
 };
 
-export default withRouter(
-  connect(mapStateToProps, {
-    createDeployment,
-  })(DeployProcess),
-);
+export default connect(mapStateToProps, { createDeployment })(DeployProcess);

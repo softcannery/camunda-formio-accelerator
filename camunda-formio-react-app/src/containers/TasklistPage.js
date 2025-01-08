@@ -1,18 +1,19 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { withRouter, Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { List, Grid, Container } from "semantic-ui-react";
 import { loadTasks } from "../actions";
 import Taskform from "../components/Taskform";
 import sortBy from "lodash/sortBy";
 
-class TasklistPage extends Component {
-  componentWillMount() {
-    this.props.loadTasks();
-  }
+const TasklistPage = ({ loadTasks, task, processDefinitionId }) => {
+  const { processDefinitionIdParam } = useParams();
 
-  renderItem(task) {
-    return (
+  useEffect(() => {
+    loadTasks();
+  }, [loadTasks]);
+
+  const renderItem = (task) => (
       <List.Item key={task.id}>
         <List.Icon name="browser" size="large" verticalAlign="middle" />
         <List.Content>
@@ -22,48 +23,35 @@ class TasklistPage extends Component {
           </Link>
         </List.Content>
       </List.Item>
-    );
-  }
+  );
 
-  render() {
-    let { task } = this.props;
-    let taskForm = "";
-    if (this.props.processDefinitionId) {
-      taskForm = <Taskform />;
-    } else {
-      taskForm = <Container>Please choose task.</Container>;
-    }
+  let taskForm = processDefinitionId ? (
+      <Taskform />
+  ) : (
+      <Container>Please choose task.</Container>
+  );
 
-    if (!task) {
-      return <Container>Loading tasks</Container>;
-    } else {
-      task = sortBy(task, "created").reverse();
-      return (
+  if (!task) {
+    return <Container>Loading tasks</Container>;
+  } else {
+    task = sortBy(task, "created").reverse();
+    return (
         <Grid divided>
           <Grid.Row>
             <Grid.Column width={4}>
               <List divided relaxed>
-                {task.map((item) => this.renderItem(item))}
+                {task.map((item) => renderItem(item))}
               </List>
             </Grid.Column>
             <Grid.Column width={12}>{taskForm}</Grid.Column>
           </Grid.Row>
         </Grid>
-      );
-    }
+    );
   }
-}
-
-const mapStateToProps = (state, ownProps) => {
-  const params = ownProps.match.params;
-  return {
-    ...params,
-    ...state.entities,
-  };
 };
 
-export default withRouter(
-  connect(mapStateToProps, {
-    loadTasks,
-  })(TasklistPage),
-);
+const mapStateToProps = (state) => ({
+  ...state.entities,
+});
+
+export default connect(mapStateToProps, { loadTasks })(TasklistPage);

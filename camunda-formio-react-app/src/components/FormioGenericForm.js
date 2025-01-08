@@ -1,114 +1,45 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import {
-  completeTask,
-  fetchFormDefinition,
-  loadTaskVariables,
-  startProcessInstance,
-} from "../actions";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { completeTask, fetchFormDefinition, loadTaskVariables, startProcessInstance } from "../actions";
 import { connect } from "react-redux";
 import FormioForm from "./FormioForm";
 
-class FormioGenericForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { submission: "", loaded: false, formValid: false };
-    this.handleStartInstance = this.handleStartInstance.bind(this);
-    this.handleComplete = this.handleComplete.bind(this);
-    this.handleSubmissionChange = this.handleSubmissionChange.bind(this);
-  }
+const FormioGenericForm = ({ processDeployment, createDeployment, dispatch }) => {
+  const [state, setState] = useState({ submission: "", loaded: false, formValid: false });
+  const { taskId, processDefinitionId } = useParams();
+  const navigate = useNavigate();
 
-  componentDidMount() {
-    this.loadFormData();
-  }
+  useEffect(() => {
+    loadFormData();
+  }, [taskId, processDefinitionId]);
 
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      !this.state.loaded ||
-      this.props.taskId !== prevProps.taskId ||
-      this.props.processDefinitionId !== prevProps.processDefinitionId
-    ) {
-      this.loadFormData();
-    }
-  }
+  const loadFormData = () => {
+    setState((prevState) => ({ ...prevState, loaded: true }));
 
-  renderStartForm(formSchema) {
-    return (
-      <div className="generic-form">
-        <FormioForm
-          formSchema={formSchema}
-          formValid={this.state.formValid}
-          onSubmit={this.handleStartInstance}
-          onSubmissionChange={this.handleSubmissionChange}
-        />
-      </div>
-    );
-  }
+    dispatch(fetchFormDefinition(processDefinitionId, taskId)).then((formDefinition) => {
+      const formSchema = formDefinition.response;
 
-  renderTaskForm(formSchema, formSubmission) {
-    return (
-      <div className="generic-form">
-        <FormioForm
-          formSchema={formSchema}
-          formSubmission={formSubmission}
-          formValid={this.state.formValid}
-          onSubmit={this.handleComplete}
-          onSubmissionChange={this.handleSubmissionChange}
-        />
-      </div>
-    );
-  }
+      if (taskId == null) {
+        setState((prevState) => ({ ...prevState, formSchema: formSchema }));
+        return;
+      }
 
-  render() {
-    const { taskId } = this.props;
+      let variables = {};
+      let submission = { data: {} };
+      variables[formSchema.submissionInVariable] = null;
+      for (let c of formSchema.components) {
+        variables[c.key] = null;
+      }
+      dispatch(loadTaskVariables(taskId, variables)).then((formVariables) => {
+        variables = formVariables.response.entities.taskVariables.variables;
+        submission = JSON.parse(variables[formSchema.submissionInVariable] || "{}");
+        submission = updateSubmission(formSchema, submission, variables);
+        setState((prevState) => ({ ...prevState, formSchema: formSchema, formSubmission: submission }));
+      });
+    });
+  };
 
-    if (!this.state.formSchema) {
-      return <div>Loading Form Schema...</div>;
-    }
-
-    if (taskId == null) {
-      return this.renderStartForm(this.state.formSchema);
-    } else {
-      return this.renderTaskForm(
-        this.state.formSchema,
-        this.state.formSubmission,
-      );
-    }
-  }
-
-  loadFormData() {
-    const { taskId, processDefinitionId, dispatch } = this.props;
-    const self = this;
-    this.setState({ loaded: true });
-
-    dispatch(fetchFormDefinition(processDefinitionId, taskId)).then(
-      (formDefinition) => {
-        const formSchema = formDefinition.response;
-
-        if (taskId == null) {
-          self.setState({ formSchema: formSchema });
-          return;
-        }
-
-        let variables = {};
-        let submission = { data: {} };
-        variables[formSchema.submissionInVariable] = null;
-        for (let c of formSchema.components) {
-          variables[c.key] = null;
-        }
-        dispatch(loadTaskVariables(taskId, variables)).then((formVariables) => {
-          variables = formVariables.response.entities.taskVariables.variables;
-          submission = JSON.parse(
-            variables[formSchema.submissionInVariable] || "{}",
-          );
-          submission = this.updateSubmission(formSchema, submission, variables);
-          self.setState({ formSchema: formSchema, formSubmission: submission });
-        });
-      },
-    );
-  }
-
-  updateSubmission(formSchema, submission, variables) {
+  const updateSubmission = (formSchema, submission, variables) => {
     let sub = submission;
     for (let c of formSchema.components) {
       if (c.key in variables) {
@@ -117,27 +48,25 @@ class FormioGenericForm extends Component {
       }
     }
     return sub;
-  }
+  };
 
-  handleSubmissionChange(e) {
-    this.setState({ submission: e, formValid: e.isValid });
-  }
+  const handleSubmissionChange = (e) => {
+    setState((prevState) => ({ ...prevState, submission: e, formValid: e.isValid }));
+  };
 
-  handleComplete(values, dispatch) {
-    const { taskId } = this.props;
-    const form = this.state.formSchema;
-    const body = this.getBody(form, { data: this.state.submission.data });
+  const handleComplete = (values) => {
+    const form = state.formSchema;
+    const body = getBody(form, { data: state.submission.data });
     return dispatch(completeTask(taskId, body));
-  }
+  };
 
-  handleStartInstance(values, dispatch) {
-    const { processDefinitionId } = this.props;
-    const form = this.state.formSchema;
-    const body = this.getBody(form, { data: this.state.submission.data });
+  const handleStartInstance = (values) => {
+    const form = state.formSchema;
+    const body = getBody(form, { data: state.submission.data });
     return dispatch(startProcessInstance(processDefinitionId, body));
-  }
+  };
 
-  getBody(formSchema, submission) {
+  const getBody = (formSchema, submission) => {
     let variables = {};
     variables[formSchema.submissionOutVariable] = {
       value: JSON.stringify(submission),
@@ -146,18 +75,40 @@ class FormioGenericForm extends Component {
     return {
       variables: variables,
     };
-  }
-}
-
-const mapStateToProps = (state, ownProps) => {
-  const params = ownProps.match.params;
-  return {
-    ...params,
-    ...state.entities,
-    ...ownProps,
   };
+
+  const renderStartForm = (formSchema) => (
+      <div className="generic-form">
+        <FormioForm
+            formSchema={formSchema}
+            formValid={state.formValid}
+            onSubmit={handleStartInstance}
+            onSubmissionChange={handleSubmissionChange}
+        />
+      </div>
+  );
+
+  const renderTaskForm = (formSchema, formSubmission) => (
+      <div className="generic-form">
+        <FormioForm
+            formSchema={formSchema}
+            formSubmission={formSubmission}
+            formValid={state.formValid}
+            onSubmit={handleComplete}
+            onSubmissionChange={handleSubmissionChange}
+        />
+      </div>
+  );
+
+  if (!state.formSchema) {
+    return <div>Loading Form Schema...</div>;
+  }
+
+  return taskId == null ? renderStartForm(state.formSchema) : renderTaskForm(state.formSchema, state.formSubmission);
 };
 
-FormioGenericForm = withRouter(connect(mapStateToProps)(FormioGenericForm));
+const mapStateToProps = (state, ownProps) => ({
+  ...state.entities,
+});
 
-export default FormioGenericForm;
+export default connect(mapStateToProps)(FormioGenericForm);

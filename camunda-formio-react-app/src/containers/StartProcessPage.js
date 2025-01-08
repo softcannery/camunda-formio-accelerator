@@ -1,29 +1,24 @@
-import React, { Component } from "react";
+import React from "react";
+import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import FormioGenericForm from "../components/FormioGenericForm";
 
-class StartProcessPage extends Component {
-  render() {
-    const { processDefinitionId, processInstanceStarted } = this.props;
+const StartProcessPage = ({ processInstanceStarted, ...props }) => {
+  const { processDefinitionId } = useParams();
 
-    if (processInstanceStarted) {
-      return <div>Process instance has been started.</div>;
-    } else {
-      return (
+  if (processInstanceStarted) {
+    return <div>Process instance has been started.</div>;
+  } else {
+    return (
         <div>
-          <FormioGenericForm processDefinitionId={processDefinitionId} />
+          <FormioGenericForm processDefinitionId={processDefinitionId} {...props} />
         </div>
-      );
-    }
+    );
   }
-}
-const mapStateToProps = (state, ownProps) => {
-  const params = ownProps.match.params;
-  return {
-    ...params,
-    ...state.entities,
-  };
 };
 
-export default withRouter(connect(mapStateToProps, {})(StartProcessPage));
+const mapStateToProps = (state) => ({
+  ...state.entities,
+});
+
+export default connect(mapStateToProps, {})(StartProcessPage);
