@@ -300,6 +300,7 @@ jobs:
       - name: MVN set version
         run: |
           mvn versions:set -DnewVersion=$NEW_VERSION
+          sed -i "s/^IMAGE_TAG=.*/IMAGE_TAG=${NEW_VERSION}/" .env
         env:
           NEW_VERSION: ${{ needs.build-maven.outputs.version }}
       - name: Create Release Tag
