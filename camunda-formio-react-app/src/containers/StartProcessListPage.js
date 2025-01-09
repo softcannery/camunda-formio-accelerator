@@ -1,26 +1,27 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Container, Header } from "semantic-ui-react";
 import BPMNDiagram from "../components/BPMNDiagram";
 import List from "../components/List";
 import { loadProcessDefinitionsWithXML } from "../actions";
 
 const StartProcessListPage = ({ processDefinition, processDefinitionXML, loadProcessDefinitionsWithXML }) => {
-    const { key } = useParams();
-
     useEffect(() => {
         loadProcessDefinitionsWithXML();
     }, [loadProcessDefinitionsWithXML]);
 
-    const renderProcess = (process) => (
-        <li key={process.id}>
-            <Link to={`/startProcess/key/${process.id}`}>
-                {process.name} - Version {process.version}
-            </Link>
-            <BPMNDiagram xml={process.xml} />
-        </li>
-    );
+    const renderProcess = (process) => {
+        console.log("XML content for process:", process.xml); // Log XML content
+        return (
+            <li key={process.id}>
+                <Link to={`/startProcess/key/${process.id}`}>
+                    {process.name} - Version {process.version}
+                </Link>
+                <BPMNDiagram xml={process.xml} />
+            </li>
+        );
+    };
 
     if (!processDefinition) {
         return (

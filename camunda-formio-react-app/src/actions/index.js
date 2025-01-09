@@ -22,16 +22,42 @@ export const loadProcessDefinitions =
     );
   };
 
-export const loadProcessDefinitionsWithXML =
-  (processDefinitionId) => (dispatch, getState) => {
-    return dispatch(
-      ProcessDefinitionActions.fetchProcessDefinitions(processDefinitionId),
-    ).then((data) => {
-      data.response.result.forEach((id) => {
-        dispatch(ProcessDefinitionActions.fetchProcessDefinitionXML(id));
-      });
-    });
-  };
+// export const loadProcessDefinitionsWithXML =
+//   (processDefinitionId) => (dispatch, getState) => {
+//     return dispatch(
+//       ProcessDefinitionActions.fetchProcessDefinitions(processDefinitionId),
+//     ).then((data) => {
+//       data.response.result.forEach((id) => {
+//         dispatch(ProcessDefinitionActions.fetchProcessDefinitionXML(id));
+//       });
+//     });
+//   };
+
+export const loadProcessDefinitionsWithXML = (processDefinitionId) => async (dispatch, getState) => {
+    try {
+        const data = await dispatch(ProcessDefinitionActions.fetchProcessDefinitions(processDefinitionId));
+
+        if (data && data.response && data.response.result) {
+            await Promise.all(
+                data.response.result.map(async (id) => {
+                    try {
+                        await dispatch(ProcessDefinitionActions.fetchProcessDefinitionXML(id));
+                    } catch (error) {
+                        console.error(`Error fetching XML for process definition ID ${id}:`, error);
+                    }
+                })
+            );
+        } else {
+            console.error("Invalid response structure:", data);
+        }
+    } catch (error) {
+        console.error("Error loading process definitions with XML:", error);
+        dispatch({
+            type: "LOAD_PROCESS_DEFINITIONS_FAILURE",
+            error,
+        });
+    }
+};
 
 export const loadProcessDefinitionXML =
   (processDefinitionId) => (dispatch, getState) => {

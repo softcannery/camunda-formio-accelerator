@@ -1,17 +1,10 @@
 import React from "react";
-
 import Viewer from "bpmn-js/lib/NavigatedViewer";
 
 export default class BPMNDiagram extends React.Component {
   constructor(props) {
     super(props);
-
-    this.viewer = new Viewer({
-      canvas: {
-        deferUpdate: false,
-      },
-    });
-
+    this.viewer = new Viewer();
     this.state = {
       loaded: false,
     };
@@ -21,20 +14,6 @@ export default class BPMNDiagram extends React.Component {
     this.container = container;
   };
 
-  render() {
-    return (
-      <div
-        className="BPMNDiagram"
-        style={this.props.style}
-        ref={this.storeContainer}
-      >
-        {this.state.loaded &&
-          this.props.children &&
-          React.cloneElement(this.props.children, { viewer: this.viewer })}
-      </div>
-    );
-  }
-
   componentDidUpdate(prevProps) {
     if (prevProps.xml !== this.props.xml) {
       this.setState({ loaded: false });
@@ -43,19 +22,37 @@ export default class BPMNDiagram extends React.Component {
   }
 
   importXML(xml) {
+    if (!xml) {
+      console.error("No XML to display");
+      return;
+    }
+
     this.viewer.importXML(xml, (err) => {
-      const canvas = this.viewer.get("canvas");
-
-      canvas.resized();
-      canvas.zoom("fit-viewport", "auto");
-
-      this.setState({ loaded: true });
+      if (err) {
+        console.error("Error importing XML:", err);
+      } else {
+        const canvas = this.viewer.get("canvas");
+        canvas.resized();
+        canvas.zoom("fit-viewport", "auto");
+        this.setState({ loaded: true });
+      }
     });
   }
 
   componentDidMount() {
     this.viewer.attachTo(this.container);
+    if (this.props.xml) {
+      this.importXML(this.props.xml);
+    }
+  }
 
-    this.importXML(this.props.xml);
+  render() {
+    return (
+        <div className="BPMNDiagram" style={this.props.style} ref={this.storeContainer}>
+          {this.state.loaded &&
+              this.props.children &&
+              React.cloneElement(this.props.children, { viewer: this.viewer })}
+        </div>
+    );
   }
 }
