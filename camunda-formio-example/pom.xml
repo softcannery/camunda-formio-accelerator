@@ -51,12 +51,12 @@
   <parent>
     <groupId>com.softcannery</groupId>
     <artifactId>camunda-formio-accelerator</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.1.55</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>camunda-formio-example</artifactId>
-  <version>0.1.1-SNAPSHOT</version>
+  <version>0.1.55</version>
 
   <properties>
     <camunda-formio-plugin.version>${project.version}</camunda-formio-plugin.version>
