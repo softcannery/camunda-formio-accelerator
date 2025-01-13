@@ -60,8 +60,8 @@ services:
   postgres:
     image: postgres
     container_name: postgres
-    ports:
-      - 5432:5432/tcp
+    # ports:
+    #   - 5432:5432/tcp
     volumes:
       - postgres:/var/lib/postgresql/data
     environment:
