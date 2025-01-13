@@ -63,7 +63,7 @@
     <groovy-jsr223.version>4.0.24</groovy-jsr223.version>
     <maven.deploy.skip>true</maven.deploy.skip>
     <camunda-bpm-mail.version>7.22.0</camunda-bpm-mail.version>
-    <greenmail.version>2.0.1</greenmail.version>
+    <greenmail.version>2.1.2</greenmail.version>
   </properties>
 
   <dependencyManagement>
