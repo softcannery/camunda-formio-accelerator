@@ -106,6 +106,7 @@ services:
     volumes:
       - ${BPMN_DIR}:/opt/config/bpmn
     environment:
+      OAUTH2_SSO_HOST: ${OAUTH2_SSO_HOST}
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_ADMIN}
       SPRING_DATASOURCE_PASSWORD: ${PSSWRD}

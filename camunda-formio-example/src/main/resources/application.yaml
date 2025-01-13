@@ -7,6 +7,18 @@ spring:
     name: camunda-formio
   jersey:
     application-path: /engine-rest
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            clientId: ${OAUTH2_CLIENT_ID:camunda-keycloak-sso}
+            clientSecret: ${OAUTH2_CLIENT_SECRET:545bc187-f10f-41f9-8d5f-cfca3dbada9c}
+            scope: openid,profile,email,offline_access # 4
+        provider:
+          keycloak:
+            issuerUri: http://${OAUTH2_SSO_HOST:localhost}/auth/realms/camunda
+            user-name-attribute: preferred_username # 5
 
 debug: false
 
@@ -34,7 +46,13 @@ camunda:
       history: true
       task: true
     deployment-resource-pattern: file:config/bpmn/*.bpmn,file:config/bpmn/*.formio
-
+    oauth2:
+      sso-logout: # 1
+        enabled: true
+        postLogoutRedirectUri: http://${OAUTH2_SSO_HOST:localhost}/bpm
+      identity-provider:
+        enabled: true
+        group-name-attribute: groups # 2
     plugin:
       mail:
         # send mails via SMTP
