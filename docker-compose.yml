@@ -60,8 +60,8 @@ services:
   postgres:
     image: postgres
     container_name: postgres
-    ports:
-      - 5432:5432/tcp
+    # ports:
+    #   - 5432:5432/tcp
     volumes:
       - postgres:/var/lib/postgresql/data
     environment:
@@ -100,8 +100,8 @@ services:
     build:
       context: ./camunda-formio-example
     container_name: camunda
-    ports:
-      - 8080:8080
+#    ports:
+#      - 8080:8080
     env_file:
       - .env
     volumes:
@@ -126,8 +126,8 @@ services:
     build:
       context: ./camunda-formio-content
     container_name: content
-    ports:
-      - 8081:8081
+#    ports:
+#      - 8081:8081
     volumes:
       - files:/mnt/files
     environment:
@@ -147,8 +147,8 @@ services:
     build:
       context: ./camunda-formio-react-app
     container_name: react
-    ports:
-      - 3000:3000
+#    ports:
+#      - 3000:3000
     environment:
       CAMUNDA_BPM_URL: "http://localhost/bpm"
       PUBLIC_URL: "http://localhost"
