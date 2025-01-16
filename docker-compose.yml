@@ -101,6 +101,9 @@ services:
     container_name: camunda
 #    ports:
 #      - 8080:8080
+    depends_on:
+      - keycloak
+      - postgres
     env_file:
       - .env
     volumes:
@@ -143,7 +146,7 @@ services:
       SERVER_SERVLET_CONTEXT_PATH: "/content"
 
   keycloak:
-    image: quay.io/keycloak/keycloak:26.0
+    image: quay.io/keycloak/keycloak:26.1
     container_name: keycloak
     ports:
       - 8082:8080
@@ -162,7 +165,17 @@ services:
       KC_DB_PASSWORD: ${PSSWRD}
     volumes:
       - ./nginx/camunda-realm.json:/opt/keycloak/data/import/camunda-realm.json
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health/ready"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres: {}
   files: {}
+
+networks:
+  local_network:
+
+    driver: bridge

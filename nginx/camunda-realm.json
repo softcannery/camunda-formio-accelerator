@@ -2,6 +2,9 @@
   "realm": "camunda",
   "enabled": true,
   "internationalizationEnabled": false,
+  "registrationEmailAsUsername": false,
+  "rememberMe": false,
+  "verifyEmail": false,
   "roles": {
     "realm": [
       {
@@ -94,6 +97,8 @@
       "clientRoles": {
         "realm-management": [
           "query-realms",
+          "query-groups",
+          "query-users",
           "view-users"
         ]
       }
@@ -257,6 +262,35 @@
       ]
     },
     {
+      "username": "${CAMUNDA_ADMIN}",
+      "enabled": true,
+      "firstName": "${CAMUNDA_ADMIN}",
+      "lastName": "Admin",
+      "email": "${CAMUNDA_ADMIN}@example.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "${PSSWRD}"
+        }
+      ],
+      "realmRoles": [
+        "CAMUNDA_USER",
+        "uma_authorization",
+        "CAMUNDA_ADMIN",
+        "CAMUNDA_TASKLIST",
+        "offline_access"
+      ],
+      "clientRoles": {
+        "account": [
+          "manage-account",
+          "view-profile"
+        ]
+      },
+      "groups": [
+        "/testgroup"
+      ]
+    },
+    {
       "username": "testuser",
       "enabled": true,
       "firstName": "Test",
@@ -322,6 +356,16 @@
       ]
     }
   ],
+  "defaultDefaultClientScopes": [
+    "role_list",
+    "profile",
+    "email",
+    "roles",
+    "web-origins",
+    "acr",
+    "basic",
+    "openid"
+  ],
   "clients": [
     {
       "clientId": "camunda-webapp",
@@ -355,7 +399,7 @@
       "secret": "545bc187-f10f-41f9-8d5f-cfca3dbada9c",
       "redirectUris": ["*"],
       "webOrigins": [],
-      "standardFlowEnabled": false,
+      "standardFlowEnabled": true,
       "implicitFlowEnabled": false,
       "directAccessGrantsEnabled": true,
       "serviceAccountsEnabled": true,
