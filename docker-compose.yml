@@ -117,8 +117,6 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       CAMUNDA_BPM_ADMIN_USER_ID: ${CAMUNDA_ADMIN}
       CAMUNDA_BPM_ADMIN_USER_PASSWORD: ${PSSWRD}
-      SERVER_SERVLET_CONTEXT_PATH: "/bpm"
-      SPRING_CONTENT_URL: "http://localhost/bpm"
       IMAP_HOST: greenmail
       IMAP_PORT: 143
       SMTP_HOST: greenmail
@@ -153,7 +151,9 @@ services:
     command:
       - start-dev
       - --import-realm
+      - --health-enabled=true
     environment:
+      CAMUNDA_ADMIN: ${CAMUNDA_ADMIN}
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
       KEYCLOAK_ADMIN_PASSWORD: ${PSSWRD}
       KEYCLOAK_FRONTEND_URL: "http://localhost/auth"
@@ -166,7 +166,7 @@ services:
     volumes:
       - ./nginx/camunda-realm.json:/opt/keycloak/data/import/camunda-realm.json
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health/ready"]
+      test: ["CMD", "curl", "--head -fsS", "http://keycloak:9000/auth/health/ready"]
       interval: 15s
       timeout: 5s
       retries: 5
@@ -177,5 +177,4 @@ volumes:
 
 networks:
   local_network:
-
     driver: bridge

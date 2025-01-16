@@ -51,7 +51,7 @@ camunda:
     oauth2:
       sso-logout: # 1
         enabled: true
-        postLogoutRedirectUri: http://${OAUTH2_SSO_HOST:localhost}/bpm/
+        postLogoutRedirectUri: http://${OAUTH2_SSO_HOST:localhost}/
       identity-provider:
         enabled: true
         group-name-attribute: groups # 2
