@@ -102,8 +102,8 @@ services:
 #    ports:
 #      - 8080:8080
     depends_on:
-      - keycloak
-      - postgres
+      keycloak:
+        condition: service_healthy
     env_file:
       - .env
     volumes:
@@ -121,6 +121,12 @@ services:
       IMAP_PORT: 143
       SMTP_HOST: greenmail
       SMTP_PORT: 25
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O- http://localhost:8080/actuator/health | grep -q 'UP' || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+      start_interval: 10s
 
   spring-content:
     image: ${IMG_REPO}camunda-formio-content:${IMAGE_TAG}
@@ -142,6 +148,12 @@ services:
       SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE: "100MB"
       SPRING_CONTENT_URL: "http://localhost/content"
       SERVER_SERVLET_CONTEXT_PATH: "/content"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O- http://localhost:8081/content/actuator/health | grep -q 'UP' || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+      start_interval: 10s
 
   keycloak:
     image: quay.io/keycloak/keycloak:26.1
@@ -166,10 +178,11 @@ services:
     volumes:
       - ./nginx/camunda-realm.json:/opt/keycloak/data/import/camunda-realm.json
     healthcheck:
-      test: ["CMD", "curl", "--head -fsS", "http://keycloak:9000/auth/health/ready"]
-      interval: 15s
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/9000 && echo -e 'GET /auth/health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200 OK'"]
+      interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 15
+      start_interval: 10s
 
 volumes:
   postgres: {}
