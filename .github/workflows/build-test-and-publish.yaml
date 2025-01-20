@@ -153,7 +153,7 @@ jobs:
       - build-plugin
       - build-deployment-plugin
       - build-maven
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -187,6 +187,8 @@ jobs:
         env:
           CR_PAT: ${{ secrets.GH_TOKEN }}
         run: |
+          curr_ip=$( ip addr show | grep -A3 eth0 | grep "inet " | awk '/inet /{print $2}' | cut -d'/' -f1 )
+          sed -i -e "s/OAUTH2_SSO_HOST=.*/OAUTH2_SSO_HOST=$curr_ip/" ./.env
           sed -i -e "s/IMAGE_TAG=.*/IMAGE_TAG=${{ needs.build-maven.outputs.tag }}/" ./.env
           docker compose pull
           docker compose -f "docker-compose.yml" up -d --no-build
@@ -236,8 +238,6 @@ jobs:
           CR_PAT: ${{ secrets.GH_TOKEN }}
         run: |
           curr_ip=$( ip addr show | grep -A3 eth0 | grep "inet " | awk '/inet /{print $2}' | cut -d'/' -f1 )
-          ip addr show
-          echo "Current IP: $curr_ip"
           sed -i -e "s/OAUTH2_SSO_HOST=.*/OAUTH2_SSO_HOST=$curr_ip/" ./.env
           sed -i -e "s/IMAGE_TAG=.*/IMAGE_TAG=${{ needs.build-maven.outputs.tag }}/" ./.env
           docker compose pull
