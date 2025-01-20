@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1c372iy" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.16.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1c372iy" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.30.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.22.0">
   <bpmn:process id="simple-task-process" name="simple-task-process" isExecutable="true" camunda:historyTimeToLive="0">
     <bpmn:startEvent id="start" camunda:formHandlerClass="org.softcannery.camunda.FormioStartFormHandler" camunda:formKey="embedded:app:formio.html">
       <bpmn:extensionElements>
@@ -62,9 +62,12 @@ print('Variable: ' + execution.getVariable("action"));</bpmn:script>
     <bpmn:dataStoreReference id="DataStoreReference_0lpp5zr" name="review" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="simpleFormioTaskAction">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="simple-task-process">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="start">
         <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_055ff3m_di" bpmnElement="Event_055ff3m">
+        <dc:Bounds x="622" y="102" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_00t2t5t_di" bpmnElement="review">
         <dc:Bounds x="280" y="80" width="100" height="80" />
@@ -83,9 +86,6 @@ print('Variable: ' + execution.getVariable("action"));</bpmn:script>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="434" y="302" width="33" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_055ff3m_di" bpmnElement="Event_055ff3m">
-        <dc:Bounds x="622" y="102" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="DataOutputAssociation_0qkr1xq_di" bpmnElement="DataOutputAssociation_0qkr1xq">
         <di:waypoint x="170" y="138" />
