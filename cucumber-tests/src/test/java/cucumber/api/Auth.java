@@ -75,9 +75,8 @@ public class Auth extends Base {
         params.put("tab_id", postUrl.split("tab_id=")[1].split("&amp;")[0]);
         params.put("client_data", postUrl.split("client_data=")[1].split("&amp;")[0]);
 
-        String host = postUrl.split("/auth/realms/camunda")[0];
-        String uri = postUrl.split("host.docker.internal/")[1].split("\\?")[0];
-        RestAssured.baseURI = host;
+        String uri = postUrl.split(dockerKeycloak + "/")[1].split("\\?")[0];
+        RestAssured.baseURI = dockerKeycloak;
         Response kcAuthPost = RestAssured
             .given()
             .redirects()
