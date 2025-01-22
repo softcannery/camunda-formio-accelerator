@@ -1,6 +1,7 @@
 package cucumber.api;
 
 public class Base {
+
     public static String camundaUrl = "http://localhost:80";
     public static String username = "kermit";
     public static String password = "password";
