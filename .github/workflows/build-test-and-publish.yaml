@@ -247,6 +247,8 @@ jobs:
       - name: run cucumber tests
         run: |
           cd ./cucumber-tests
+          curr_ip=$( ip addr show | grep -A3 eth0 | grep "inet " | awk '/inet /{print $2}' | cut -d'/' -f1 )
+          export OAUTH2_SSO_HOST=$curr_ip
           chmod +x ./healthcheck.sh
           ./healthcheck.sh
           mvn clean verify -ntp -Dcucumber.filter.tags="@web"
