@@ -203,10 +203,12 @@ jobs:
           cd ./cucumber-tests
           chmod +x ./healthcheck.sh
           ./healthcheck.sh
+          curr_ip=$( ip addr show | grep -A3 eth0 | grep "inet " | awk '/inet /{print $2}' | cut -d'/' -f1 )
+          export OAUTH2_SSO_HOST=$curr_ip
       - name: Run Camunda Modeler test
         uses: coactions/setup-xvfb@v1.0.1
         with:
-          run: curr_ip=$( ip addr show | grep -A3 eth0 | grep "inet " | awk '/inet /{print $2}' | cut -d'/' -f1 ) && export OAUTH2_SSO_HOST=$curr_ip && mvn clean verify -ntp -Dcucumber.filter.tags="@modeler"
+          run: mvn clean verify -ntp -Dcucumber.filter.tags="@modeler"
           working-directory: ./cucumber-tests
   run-tests:
     name: Run Tests
