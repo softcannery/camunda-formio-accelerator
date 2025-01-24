@@ -190,7 +190,7 @@ jobs:
           curr_ip=$( ip addr show | grep -A3 eth0 | grep "inet " | awk '/inet /{print $2}' | cut -d'/' -f1 )
           sed -i -e "s/OAUTH2_SSO_HOST=.*/OAUTH2_SSO_HOST=$curr_ip/" ./.env
           sed -i -e "s/IMAGE_TAG=.*/IMAGE_TAG=${{ needs.build-maven.outputs.tag }}/" ./.env
-          cp .env ./cucumber-tests/.env
+          echo "curr_ip=$curr_ip" >> $GITHUB_ENV
           docker compose pull
           docker compose -f "docker-compose.yml" up -d --no-build
       - name: install modeller
@@ -203,9 +203,9 @@ jobs:
           cd ./cucumber-tests
           chmod +x ./healthcheck.sh
           ./healthcheck.sh
-          curr_ip=$( ip addr show | grep -A3 eth0 | grep "inet " | awk '/inet /{print $2}' | cut -d'/' -f1 )
-          export OAUTH2_SSO_HOST=$curr_ip
       - name: Run Camunda Modeler test
+        env:
+          OAUTH2_SSO_HOST: ${{ env.curr_ip }}
         uses: coactions/setup-xvfb@v1.0.1
         with:
           run: mvn clean verify -ntp -Dcucumber.filter.tags="@modeler"
