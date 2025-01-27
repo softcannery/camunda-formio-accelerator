@@ -26,7 +26,7 @@
         <bpmn:targetRef>Property_0c39d38</bpmn:targetRef>
       </bpmn:dataInputAssociation>
       <bpmn:multiInstanceLoopCharacteristics camunda:asyncAfter="true" camunda:collection="${formio.startEmployeeReviewRating.data.employeeData}" camunda:elementVariable="employeeRecord" />
-      <bpmn:startEvent id="Event_0qqz14o" camunda:formKey="embedded:app:formio.html">
+      <bpmn:startEvent id="Event_0qqz14o">
         <bpmn:outgoing>Flow_0knpqse</bpmn:outgoing>
       </bpmn:startEvent>
       <bpmn:endEvent id="Event_0giiril">
