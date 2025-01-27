@@ -51,6 +51,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SubmissionRepository extends CrudRepository<SubmissionEntity, String> {
-    List<SubmissionEntity> findByInstanceIdAndTaskId(String instanceId, String taskId);
     List<SubmissionEntity> findByInstanceId(String instanceId);
 }
