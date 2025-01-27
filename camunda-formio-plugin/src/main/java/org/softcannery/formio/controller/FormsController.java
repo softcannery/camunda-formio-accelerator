@@ -108,6 +108,10 @@ public class FormsController {
         FormKey formKey = FormioUtils.parseFormKey(value[0], value[1]);
         log.debug("getForm: formKey={}, defaultValue={}", value[0], value[1]);
 
+        if (formKey == null) {
+            return null;
+        }
+
         String content = getResourceByName(repositoryService, processDefinition, formKey);
         if (Strings.isBlank(content)) return null;
 
