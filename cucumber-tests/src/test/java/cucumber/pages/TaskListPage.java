@@ -16,7 +16,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-@DefaultUrl("http://localhost/bpm/camunda/app/tasklist/default/")
+@DefaultUrl("http://localhost/camunda/app/tasklist/default/")
 public class TaskListPage extends PageObject {
 
     public static Target START_PROCESS = Target

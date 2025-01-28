@@ -1,9 +1,8 @@
 #!/bin/bash
 
 TARGET="localhost"
-APP="localhost"
 CONTENT="localhost/content"
-CAMUNDA="localhost/bpm"
+CAMUNDA="localhost"
 
 check_service(){
   TARGET=$1
@@ -29,7 +28,6 @@ check_service(){
   fi
 }
 
-check_service $APP &&
 check_service "$CONTENT/actuator/health" &&
 check_service "$CAMUNDA/actuator/health" &&
 wait

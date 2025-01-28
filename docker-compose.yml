@@ -43,8 +43,6 @@
 # THAT IT CANNOT BE LAWFULLY EXCLUDED OR RESTRICTED.
 #
 
-version: "3.2"
-
 services:
   nginx:
     image: nginx:latest
@@ -114,8 +112,8 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       CAMUNDA_BPM_ADMIN_USER_ID: kermit
       CAMUNDA_BPM_ADMIN_USER_PASSWORD: password
-      SERVER_SERVLET_CONTEXT_PATH: "/bpm"
-      SPRING_CONTENT_URL: "http://localhost/bpm"
+      SERVER_SERVLET_CONTEXT_PATH: "/"
+      SPRING_CONTENT_URL: "http://localhost/"
       IMAP_HOST: greenmail
       IMAP_PORT: 143
       SMTP_HOST: greenmail
@@ -141,17 +139,6 @@ services:
       SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE: "100MB"
       SPRING_CONTENT_URL: "http://localhost/content"
       SERVER_SERVLET_CONTEXT_PATH: "/content"
-
-  camunda-formio-react-app:
-    image: ${IMG_REPO}camunda-formio-react-app:${IMAGE_TAG}
-    build:
-      context: ./camunda-formio-react-app
-    container_name: react
-#    ports:
-#      - 3000:3000
-    environment:
-      CAMUNDA_BPM_URL: "http://localhost/bpm"
-      PUBLIC_URL: "http://localhost"
 
 volumes:
   postgres: {}
