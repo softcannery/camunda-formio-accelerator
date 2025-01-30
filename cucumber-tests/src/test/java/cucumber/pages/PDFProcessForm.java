@@ -32,7 +32,7 @@ public class PDFProcessForm {
         try {
             Thread.sleep(2000);
             actions.moveToElement(submitButton).click().build().perform();
-        } catch (InterruptedException | ElementClickInterceptedException e) {
+        } catch (InterruptedException | ElementClickInterceptedException | StaleElementReferenceException e) {
             throw new RuntimeException(e);
         }
         try {
