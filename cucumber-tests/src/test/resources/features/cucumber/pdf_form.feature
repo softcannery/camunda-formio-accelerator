@@ -1,7 +1,8 @@
 @web
 Feature: test PDF form
   Scenario: Start and Complete PDF form
-    When kermit goes to the react main page
+    Given kermit is logged in to Camunda
+    When he selects start process "Example PDF Form"
     When he starts PDF process
     When he complete PDF process
     Then he process is closed

@@ -292,7 +292,12 @@ public class StepDefinitions {
 
     @When("{actor} complete PDF process")
     public void completePDFProcess(Actor actor) {
-        actor.wasAbleTo(NavigateTo.theReactMainPage());
+        actor.wasAbleTo(NavigateTo.theTaskListPage());
+        try {
+            Thread.sleep(8000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         actor.wasAbleTo(PDFProcessForm.submitPdfProcess());
     }
 
