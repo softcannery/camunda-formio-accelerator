@@ -29,6 +29,7 @@ public class TaskListPage extends PageObject {
     public static Target HIDE_TASK_LIST_BUTTON = Target
         .the("Hide")
         .locatedBy("//section[contains(@class,'tasks-list')]/.//button[@ng-click='toggleRegion($event)']");
+    private static Target START_BUTTON = Target.the("Start button").locatedBy("//button[contains(text(), 'Start')]");
 
     @FindBy(name = "data[action]")
     public static WebElementFacade DROPDOWN_ACTION;
@@ -109,5 +110,9 @@ public class TaskListPage extends PageObject {
             e.printStackTrace();
         }
         return count;
+    }
+
+    public static Performable clickStartProcessButton() {
+        return Task.where("{0} click Claim button", Click.on(START_BUTTON));
     }
 }

@@ -281,13 +281,13 @@ public class StepDefinitions {
 
     @When("{actor} approve multi tasks")
     public void approveMultiTasks(Actor actor) {
-        actor.wasAbleTo(ReactMultiProcessForm.approveMultiTasks(actor));
+        actor.wasAbleTo(MultiProcessForm.approveMultiTasks(actor));
     }
 
-    @When("{actor} open Show Results and complete")
+    @When("{actor} open Show Results, clime and complete")
     public void completeMultiResults(Actor actor) {
-        actor.wasAbleTo(NavigateTo.theReactMainPage());
-        actor.wasAbleTo(ReactMultiProcessForm.completeShowResults());
+        actor.wasAbleTo(NavigateTo.theTaskListPage());
+        actor.wasAbleTo(MultiProcessForm.completeShowResults());
     }
 
     @When("{actor} complete PDF process")
@@ -396,5 +396,17 @@ public class StepDefinitions {
         JsonPath mailJson = methods.getMailFromInbox(userEmail);
         Assert.assertTrue(mailJson.get("subject[0]").toString().contains("RE: Pizza Order 1"));
         Assert.assertTrue(mailJson.get("mimeMessage[0]").toString().contains("Cheers!"));
+    }
+
+    @When("{actor} clicks start process button")
+    public void clickStartProcess(Actor actor) {
+        actor.wasAbleTo(TaskListPage.clickStartProcessButton());
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        actor.wasAbleTo(NavigateTo.theProcessCountAPIPage());
+        processCount = TaskListPage.getCountProcesses();
     }
 }
