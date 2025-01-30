@@ -1,6 +1,7 @@
 package cucumber.pages;
 
 import static net.serenitybdd.core.Serenity.getDriver;
+
 import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
