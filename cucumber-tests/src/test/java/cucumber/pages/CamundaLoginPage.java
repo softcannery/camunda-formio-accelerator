@@ -8,7 +8,7 @@ import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.targets.Target;
 
-@DefaultUrl("http://localhost/bpm/")
+@DefaultUrl("http://localhost/")
 public class CamundaLoginPage extends PageObject {
 
     private static Target USER_LOGIN = Target.the("login field").locatedBy("//*[@placeholder='Username']");

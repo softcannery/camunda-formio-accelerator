@@ -12,6 +12,9 @@ debug: false
 
 camunda:
   bpm:
+    webapp:
+      header-security:
+        content-security-policy-disabled: true
     generic-properties:
       properties:
         telemetry-reporter-activate: false

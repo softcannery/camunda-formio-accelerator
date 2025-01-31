@@ -14,21 +14,8 @@ public class PDFProcessForm {
     public static Performable startProcess() {
         WebDriver driver = getDriver();
         Actions actions = new Actions(driver);
-        for (int i = 0; i < 20; i++) {
-            try {
-                driver.findElement(By.xpath("//a[contains(text(),'Start Process')]")).click();
-                driver.findElement(By.xpath("//a[contains(text(), 'Example PDF Form')]")).click();
-                break;
-            } catch (NoSuchElementException e) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -40,21 +27,25 @@ public class PDFProcessForm {
         driver.findElement(By.xpath("//input[@name='data[printName1]']/../input[@type='text']")).sendKeys("print name");
         driver.switchTo().defaultContent();
 
-        WebElement submitButton = driver.findElement(By.xpath("//button[@type='submit']"));
+        WebElement submitButton = driver.findElement(By.xpath("//button[@ng-click='startProcessInstance()']"));
         actions.moveToElement(submitButton).click().build().perform();
         try {
             Thread.sleep(2000);
             actions.moveToElement(submitButton).click().build().perform();
-        } catch (ElementClickInterceptedException | InterruptedException e) {
-            e.getMessage();
+        } catch (InterruptedException | ElementClickInterceptedException | StaleElementReferenceException e) {
+            e.printStackTrace();
+        }
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
         return Task.where("{0} Start Process");
     }
 
     public static Performable submitPdfProcess() {
         WebDriver driver = getDriver();
-        driver.findElement(By.xpath("//a[contains(text(),'Tasklist')]")).click();
-        driver.findElement(By.xpath("//div[text()='Review PDF']")).click();
+        driver.findElement(By.xpath("//a[contains(text(),'Review PDF')]")).click();
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -76,14 +67,15 @@ public class PDFProcessForm {
         Assert.assertEquals("The Facility/Site/Program field is incorrect", "site test", actualFacilitySiteProgram);
         Assert.assertEquals("The Date field is incorrect", "2023-11-11T00:00:00", actualDate);
         driver.switchTo().defaultContent();
-        Actions actions = new Actions(driver);
-        WebElement submitButton = driver.findElement(By.xpath("//button[@type='submit']"));
-        actions.moveToElement(submitButton).click().build().perform();
+        driver.findElement(By.xpath("//button[@ng-click='claim()']")).click();
         try {
-            actions.moveToElement(submitButton).click().build().perform();
-        } catch (ElementClickInterceptedException e) {
-            e.getMessage();
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
+        Actions actions = new Actions(driver);
+        WebElement submitButton = driver.findElement(By.xpath("//button[@ng-click='complete()']"));
+        js.executeScript("arguments[0].click();", submitButton);
         return Task.where("{0} Submit Process");
     }
 }

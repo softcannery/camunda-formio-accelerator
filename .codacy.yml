@@ -1,6 +1,5 @@
 ---
 exclude_paths:
-  - "camunda-formio-react-app/src/css/**"
   - "camunda-modeler-formio-plugin/css/**"
   - "camunda-modeler-formio-plugin/style/**"
   - "camunda-formio-plugin/src/main/resources/META-INF/resources/webjars/camunda/app/tasklist/formio/**"

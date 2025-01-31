@@ -10,7 +10,6 @@ jobs:
       matrix:
         name:
           [
-            camunda-formio-react-app,
             camunda-formio-example,
             camunda-formio-content,
           ]

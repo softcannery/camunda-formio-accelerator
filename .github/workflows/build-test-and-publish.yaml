@@ -75,15 +75,6 @@ jobs:
           if [[ ${{ github.event_name }} == 'pull_request' ]]; then
             mvn deploy -ntp -Drepo.login=${{ github.actor }} -Drepo.pwd=${{ secrets.GH_TOKEN }} -s .m2/settings.xml -DskipTests
           fi
-      - name: Build and push Docker image camunda-formio-react-app
-        uses: softcannery/.github/actions/github-docker-registry@master
-        with:
-          chart-path: ./camunda-formio-react-app
-          git-username: ${{ github.actor }}
-          git-token: ${{ secrets.GH_TOKEN }}
-          image-name: camunda-formio-react-app
-          version: ${{ steps.tag.outputs.tag }}
-          release: ${{ steps.tag.outputs.release }}
       - name: Build and push Docker image camunda-formio-example
         uses: softcannery/.github/actions/github-docker-registry@master
         with:

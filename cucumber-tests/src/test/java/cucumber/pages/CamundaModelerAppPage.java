@@ -162,7 +162,7 @@ public class CamundaModelerAppPage {
         for (int i = 0; i < 35; i++) {
             driver.findElement(By.xpath("//input[@name='endpoint.url']")).sendKeys(Keys.BACK_SPACE);
         }
-        driver.findElement(By.xpath("//input[@name='endpoint.url']")).sendKeys("http://localhost/bpm/engine-rest");
+        driver.findElement(By.xpath("//input[@name='endpoint.url']")).sendKeys("http://localhost/engine-rest");
         driver.findElement(By.xpath("//input[@name='endpoint.username']")).sendKeys("test");
         driver.findElement(By.xpath("//input[@name='endpoint.password']")).sendKeys("test");
 
