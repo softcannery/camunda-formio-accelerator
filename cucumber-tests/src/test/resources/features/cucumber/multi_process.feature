@@ -1,5 +1,4 @@
 @web
-@ignore
 Feature: Parallel tasks process
   Scenario: Start and complete process
     Given kermit is logged in to Camunda
