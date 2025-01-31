@@ -117,6 +117,8 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       CAMUNDA_BPM_ADMIN_USER_ID: ${CAMUNDA_ADMIN}
       CAMUNDA_BPM_ADMIN_USER_PASSWORD: ${PSSWRD}
+      SERVER_SERVLET_CONTEXT_PATH: "/"
+      SPRING_CONTENT_URL: "http://localhost/"
       IMAP_HOST: greenmail
       IMAP_PORT: 143
       SMTP_HOST: greenmail
