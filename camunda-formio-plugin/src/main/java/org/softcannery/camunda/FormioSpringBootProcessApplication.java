@@ -44,25 +44,25 @@
  */
 package org.softcannery.camunda;
 
-import static org.camunda.bpm.application.ProcessApplicationInfo.PROP_SERVLET_CONTEXT_PATH;
-import static org.camunda.bpm.spring.boot.starter.util.GetProcessApplicationNameFromAnnotation.processApplicationNameFromAnnotation;
+import static org.cibseven.bpm.application.ProcessApplicationInfo.PROP_SERVLET_CONTEXT_PATH;
+import static org.cibseven.bpm.spring.boot.starter.util.GetProcessApplicationNameFromAnnotation.processApplicationNameFromAnnotation;
 
 import jakarta.servlet.ServletContext;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
-import org.camunda.bpm.application.PostDeploy;
-import org.camunda.bpm.application.PreUndeploy;
-import org.camunda.bpm.application.impl.ProcessApplicationReferenceImpl;
-import org.camunda.bpm.container.RuntimeContainerDelegate;
-import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.repository.Deployment;
-import org.camunda.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.camunda.bpm.engine.spring.application.SpringProcessApplication;
-import org.camunda.bpm.spring.boot.starter.event.PostDeployEvent;
-import org.camunda.bpm.spring.boot.starter.event.PreUndeployEvent;
-import org.camunda.bpm.spring.boot.starter.property.CamundaBpmProperties;
+import org.cibseven.bpm.application.PostDeploy;
+import org.cibseven.bpm.application.PreUndeploy;
+import org.cibseven.bpm.application.impl.ProcessApplicationReferenceImpl;
+import org.cibseven.bpm.container.RuntimeContainerDelegate;
+import org.cibseven.bpm.engine.ProcessEngine;
+import org.cibseven.bpm.engine.repository.Deployment;
+import org.cibseven.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.cibseven.bpm.engine.spring.application.SpringProcessApplication;
+import org.cibseven.bpm.spring.boot.starter.event.PostDeployEvent;
+import org.cibseven.bpm.spring.boot.starter.event.PreUndeployEvent;
+import org.cibseven.bpm.spring.boot.starter.property.CamundaBpmProperties;
 import org.softcannery.camunda.listener.ProcessDeployedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
