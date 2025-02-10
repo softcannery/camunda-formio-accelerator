@@ -62,7 +62,7 @@
   <properties>
     <encoding>UTF-8</encoding>
     <failOnMissingWebXml>false</failOnMissingWebXml>
-    <spring-content.version>3.0.16</spring-content.version>
+    <spring-content.version>3.0.17</spring-content.version>
     <maven.deploy.skip>true</maven.deploy.skip>
   </properties>
 
