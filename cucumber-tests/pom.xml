@@ -27,7 +27,7 @@
         <modeler.bpmnProcessFilePath>./../camunda-formio-bpmn/simple-task.bpmn</modeler.bpmnProcessFilePath>
         <skipPrettier>false</skipPrettier>
         <maven.deploy.skip>true</maven.deploy.skip>
-        <greenmail.version>2.1.2</greenmail.version>
+        <greenmail.version>2.1.3</greenmail.version>
     </properties>
     <dependencies>
         <dependency>
