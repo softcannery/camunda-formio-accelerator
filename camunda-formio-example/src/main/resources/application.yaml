@@ -7,6 +7,20 @@ spring:
     name: camunda-formio
   jersey:
     application-path: /engine-rest
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            clientId: ${OAUTH2_CLIENT_ID:camunda-keycloak-sso}
+            clientSecret: ${OAUTH2_CLIENT_SECRET:545bc187-f10f-41f9-8d5f-cfca3dbada9c}
+            authorization-grant-type: authorization_code
+            scope: openid
+            provider: keycloak
+        provider:
+          keycloak:
+            issuerUri: http://${OAUTH2_SSO_HOST:localhost}/auth/realms/camunda
+            user-name-attribute: preferred_username # 5
 
 debug: false
 
@@ -34,13 +48,18 @@ camunda:
       history: true
       task: true
     deployment-resource-pattern: file:config/bpmn/*.bpmn,file:config/bpmn/*.formio
-
+    oauth2:
+      sso-logout: # 1
+        enabled: true
+        postLogoutRedirectUri: http://${OAUTH2_SSO_HOST:localhost}/
+      identity-provider:
+        enabled: true
+        group-name-attribute: groups # 2
     plugin:
       mail:
         # send mails via SMTP
         transport:
           protocol: ${MAIL_TRANSPORT_PROTOCOL:smtp}
-
         smtp:
           host: ${SMTP_HOST:localhost}
           port: ${SMTP_PORT:25}
@@ -50,31 +69,25 @@ camunda:
           socketFactory:
             port: ${SMTP_PORT:25}
             class: javax.net.ssl.SSLSocketFactory
-
         # poll mails via IMAPS
         store:
           protocol: ${MAIL_STORE_PROTOCOL:imap}
-
         imap:
           host: ${IMAP_HOST:localhost}
           port: ${IMAP_PORT:143}
           timeout: ${IMAP_TIMEOUT:10000}
           # if peek :   false then the polled mails are marked as read
           peek: ${IMAP_PEEK:false}
-
         # additional config
         poll.folder: ${MAIL_POLL_FOLDER:INBOX}
         sender: ${MAIL_SENDER:camunda@greenmail.com}
         sender.alias: ${MAIL_SENDER_ALIAS:Camunda Bpm}
-
         attachment:
           download: ${MAIL_ATTACHMENT_DOWNLOAD:true}
           path: ${MAIL_ATTACHMENT_PATH:attachments}
-
         # credentials
         user: ${MAIL_USER:camunda@greenmail.com}
         password: ${MAIL_PASSWORD:greenmail}
-
 
 server:
   port: 8080

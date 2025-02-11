@@ -47,8 +47,8 @@ FROM alpine:3
 
 RUN apk add --no-cache openjdk17-jre-headless bash
 
-ENV PORT 8080
-ENV CLASSPATH /opt/lib
+ENV PORT=8080
+ENV CLASSPATH=/opt/lib
 EXPOSE 8080
 
 # copy pom.xml and wildcards to avoid this command failing if there's no target/lib directory
