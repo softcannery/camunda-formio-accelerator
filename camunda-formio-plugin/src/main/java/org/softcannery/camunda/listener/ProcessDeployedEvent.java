@@ -44,7 +44,7 @@
  */
 package org.softcannery.camunda.listener;
 
-import org.camunda.bpm.engine.repository.ProcessDefinition;
+import org.cibseven.bpm.engine.repository.ProcessDefinition;
 import org.springframework.context.ApplicationEvent;
 
 public class ProcessDeployedEvent extends ApplicationEvent {

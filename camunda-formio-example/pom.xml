@@ -69,8 +69,8 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.camunda.bpm</groupId>
-        <artifactId>camunda-bom</artifactId>
+        <groupId>org.cibseven.bpm</groupId>
+        <artifactId>cibseven-bom</artifactId>
         <version>${camunda.version}</version>
         <scope>import</scope>
         <type>pom</type>
@@ -88,12 +88,12 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.springboot</groupId>
-      <artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
+      <groupId>org.cibseven.bpm.springboot</groupId>
+      <artifactId>cibseven-bpm-spring-boot-starter-webapp</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.camunda.bpm.springboot</groupId>
-      <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
+      <groupId>org.cibseven.bpm.springboot</groupId>
+      <artifactId>cibseven-bpm-spring-boot-starter-rest</artifactId>
       <exclusions>
         <exclusion>
           <groupId>org.ow2.asm</groupId>
@@ -103,12 +103,12 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine-plugin-connect</artifactId>
+      <groupId>org.cibseven.bpm</groupId>
+      <artifactId>cibseven-engine-plugin-connect</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.camunda.connect</groupId>
-      <artifactId>camunda-connect-connectors-all</artifactId>
+      <groupId>org.cibseven.connect</groupId>
+      <artifactId>cibseven-connect-connectors-all</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -133,8 +133,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.template-engines</groupId>
-      <artifactId>camunda-template-engines-freemarker</artifactId>
+      <groupId>org.cibseven.template-engines</groupId>
+      <artifactId>cibseven-template-engines-freemarker</artifactId>
     </dependency>
 
     <dependency>
@@ -170,12 +170,12 @@
 
     <!-- Required to use Spin dataformat support -->
     <dependency>
-      <groupId>org.camunda.spin</groupId>
-      <artifactId>camunda-spin-dataformat-all</artifactId>
+      <groupId>org.cibseven.spin</groupId>
+      <artifactId>cibseven-spin-dataformat-all</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine-plugin-spin</artifactId>
+      <groupId>org.cibseven.bpm</groupId>
+      <artifactId>cibseven-engine-plugin-spin</artifactId>
     </dependency>
 
     <!-- Required to run with Java 11 -->

@@ -48,9 +48,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
-import org.camunda.spin.Spin;
-import org.camunda.spin.plugin.variable.SpinValues;
-import org.camunda.spin.plugin.variable.value.JsonValue;
+import org.cibseven.spin.Spin;
+import org.cibseven.spin.plugin.variable.SpinValues;
+import org.cibseven.spin.plugin.variable.value.JsonValue;
 
 public class SubmissionValue extends LinkedHashMap<String, Object> {
 
