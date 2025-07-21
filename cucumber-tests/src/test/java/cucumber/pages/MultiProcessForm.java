@@ -3,7 +3,6 @@ package cucumber.pages;
 import static net.serenitybdd.core.Serenity.getDriver;
 
 import java.util.concurrent.TimeUnit;
-import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
@@ -14,17 +13,20 @@ import org.openqa.selenium.interactions.Actions;
 
 public class MultiProcessForm {
 
+    private static final By showResultsEl = By.xpath("//a[contains(text(),'Show Result')]");
+    private static final By claimBtn = By.xpath("//button[@ng-click='claim()']");
+    private static final By completeBtn = By.xpath("//button[@ng-click='complete()']");
+
     public static Performable approveMultiTasks(Actor actor) {
         Actions actions = new Actions(getDriver());
         actor.wasAbleTo(NavigateTo.theTaskListPage());
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         String[] multiTaskUsers = { "Chris", "Tyler", "Edward" };
         for (String user : multiTaskUsers) {
             WebDriver driver = getDriver();
+            Awaitility
+                .await()
+                .atMost(15, TimeUnit.SECONDS)
+                .until(() -> driver.findElements(By.xpath("//a[contains(text(),'Evaluate " + user + "')]")).size() > 0);
             driver.findElement(By.xpath("//a[contains(text(),'Evaluate " + user + "')]")).click();
             try {
                 Thread.sleep(3000);
@@ -85,11 +87,8 @@ public class MultiProcessForm {
 
     public static Performable completeShowResults() {
         WebDriver driver = getDriver();
-        Awaitility
-            .await()
-            .atMost(10, TimeUnit.SECONDS)
-            .until(() -> driver.findElements(By.xpath("//a[contains(text(),'Show Result')]")).size() > 0);
-        driver.findElement(By.xpath("//a[contains(text(),'Show Result')]")).click();
+        Awaitility.await().atMost(10, TimeUnit.SECONDS).until(() -> driver.findElements(showResultsEl).size() > 0);
+        driver.findElement(showResultsEl).click();
         Awaitility
             .await()
             .atMost(10, TimeUnit.SECONDS)
@@ -143,12 +142,9 @@ public class MultiProcessForm {
         Assert.assertNotNull("Wrong Form status", row3.findElement(By.xpath("//input[@value='Reviewed']")));
         Assert.assertNotNull("Task must be approved", row3.findElement(By.xpath("//input[@checked='true']")));
 
-        driver.findElement(By.xpath("//button[@ng-click='claim()']")).click();
-        Awaitility
-            .await()
-            .atMost(5, TimeUnit.SECONDS)
-            .until(() -> driver.findElements(By.xpath("//button[@ng-click='complete()']")).size() > 0);
-        WebElement submitButton = driver.findElement(By.xpath("//button[@ng-click='complete()']"));
+        driver.findElement(claimBtn).click();
+        Awaitility.await().atMost(5, TimeUnit.SECONDS).until(() -> driver.findElements(completeBtn).size() > 0);
+        WebElement submitButton = driver.findElement(completeBtn);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", submitButton);
         return Task.where("{0} Complete MultiTasks");

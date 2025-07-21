@@ -18,7 +18,7 @@ public class Methods extends Base {
         this.headers.put("Accept", "application/hal+json, application/json; q=0.5");
         this.headers.put("Content-Type", "application/json");
         this.headers.put("Origin", camundaUrl);
-        this.headers.put("Referer", camundaUrl + "/camunda/app/tasklist/default/");
+        this.headers.put("Referer", camundaUrl + tasks);
         this.headers.put("X-XSRF-TOKEN", cookiesMap.get("XSRF").getValue());
         this.cookiesMap = cookiesMap;
     }
@@ -41,7 +41,7 @@ public class Methods extends Base {
             .headers(this.headers)
             .cookie(this.cookiesMap.get("XSRF"))
             .cookie(this.cookiesMap.get("JSESSIONID"))
-            .get("camunda/api/engine/engine/default/process-definition");
+            .get(processDefinition);
         Assertions.assertEquals(200, res.statusCode(), "Get deploymentId: response code not 200");
 
         String rbdy = res.body().asString();
@@ -66,7 +66,7 @@ public class Methods extends Base {
             .headers(this.headers)
             .cookie(this.cookiesMap.get("XSRF"))
             .cookie(this.cookiesMap.get("JSESSIONID"))
-            .get("camunda/api/engine/engine/default/process-definition");
+            .get(processDefinition);
         Assertions.assertEquals(200, res.statusCode(), "Get deploymentId: response code not 200");
 
         JsonPath jpath = new JsonPath(res.body().asString());
@@ -78,7 +78,7 @@ public class Methods extends Base {
                 .headers(this.headers)
                 .cookie(this.cookiesMap.get("XSRF"))
                 .cookie(this.cookiesMap.get("JSESSIONID"))
-                .get("camunda/api/engine/engine/default/deployment/" + processDefinitionId + "/resources");
+                .get(deploymentApi + processDefinitionId + "/resources");
         Assertions.assertEquals(200, res.statusCode(), "Get deploymentId: response code not 200");
 
         return new JsonPath(res.body().asString());
@@ -95,7 +95,7 @@ public class Methods extends Base {
             .headers(headers)
             .cookie(this.cookiesMap.get("XSRF"))
             .cookie(this.cookiesMap.get("JSESSIONID"))
-            .get("camunda/api/engine/engine/default/task");
+            .get(taskApi);
         Assertions.assertEquals(200, res.statusCode(), "Get taskId: response code not 200");
 
         String rbdy = res.body().asString();
@@ -109,7 +109,7 @@ public class Methods extends Base {
         headers.put("Content-Type", "application/json");
         RestAssured.baseURI = camundaUrl;
         RequestSpecification httpRequest = RestAssured.given();
-        Response res = httpRequest.headers(headers).get("/engine-rest/process-instance/" + processInstanceId);
+        Response res = httpRequest.headers(headers).get(processInstance + processInstanceId);
         return res.statusCode();
     }
 
@@ -124,7 +124,7 @@ public class Methods extends Base {
             .cookie(cookiesMap.get("JSESSIONID"))
             .body(payload)
             .urlEncodingEnabled(false)
-            .post("camunda/api/engine/engine/default/task/" + taskId + "/claim");
+            .post(taskApi + "/" + taskId + "/claim");
         return res.statusCode();
     }
 
@@ -139,7 +139,7 @@ public class Methods extends Base {
             .cookie(this.cookiesMap.get("XSRF"))
             .cookie(this.cookiesMap.get("JSESSIONID"))
             .queryParams(params)
-            .get("camunda/api/engine/engine/default/task/" + taskId + "/form-variables");
+            .get(taskApi + "/" + taskId + "/form-variables");
         Assertions.assertEquals(200, res.statusCode(), "Get form variables: response code not 200");
 
         String rbdy = res.body().asString();

@@ -18,7 +18,7 @@ public class SimpleProcess extends Base {
         this.headers.put("Accept", "application/hal+json, application/json; q=0.5");
         this.headers.put("Content-Type", "application/json");
         this.headers.put("Origin", camundaUrl);
-        this.headers.put("Referer", camundaUrl + "/camunda/app/tasklist/default/");
+        this.headers.put("Referer", camundaUrl + tasks);
         this.headers.put("X-XSRF-TOKEN", cookiesMap.get("XSRF").getValue());
         this.cookiesMap = cookiesMap;
     }
@@ -36,7 +36,7 @@ public class SimpleProcess extends Base {
             .cookie(this.cookiesMap.get("JSESSIONID"))
             .body(payloadStr)
             .urlEncodingEnabled(false)
-            .post("camunda/api/engine/engine/default/process-definition/" + processDefinitionId + "/start");
+            .post(processDefinition + "/" + processDefinitionId + "/start");
         Assertions.assertEquals(200, res.statusCode(), "Submit Process: response code is not 200");
         String body = res.getBody().asString();
         JsonPath jpath = new JsonPath(body);
@@ -58,7 +58,7 @@ public class SimpleProcess extends Base {
             .cookie(cookiesMap.get("JSESSIONID"))
             .body(payloadStr)
             .urlEncodingEnabled(false)
-            .post("camunda/api/engine/engine/default/task/" + taskId + "/complete");
+            .post(taskApi + "/" + taskId + "/complete");
         Assertions.assertEquals(204, res.statusCode(), "Complete Process: response code is not 204");
     }
 }

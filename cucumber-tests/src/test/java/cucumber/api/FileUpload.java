@@ -37,7 +37,7 @@ public class FileUpload extends Base {
         Map<String, String> headers = new HashMap<>();
         headers.put("content-type", "multipart/form-data");
         headers.put("origin", camundaUrl);
-        headers.put("referer", camundaUrl + "/camunda/app/tasklist/default/");
+        headers.put("referer", camundaUrl + tasks);
         headers.put("Accept", "*/*");
         //RestAssured.baseURI = this.camundaUrl;
 
@@ -49,7 +49,7 @@ public class FileUpload extends Base {
             .multiPart("name", "bot.png")
             .multiPart("dir", "")
             .when()
-            .post("/content/upload");
+            .post(upload);
         Assertions.assertEquals(200, res.statusCode(), "Upload file: response code is not 200");
         JsonPath jpath = new JsonPath(res.getBody().asString());
         return jpath.getString("url");

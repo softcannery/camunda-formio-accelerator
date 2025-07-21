@@ -3,8 +3,8 @@ package cucumber.pages;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 import net.serenitybdd.core.Serenity;
-import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
@@ -12,14 +12,20 @@ import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.actions.Scroll;
 import net.serenitybdd.screenplay.targets.Target;
+import org.awaitility.Awaitility;
+import org.openqa.selenium.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 public class InvoiceForm extends PageObject {
 
-    public static Target APPROVE_CHECKBOX = Target.the("Check approve").locatedBy("//input[@name='data[approved]']");
-    public static Target COMPLETE_BUTTON = Target.the("Complete").locatedBy("//button[contains(text(), 'Complete')]");
+    public static final Target APPROVE_CHECKBOX = Target
+        .the("Check approve")
+        .locatedBy("//input[@name='data[approved]']");
+    public static final Target COMPLETE_BUTTON = Target
+        .the("Complete")
+        .locatedBy("//button[contains(text(), 'Complete')]");
     private static final Target EMAIL_FIELD = Target.the("Email field").locatedBy("//input[@name='data[email]']");
     private static final Target NUMBER_FIELD = Target.the("Number field").locatedBy("//input[@name='data[number]']");
     private static final Target INVOICE_ID_FIELD = Target
@@ -29,14 +35,15 @@ public class InvoiceForm extends PageObject {
         .the("Start button")
         .locatedBy("//button[contains(text(), 'Start')]");
 
+    private static final By creditor = By.xpath("//input[@name='data[creditor]']");
+    public static final By signature = By.xpath("//*[@class='signature-pad-canvas']");
+    public static final By browse = By.xpath("//a[@class='browse']");
+    public static final By file = By.xpath("//input[@type='file']");
+
     public static Performable setCreditor(String creditorName) {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         WebDriver driver = Serenity.getDriver();
-        driver.findElement(By.xpath("//input[@name='data[creditor]']")).sendKeys(creditorName);
+        Awaitility.await().atMost(10, TimeUnit.SECONDS).until(() -> driver.findElements(creditor).size() > 0);
+        driver.findElement(creditor).sendKeys(creditorName);
         return Task.where("{0} set creditor name");
     }
 
@@ -55,7 +62,7 @@ public class InvoiceForm extends PageObject {
     public static Performable setSignature() {
         WebDriver driver = Serenity.getDriver();
         Actions actions = new Actions(driver);
-        WebElement signatureField = driver.findElement(By.xpath("//*[@class='signature-pad-canvas']"));
+        WebElement signatureField = driver.findElement(signature);
         actions.moveToElement(signatureField, 10, 3).clickAndHold().moveByOffset(20, 6).release().perform();
         return Task.where("{0} set signature");
     }
@@ -75,8 +82,8 @@ public class InvoiceForm extends PageObject {
         }
 
         WebDriver driver = Serenity.getDriver();
-        driver.findElement(By.xpath("//a[@class='browse']")).click();
-        driver.findElement(By.xpath("//input[@type='file']")).sendKeys(testFilePath);
+        driver.findElement(browse).click();
+        driver.findElement(file).sendKeys(testFilePath);
         return Task.where("{0} upload file");
     }
 

@@ -17,12 +17,12 @@ public class Auth extends Base {
     private void getCsrf() {
         RestAssured.baseURI = camundaUrl;
         Map<String, String> headers = new HashMap<>();
-        headers.put("referer", camundaUrl + "/camunda/app/tasklist/default/");
+        headers.put("referer", camundaUrl + tasks);
         Cookies cookies = RestAssured
             .given()
             .headers(headers)
             .when()
-            .get("/camunda/api/engine/engine/")
+            .get(engine)
             .then()
             .statusCode(200)
             .extract()
@@ -38,7 +38,7 @@ public class Auth extends Base {
         Map<String, String> headers = new HashMap<>();
         headers.put("content-type", "application/x-www-form-urlencoded;charset=UTF-8");
         headers.put("origin", camundaUrl);
-        headers.put("referer", camundaUrl + "/camunda/app/tasklist/default/");
+        headers.put("referer", camundaUrl + tasks);
         headers.put("X-Xsrf-Token", this.XSRF.getValue());
         headers.put("Accept", "application/json, text/plain, */*");
         RestAssured.baseURI = camundaUrl;
@@ -48,7 +48,7 @@ public class Auth extends Base {
             .cookie(this.XSRF)
             .cookie(this.JSESSIONID)
             .body("username=" + username + "&password=" + password)
-            .post("/camunda/api/admin/auth/user/default/login/tasklist");
+            .post(loginTasks);
         Assertions.assertEquals(200, res.statusCode(), "Authenticate: response code is not 200");
         this.JSESSIONID = res.getDetailedCookie("JSESSIONID");
         this.XSRF =
@@ -58,7 +58,7 @@ public class Auth extends Base {
                 .cookie(this.XSRF)
                 .cookie(this.JSESSIONID)
                 .when()
-                .get("/camunda/api/engine/engine/")
+                .get(engine)
                 .then()
                 .statusCode(200)
                 .extract()

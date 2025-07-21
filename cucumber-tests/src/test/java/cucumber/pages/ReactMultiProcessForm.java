@@ -3,7 +3,6 @@ package cucumber.pages;
 import static net.serenitybdd.core.Serenity.getDriver;
 
 import java.util.concurrent.TimeUnit;
-import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
@@ -14,22 +13,22 @@ import org.openqa.selenium.interactions.Actions;
 
 public class ReactMultiProcessForm {
 
+    private static final By startProcessBtn = By.xpath("//a[contains(text(),'Start Process')]");
+    private static final By processName = By.xpath("//a[contains(text(), 'Multi-Instance Sub-Process Demo')]");
+    private static final By submitBtn = By.xpath("//button[text()='Submit']");
+    private static final By tasksList = By.xpath("//a[contains(text(),'Tasklist')]");
+    private static final By approveCheckBox = By.xpath("//input[@name='data[approved]']");
+    private static final By submitForm = By.xpath("//button[@type='submit']");
+    private static final By showResults = By.xpath("//div[text()='Show Result']");
+
     public static Performable startMultiProcess() {
         WebDriver driver = getDriver();
-        Awaitility
-            .await()
-            .atMost(20, TimeUnit.SECONDS)
-            .until(() -> driver.findElements(By.xpath("//a[contains(text(),'Start Process')]")).size() > 0);
-        driver.findElement(By.xpath("//a[contains(text(),'Start Process')]")).click();
-        Awaitility
-            .await()
-            .atMost(20, TimeUnit.SECONDS)
-            .until(() ->
-                driver.findElements(By.xpath("//a[contains(text(), 'Multi-Instance Sub-Process Demo')]")).size() > 0
-            );
+        Awaitility.await().atMost(20, TimeUnit.SECONDS).until(() -> driver.findElements(startProcessBtn).size() > 0);
+        driver.findElement(startProcessBtn).click();
+        Awaitility.await().atMost(20, TimeUnit.SECONDS).until(() -> driver.findElements(processName).size() > 0);
 
-        driver.findElement(By.xpath("//a[contains(text(), 'Multi-Instance Sub-Process Demo')]")).click();
-        driver.findElement(By.xpath("//button[text()='Submit']")).click();
+        driver.findElement(processName).click();
+        driver.findElement(submitBtn).click();
         return Task.where("{0} Start Process");
     }
 
@@ -39,7 +38,7 @@ public class ReactMultiProcessForm {
         for (String user : multiTaskUsers) {
             actor.wasAbleTo(NavigateTo.theReactMainPage());
             WebDriver driver = getDriver();
-            driver.findElement(By.xpath("//a[contains(text(),'Tasklist')]")).click();
+            driver.findElement(tasksList).click();
             try {
                 driver.findElement(By.xpath("(//div[text()='Evaluate " + user + "'])[1]")).click();
             } catch (ElementClickInterceptedException e) {
@@ -89,9 +88,9 @@ public class ReactMultiProcessForm {
                 Assert.assertEquals("Wrong supervisor name", "Joe Doe", supervisorName);
                 Assert.assertEquals("Wrong supervisor Email", "joe@example.com", supervisorEmail);
             }
-            WebElement approvedField = driver.findElement(By.xpath("//input[@name='data[approved]']"));
+            WebElement approvedField = driver.findElement(approveCheckBox);
             actions.moveToElement(approvedField).click().build().perform();
-            WebElement submitButton = driver.findElement(By.xpath("//button[@type='submit']"));
+            WebElement submitButton = driver.findElement(submitForm);
             actions.moveToElement(submitButton).click().build().perform();
             try {
                 Thread.sleep(3000);
@@ -104,15 +103,9 @@ public class ReactMultiProcessForm {
 
     public static Performable completeShowResults() {
         WebDriver driver = getDriver();
-        Awaitility
-            .await()
-            .atMost(5, TimeUnit.SECONDS)
-            .until(() -> driver.findElements(By.xpath("//a[contains(text(),'Tasklist')]")).size() > 0);
-        driver.findElement(By.xpath("//a[contains(text(),'Tasklist')]")).click();
-        Awaitility
-            .await()
-            .atMost(5, TimeUnit.SECONDS)
-            .until(() -> driver.findElements(By.xpath("//div[text()='Show Result']")).size() > 1);
+        Awaitility.await().atMost(5, TimeUnit.SECONDS).until(() -> driver.findElements(tasksList).size() > 0);
+        driver.findElement(tasksList).click();
+        Awaitility.await().atMost(5, TimeUnit.SECONDS).until(() -> driver.findElements(showResults).size() > 1);
         driver.findElement(By.xpath("(//div[text()='Show Result'])[1]")).click();
         try {
             Thread.sleep(2000);
@@ -168,9 +161,9 @@ public class ReactMultiProcessForm {
         Assert.assertNotNull("Task must be approved", row3.findElement(By.xpath("//input[@checked='true']")));
 
         try {
-            driver.findElement(By.xpath("//button[@type='submit']")).click();
+            driver.findElement(submitForm).click();
         } catch (ElementClickInterceptedException e) {
-            driver.findElement(By.xpath("//button[@type='submit']")).click();
+            driver.findElement(submitForm).click();
         }
         return Task.where("{0} Complete MultiTasks");
     }

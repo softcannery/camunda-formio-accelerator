@@ -18,7 +18,7 @@ public class InvoiceProcess extends Base {
         this.headers.put("Accept", "application/hal+json, application/json; q=0.5");
         this.headers.put("Content-Type", "application/json");
         this.headers.put("Origin", camundaUrl);
-        this.headers.put("Referer", camundaUrl + "/camunda/app/tasklist/default/");
+        this.headers.put("Referer", camundaUrl + tasks);
         this.headers.put("X-XSRF-TOKEN", cookiesMap.get("XSRF").getValue());
         this.cookiesMap = cookiesMap;
     }
@@ -37,7 +37,7 @@ public class InvoiceProcess extends Base {
             .cookie(this.cookiesMap.get("JSESSIONID"))
             .body(payloadStr)
             .urlEncodingEnabled(false)
-            .post("camunda/api/engine/engine/default/process-definition/" + processDefinitionId + "/submit-form");
+            .post(processDefinition + "/" + processDefinitionId + "/submit-form");
         String body = res.getBody().asString();
         Assertions.assertEquals(200, res.statusCode(), "Submit Process: response code is not 200");
         JsonPath jpath = new JsonPath(body);
@@ -66,7 +66,7 @@ public class InvoiceProcess extends Base {
             .cookie(cookiesMap.get("JSESSIONID"))
             .body(payloadStr)
             .urlEncodingEnabled(false)
-            .post("camunda/api/engine/engine/default/task/" + taskId + "/submit-form");
+            .post(taskApi + "/" + taskId + "/submit-form");
         Assertions.assertEquals(204, res.statusCode(), "Complete Process: response code is not 204");
     }
 }

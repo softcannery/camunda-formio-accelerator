@@ -292,7 +292,6 @@ public class StepDefinitions {
     @When("Open Camunda modeler and new diagram")
     public void camundaModelerIsOpened() {
         camundaModelerAppPage = new CamundaModelerAppPage();
-        //camundaModelerAppPage.openNewDiagram();
     }
 
     @Then("Form.io Import button is displayed")
