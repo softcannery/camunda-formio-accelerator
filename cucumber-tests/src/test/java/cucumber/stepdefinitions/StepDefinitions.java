@@ -243,10 +243,7 @@ public class StepDefinitions {
     @When("{actor} starts PDF process")
     public void startPDFProcess(Actor actor) {
         actor.wasAbleTo(PDFProcessForm.startProcess());
-        Awaitility
-            .await()
-            .atMost(10, TimeUnit.SECONDS)
-            .until(() -> TaskListPage.getCountProcesses(actor) > 0);
+        Awaitility.await().atMost(10, TimeUnit.SECONDS).until(() -> TaskListPage.getCountProcesses(actor) > 0);
         processCount = TaskListPage.getCountProcesses(actor);
     }
 
