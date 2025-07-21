@@ -20,19 +20,14 @@ public class InvoiceForm extends PageObject {
 
     public static Target APPROVE_CHECKBOX = Target.the("Check approve").locatedBy("//input[@name='data[approved]']");
     public static Target COMPLETE_BUTTON = Target.the("Complete").locatedBy("//button[contains(text(), 'Complete')]");
-    private static Target CREDITOR_FIELD = Target.the("Creditor field").locatedBy("//input[@name='data[creditor]']");
-    private static Target EMAIL_FIELD = Target.the("Email field").locatedBy("//input[@name='data[email]']");
-    private static Target NUMBER_FIELD = Target.the("Number field").locatedBy("//input[@name='data[number]']");
-    private static Target CATEGORY_SELECT_FIELD = Target
-        .the("Category select field")
-        .locatedBy("//select[@name='data[category]']");
-    private static Target INVOICE_ID_FIELD = Target
+    private static final Target EMAIL_FIELD = Target.the("Email field").locatedBy("//input[@name='data[email]']");
+    private static final Target NUMBER_FIELD = Target.the("Number field").locatedBy("//input[@name='data[number]']");
+    private static final Target INVOICE_ID_FIELD = Target
         .the("Invoice id field")
         .locatedBy("//input[@name='data[invoiceID]']");
-    private static Target SIGNATURE_FIELD = Target
-        .the("Signature field")
-        .locatedBy("//*[@class='signature-pad-canvas']");
-    private static Target START_BUTTON = Target.the("Start button").locatedBy("//button[contains(text(), 'Start')]");
+    private static final Target START_BUTTON = Target
+        .the("Start button")
+        .locatedBy("//button[contains(text(), 'Start')]");
 
     public static Performable setCreditor(String creditorName) {
         try {

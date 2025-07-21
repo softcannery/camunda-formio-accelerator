@@ -2,10 +2,12 @@ package cucumber.pages;
 
 import static net.serenitybdd.core.Serenity.getDriver;
 
+import java.util.concurrent.TimeUnit;
 import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
+import org.awaitility.Awaitility;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -45,28 +47,28 @@ public class MultiProcessForm {
                 "return document.getElementsByName('data[supervisorEmail]')[0].value"
             );
             if (user.equals("Chris")) {
-                Assert.assertEquals("Wrong employee name", emplName, "Chris");
-                Assert.assertEquals("Wrong employee Email", emplEmail, "chris@example.com");
+                Assert.assertEquals("Wrong employee name", "Chris", emplName);
+                Assert.assertEquals("Wrong employee Email", "chris@example.com", emplEmail);
                 Assert.assertTrue("Wrong DOH", doh.contains("2023-04-02"));
-                Assert.assertEquals("Wrong Position", position, "Position3");
-                Assert.assertEquals("Wrong supervisor name", supervisorName, "Joe Doe");
-                Assert.assertEquals("Wrong supervisor Email", supervisorEmail, "joe@example.com");
+                Assert.assertEquals("Wrong Position", "Position3", position);
+                Assert.assertEquals("Wrong supervisor name", "Joe Doe", supervisorName);
+                Assert.assertEquals("Wrong supervisor Email", "joe@example.com", supervisorEmail);
             }
             if (user.equals("Tyler")) {
-                Assert.assertEquals("Wrong employee name", emplName, "Tyler");
-                Assert.assertEquals("Wrong employee Email", emplEmail, "tyler@example.com");
+                Assert.assertEquals("Wrong employee name", "Tyler", emplName);
+                Assert.assertEquals("Wrong employee Email", "tyler@example.com", emplEmail);
                 Assert.assertTrue("Wrong DOH", doh.contains("2023-04-04"));
-                Assert.assertEquals("Wrong Position", position, "Position2");
-                Assert.assertEquals("Wrong supervisor name", supervisorName, "Joe Doe");
-                Assert.assertEquals("Wrong supervisor Email", supervisorEmail, "joe@example.com");
+                Assert.assertEquals("Wrong Position", "Position2", position);
+                Assert.assertEquals("Wrong supervisor name", "Joe Doe", supervisorName);
+                Assert.assertEquals("Wrong supervisor Email", "joe@example.com", supervisorEmail);
             }
             if (user.equals("Edward")) {
-                Assert.assertEquals("Wrong employee name", emplName, "Edward");
-                Assert.assertEquals("Wrong employee Email", emplEmail, "edward@example.com");
+                Assert.assertEquals("Wrong employee name", "Edward", emplName);
+                Assert.assertEquals("Wrong employee Email", "edward@example.com", emplEmail);
                 Assert.assertTrue("Wrong DOH", doh.contains("2023-04-01"));
-                Assert.assertEquals("Wrong Position", position, "Position1 ");
-                Assert.assertEquals("Wrong supervisor name", supervisorName, "Joe Doe");
-                Assert.assertEquals("Wrong supervisor Email", supervisorEmail, "joe@example.com");
+                Assert.assertEquals("Wrong Position", "Position1 ", position);
+                Assert.assertEquals("Wrong supervisor name", "Joe Doe", supervisorName);
+                Assert.assertEquals("Wrong supervisor Email", "joe@example.com", supervisorEmail);
             }
             WebElement approvedField = driver.findElement(By.xpath("//input[@name='data[approved]']"));
             actions.moveToElement(approvedField).click().build().perform();
@@ -82,18 +84,17 @@ public class MultiProcessForm {
     }
 
     public static Performable completeShowResults() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         WebDriver driver = getDriver();
+        Awaitility
+            .await()
+            .atMost(10, TimeUnit.SECONDS)
+            .until(() -> driver.findElements(By.xpath("//a[contains(text(),'Show Result')]")).size() > 0);
         driver.findElement(By.xpath("//a[contains(text(),'Show Result')]")).click();
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Awaitility
+            .await()
+            .atMost(10, TimeUnit.SECONDS)
+            .until(() -> driver.findElements(By.xpath("//tbody/.//tr/.//input[@value='Chris']/../../../..")).size() > 0
+            );
         WebElement row1 = driver.findElement(By.xpath("//tbody/.//tr/.//input[@value='Chris']/../../../.."));
         Assert.assertNotNull("Wrong employee email", row1.findElement(By.xpath("//input[@value='chris@example.com']")));
         Assert.assertNotNull(
@@ -143,11 +144,10 @@ public class MultiProcessForm {
         Assert.assertNotNull("Task must be approved", row3.findElement(By.xpath("//input[@checked='true']")));
 
         driver.findElement(By.xpath("//button[@ng-click='claim()']")).click();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        Awaitility
+            .await()
+            .atMost(5, TimeUnit.SECONDS)
+            .until(() -> driver.findElements(By.xpath("//button[@ng-click='complete()']")).size() > 0);
         WebElement submitButton = driver.findElement(By.xpath("//button[@ng-click='complete()']"));
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", submitButton);

@@ -2,9 +2,11 @@ package cucumber.pages;
 
 import static net.serenitybdd.core.Serenity.getDriver;
 
+import java.util.concurrent.TimeUnit;
 import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
+import org.awaitility.Awaitility;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -31,10 +33,10 @@ public class PDFProcessForm {
         actions.moveToElement(submitButton).click().build().perform();
         try {
             Thread.sleep(2000);
-            actions.moveToElement(submitButton).click().build().perform();
-        } catch (InterruptedException | ElementClickInterceptedException | StaleElementReferenceException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        actions.moveToElement(submitButton).click().build();
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -45,6 +47,10 @@ public class PDFProcessForm {
 
     public static Performable submitPdfProcess() {
         WebDriver driver = getDriver();
+        Awaitility
+            .await()
+            .atMost(15, TimeUnit.SECONDS)
+            .until(() -> driver.findElements(By.xpath("//a[contains(text(),'Review PDF')]")).size() > 0);
         driver.findElement(By.xpath("//a[contains(text(),'Review PDF')]")).click();
         try {
             Thread.sleep(5000);

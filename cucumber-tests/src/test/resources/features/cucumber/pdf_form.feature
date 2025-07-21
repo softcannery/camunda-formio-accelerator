@@ -5,4 +5,4 @@ Feature: test PDF form
     When he selects start process "Example PDF Form"
     When he starts PDF process
     When he complete PDF process
-    Then he process is closed
+    Then he checks that process is closed

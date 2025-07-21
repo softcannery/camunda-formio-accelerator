@@ -1,17 +1,21 @@
 package cucumber.pages;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Objects;
 import net.serenitybdd.annotations.DefaultUrl;
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
+import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.targets.Target;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,7 +33,9 @@ public class TaskListPage extends PageObject {
     public static Target HIDE_TASK_LIST_BUTTON = Target
         .the("Hide")
         .locatedBy("//section[contains(@class,'tasks-list')]/.//button[@ng-click='toggleRegion($event)']");
-    private static Target START_BUTTON = Target.the("Start button").locatedBy("//button[contains(text(), 'Start')]");
+    private static final Target START_BUTTON = Target
+        .the("Start button")
+        .locatedBy("//button[contains(text(), 'Start')]");
 
     @FindBy(name = "data[action]")
     public static WebElementFacade DROPDOWN_ACTION;
@@ -97,18 +103,24 @@ public class TaskListPage extends PageObject {
         return Integer.parseInt(countTasksStr);
     }
 
-    public static int getCountProcesses() {
+    public static int getCountProcesses(Actor actor) {
+        actor.wasAbleTo(NavigateTo.theProcessCountAPIPage());
         WebDriver driver = Serenity.getDriver();
         WebElement responseWE = driver.findElement(By.xpath("//pre"));
         String jsonString = responseWE.getText();
         int count = 0;
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = null;
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode jsonNode = mapper.readTree(jsonString);
-            count = jsonNode.get("count").asInt();
-        } catch (Exception e) {
-            e.printStackTrace();
+            jsonNode = mapper.readTree(jsonString);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
+        if (jsonNode.has("count")) {
+            count = jsonNode.get("count").asInt();
+        }
+
         return count;
     }
 

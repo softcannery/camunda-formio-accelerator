@@ -2,10 +2,10 @@
 Feature: Invoice for Approval
   @reset
   Scenario: Start and complete process with Attachments API test
-    Given kermit is logged in to Camunda via POST
-    When he starts an Invoice Process via API
-    When he completes Invoice Process via API
-    Then he should see that process not in the list via API
+    Given user is logged in to Camunda via POST
+    When user starts an Invoice Process via API
+    When user completes Invoice Process via API
+    Then user should see that process not in the list via API
   @reset
   Scenario: Start and complete process
     Given kermit is logged in to Camunda

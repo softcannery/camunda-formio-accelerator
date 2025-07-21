@@ -13,11 +13,15 @@ import net.serenitybdd.screenplay.targets.Target;
 
 public class SimpleProcessForm extends PageObject {
 
-    private static Target COMPLETE_BUTTON = Target.the("Complete").locatedBy("//button[contains(text(), 'Complete')]");
+    private static final Target COMPLETE_BUTTON = Target
+        .the("Complete")
+        .locatedBy("//button[contains(text(), 'Complete')]");
 
-    private static Target TEXT_FIELD = Target.the("Text field").locatedBy("//input[@name='data[textField]']");
-    private static Target NUMBER_FIELD = Target.the("Number field").locatedBy("//input[@name='data[number]']");
-    private static Target START_BUTTON = Target.the("Start button").locatedBy("//button[contains(text(), 'Start')]");
+    private static final Target TEXT_FIELD = Target.the("Text field").locatedBy("//input[@name='data[textField]']");
+    private static final Target NUMBER_FIELD = Target.the("Number field").locatedBy("//input[@name='data[number]']");
+    private static final Target START_BUTTON = Target
+        .the("Start button")
+        .locatedBy("//button[contains(text(), 'Start')]");
 
     public static Performable selectActionFromDropDown(String value) {
         TaskListPage.DROPDOWN_ACTION.selectByVisibleText(value);

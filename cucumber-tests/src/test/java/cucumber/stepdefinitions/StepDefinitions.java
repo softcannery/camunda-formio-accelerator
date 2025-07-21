@@ -42,8 +42,8 @@ public class StepDefinitions {
         actor.wasAbleTo(CamundaLoginPage.loginToCamunda(actor.toString(), "password"));
     }
 
-    @Given("{actor} is logged in to Camunda via POST")
-    public void loginToCamundaPOST(Actor actor) {
+    @Given("user is logged in to Camunda via POST")
+    public void loginToCamundaPOST() {
         Auth auth = new Auth();
         this.cookiesMap = auth.loginPost();
         this.methods = new Methods(cookiesMap);
@@ -51,41 +51,41 @@ public class StepDefinitions {
 
     @Given("delete mails for user {string}")
     public void deleteMailsFromUser(String userEmail) {
-        this.methods = new Methods();
+        methods = new Methods();
         methods.getDeleteAllMails(userEmail);
     }
 
-    @When("{actor} starts an Invoice Process via API")
-    public void startProcessInvoicePOST(Actor actor) {
-        this.invoiceProcess = new InvoiceProcess(cookiesMap);
+    @When("user starts an Invoice Process via API")
+    public void startProcessInvoicePOST() {
+        invoiceProcess = new InvoiceProcess(cookiesMap);
         FileUpload fileUpload = new FileUpload();
-        this.fileURL = fileUpload.uploadForm("files/bot.png", cookiesMap);
-        this.processDefinitionId = methods.getProcessDefinitionId("Submit Invoice for Approval");
-        this.processInstanceId = invoiceProcess.submitForm(fileURL, processDefinitionId);
+        fileURL = fileUpload.uploadForm("files/bot.png", cookiesMap);
+        processDefinitionId = methods.getProcessDefinitionId("Submit Invoice for Approval");
+        processInstanceId = invoiceProcess.submitForm(fileURL, processDefinitionId);
     }
 
-    @When("{actor} starts an Simple Process via API")
-    public void startSimpleProcessPOST(Actor actor) {
-        this.simpleProcess = new SimpleProcess(cookiesMap);
-        this.processDefinitionId = methods.getProcessDefinitionId("Simple Formio Task Action");
-        this.processInstanceId = simpleProcess.submitForm(processDefinitionId);
+    @When("user starts an Simple Process via API")
+    public void startSimpleProcessPOST() {
+        simpleProcess = new SimpleProcess(cookiesMap);
+        processDefinitionId = methods.getProcessDefinitionId("Simple Formio Task Action");
+        processInstanceId = simpleProcess.submitForm(processDefinitionId);
     }
 
-    @When("{actor} completes Invoice Process via API")
-    public void completeProcessInvoicePOST(Actor actor) {
-        String taskId = this.methods.getTaskId(this.processInstanceId);
-        this.methods.claim(taskId);
-        Map<String, String> submitAndActivityIds = this.methods.getFormVariables(taskId);
-        int respCodeGetProcessInstance = this.methods.getProcessInstance(this.processInstanceId);
+    @When("user completes Invoice Process via API")
+    public void completeProcessInvoicePOST() {
+        String taskId = methods.getTaskId(processInstanceId);
+        methods.claim(taskId);
+        Map<String, String> submitAndActivityIds = methods.getFormVariables(taskId);
+        int respCodeGetProcessInstance = methods.getProcessInstance(processInstanceId);
         Assertions.assertEquals(200, respCodeGetProcessInstance, "process instance was not created");
-        this.invoiceProcess.completeProcess(this.fileURL, taskId, submitAndActivityIds, this.processDefinitionId);
+        invoiceProcess.completeProcess(fileURL, taskId, submitAndActivityIds, processDefinitionId);
     }
 
-    @When("{actor} completes Simple Process via API")
-    public void completeSimpleProcessPOST(Actor actor) {
-        String taskId = this.methods.getTaskId(this.processInstanceId);
-        this.methods.claim(taskId);
-        Map<String, String> formVariables = this.methods.getFormVariables(taskId);
+    @When("user completes Simple Process via API")
+    public void completeSimpleProcessPOST() {
+        String taskId = methods.getTaskId(processInstanceId);
+        methods.claim(taskId);
+        Map<String, String> formVariables = methods.getFormVariables(taskId);
         JsonPath jpath = new JsonPath(formVariables.get("body"));
         Assertions.assertEquals(
             "1.11111112E8",
@@ -97,25 +97,18 @@ public class StepDefinitions {
             jpath.getString("textField.value"),
             "expected textField value - 'mike test'"
         );
-        int respCodeGetProcessInstance = this.methods.getProcessInstance(this.processInstanceId);
+        int respCodeGetProcessInstance = methods.getProcessInstance(processInstanceId);
         Assertions.assertEquals(200, respCodeGetProcessInstance, "process instance was not created");
-        this.simpleProcess.completeProcess(taskId, formVariables, this.processDefinitionId);
+        simpleProcess.completeProcess(taskId, formVariables, processDefinitionId);
     }
 
-    @Then("{actor} should see that process not in the list via API")
-    public void ensureThatProcessCompleted(Actor actor) {
-        int respCodeResult = 0;
-        for (int i = 0; i < 10; i++) {
-            respCodeResult = methods.getProcessInstance(processInstanceId);
-            if (respCodeResult == 404) {
-                break;
-            }
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    @Then("user should see that process not in the list via API")
+    public void ensureThatProcessCompleted() {
+        Awaitility
+            .await()
+            .atMost(15, TimeUnit.SECONDS)
+            .until(() -> methods.getProcessInstance(processInstanceId) == 404);
+        int respCodeResult = methods.getProcessInstance(processInstanceId);
         Assertions.assertEquals(404, respCodeResult, "process instance was not completed");
     }
 
@@ -148,9 +141,7 @@ public class StepDefinitions {
         actor.wasAbleTo(NavigateTo.theTaskListPage());
         tasksCountUI = TaskListPage.getTasksCount();
         actor.wasAbleTo(Ensure.that(TaskListPage.TASK_LIST_FIRST_ITEM_PROCESS).hasText(processName));
-        actor.wasAbleTo(NavigateTo.theProcessCountAPIPage());
-        processCount = TaskListPage.getCountProcesses();
-        System.out.println();
+        processCount = TaskListPage.getCountProcesses(actor);
     }
 
     @When("{actor} select the first process {string} in the tasks list")
@@ -198,8 +189,7 @@ public class StepDefinitions {
         } else {
             actor.wasAbleTo(Ensure.that(currentTasksCount).isEqualTo(tasksCountUI - 1));
         }
-        actor.wasAbleTo(NavigateTo.theProcessCountAPIPage());
-        int processCountAfterComplete = TaskListPage.getCountProcesses();
+        int processCountAfterComplete = TaskListPage.getCountProcesses(actor);
         actor.wasAbleTo(Ensure.that(processCountAfterComplete).isEqualTo(processCount - 1));
     }
 
@@ -246,37 +236,28 @@ public class StepDefinitions {
     @When("{actor} starts simple process")
     public void startSimpleProcess(Actor actor) {
         actor.wasAbleTo(SimpleProcessUpgrade.startSimpleProcess());
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        actor.wasAbleTo(NavigateTo.theProcessCountAPIPage());
-        processCount = TaskListPage.getCountProcesses();
+        Awaitility.await().atMost(5, TimeUnit.SECONDS).until(() -> TaskListPage.getCountProcesses(actor) > 0);
+        processCount = TaskListPage.getCountProcesses(actor);
     }
 
     @When("{actor} starts PDF process")
     public void startPDFProcess(Actor actor) {
         actor.wasAbleTo(PDFProcessForm.startProcess());
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        actor.wasAbleTo(NavigateTo.theProcessCountAPIPage());
-        processCount = TaskListPage.getCountProcesses();
+        Awaitility
+            .await()
+            .atMost(5, TimeUnit.SECONDS)
+            .until(() -> TaskListPage.getCountProcesses(actor) > processCount);
+        processCount = TaskListPage.getCountProcesses(actor);
     }
 
     @When("{actor} starts Multi process")
     public void startMultiProcess(Actor actor) {
         actor.wasAbleTo(ReactMultiProcessForm.startMultiProcess());
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        actor.wasAbleTo(NavigateTo.theProcessCountAPIPage());
-        processCount = TaskListPage.getCountProcesses();
+        Awaitility
+            .await()
+            .atMost(5, TimeUnit.SECONDS)
+            .until(() -> TaskListPage.getCountProcesses(actor) > processCount + 2);
+        processCount = TaskListPage.getCountProcesses(actor);
     }
 
     @When("{actor} approve multi tasks")
@@ -284,7 +265,7 @@ public class StepDefinitions {
         actor.wasAbleTo(MultiProcessForm.approveMultiTasks(actor));
     }
 
-    @When("{actor} open Show Results, clime and complete")
+    @When("{actor} open Show Results, claim and complete")
     public void completeMultiResults(Actor actor) {
         actor.wasAbleTo(NavigateTo.theTaskListPage());
         actor.wasAbleTo(MultiProcessForm.completeShowResults());
@@ -293,11 +274,6 @@ public class StepDefinitions {
     @When("{actor} complete PDF process")
     public void completePDFProcess(Actor actor) {
         actor.wasAbleTo(NavigateTo.theTaskListPage());
-        try {
-            Thread.sleep(8000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         actor.wasAbleTo(PDFProcessForm.submitPdfProcess());
     }
 
@@ -307,16 +283,13 @@ public class StepDefinitions {
         actor.wasAbleTo(SimpleProcessUpgrade.submitSimpleProcess());
     }
 
-    @Then("{actor} process is closed")
+    @Then("{actor} checks that process is closed")
     public void checkThatProcessIsClosed(Actor actor) {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        actor.wasAbleTo(NavigateTo.theProcessCountAPIPage());
-        int newProcessCount = TaskListPage.getCountProcesses();
-        Assert.assertEquals("process was not closed", processCount - 1, newProcessCount);
+        Awaitility
+            .await()
+            .atMost(5, TimeUnit.SECONDS)
+            .until(() -> TaskListPage.getCountProcesses(actor) < processCount);
+        Assert.assertEquals("process was not closed", processCount - 1, TaskListPage.getCountProcesses(actor));
     }
 
     @When("Open Camunda modeler and new diagram")
@@ -358,23 +331,32 @@ public class StepDefinitions {
     @Then("Check process {string} is present by ID")
     public void processIsPresent(String processName) {
         processDefinitionId = methods.getProcessDefinitionId(processName);
+        Awaitility.await().atMost(5, TimeUnit.SECONDS).until(() -> processDefinitionId.contains(processName));
         Assert.assertTrue(processDefinitionId.contains(processName));
     }
 
     @And("Check all formio files are present in process {string}")
     public void formioFilesAdded(String processName) {
-        methods.checkFormioFiles(processName);
+        JsonPath resources = methods.checkFormioFiles(processName);
+        Assertions.assertEquals(
+            processName + "-review.formio",
+            resources.getString("find{it.name == '" + processName + "-review.formio'}.name")
+        );
+        Assertions.assertEquals(
+            processName + "-submit.formio",
+            resources.getString("find{it.name == '" + processName + "-submit.formio'}.name")
+        );
     }
 
-    @When("{actor} starts an Pizza Process via API")
-    public void startProcessPizzaPOST(Actor actor) {
+    @When("user starts an Pizza Process via API")
+    public void startProcessPizzaPOST() {
         pizzaProcess = new PizzaProcess(cookiesMap);
         processDefinitionId = methods.getProcessDefinitionId("Pizza Order Process");
         processInstanceId = pizzaProcess.submitForm(processDefinitionId);
     }
 
-    @When("{actor} claim and complete Pizza forms for make and deliver via API")
-    public void makeThePizzaPOST(Actor actor) {
+    @When("user claim and complete Pizza forms for make and deliver via API")
+    public void makeThePizzaPOST() {
         for (int i = 0; i < 2; i++) {
             Awaitility.await().atMost(15, TimeUnit.SECONDS).until(() -> methods.getTaskId(processInstanceId) != null);
             String taskId = methods.getTaskId(processInstanceId);
@@ -406,12 +388,10 @@ public class StepDefinitions {
     @When("{actor} clicks start process button")
     public void clickStartProcess(Actor actor) {
         actor.wasAbleTo(TaskListPage.clickStartProcessButton());
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        actor.wasAbleTo(NavigateTo.theProcessCountAPIPage());
-        processCount = TaskListPage.getCountProcesses();
+        Awaitility
+            .await()
+            .atMost(5, TimeUnit.SECONDS)
+            .until(() -> TaskListPage.getCountProcesses(actor) > processCount);
+        processCount = TaskListPage.getCountProcesses(actor);
     }
 }
