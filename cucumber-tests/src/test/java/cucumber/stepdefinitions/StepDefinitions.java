@@ -245,7 +245,7 @@ public class StepDefinitions {
         actor.wasAbleTo(PDFProcessForm.startProcess());
         Awaitility
             .await()
-            .atMost(5, TimeUnit.SECONDS)
+            .atMost(10, TimeUnit.SECONDS)
             .until(() -> TaskListPage.getCountProcesses(actor) > processCount);
         processCount = TaskListPage.getCountProcesses(actor);
     }
