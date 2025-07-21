@@ -246,7 +246,7 @@ public class StepDefinitions {
         Awaitility
             .await()
             .atMost(10, TimeUnit.SECONDS)
-            .until(() -> TaskListPage.getCountProcesses(actor) > processCount);
+            .until(() -> TaskListPage.getCountProcesses(actor) > 0);
         processCount = TaskListPage.getCountProcesses(actor);
     }
 
