@@ -16,24 +16,24 @@ public class CamundaModelerAppPage {
 
     private WebDriver driver;
 
-    private By formIoImportBtn = By.xpath("//button[text()='Form.io Import']");
+    private final By formIoImportBtn = By.xpath("//button[text()='Form.io Import']");
 
-    private By deployToCamundaBtn = By.xpath("//button[text()='Deploy to Camunda']");
-    private By saveBtn = By.xpath("//button[text()='Save']");
-    private By bpmnDiagramBtn = By.xpath(
+    private final By deployToCamundaBtn = By.xpath("//button[text()='Deploy to Camunda']");
+    private final By saveBtn = By.xpath("//button[text()='Save']");
+    private final By bpmnDiagramBtn = By.xpath(
         "//*[@id='welcome-page-platform']/.//button[contains(text(), 'BPMN diagram')]"
     );
-    private By apiKeyField = By.xpath("//label[@for='apiKey']/../input");
-    private By endpointField = By.xpath("//label[@for='endpoint']/../input");
-    private By versionField = By.xpath("//label[@for='tag']/../input");
-    private By deploymentNameField = By.xpath("//label[@for='deployment.name']/../input");
-    private By deploymentTenantId = By.xpath("//label[@for='deployment.tenantId']/../input");
-    private By deploymentRestEndpoint = By.xpath("//label[@for='endpoint.url']/../input");
-    private By deploymentUsername = By.xpath("//label[@for='endpoint.username']/../input");
-    private By deploymentPassword = By.xpath("//label[@for='endpoint.password']/../input");
-    private By deploymentRBHttp = By.xpath("//label[@for='radio-element-http-basic']/../input");
-    private By deploymentRBToken = By.xpath("//label[@for='radio-element-bearer-token']/../input");
-    private By deploymentAddAttachments = By.xpath("//label[@for='deployment.attachments']/../input");
+    private final By apiKeyField = By.xpath("//label[@for='apiKey']/../input");
+    private final By endpointField = By.xpath("//label[@for='endpoint']/../input");
+    private final By versionField = By.xpath("//label[@for='tag']/../input");
+    private final By deploymentNameField = By.xpath("//label[@for='deployment.name']/../input");
+    private final By deploymentTenantId = By.xpath("//label[@for='deployment.tenantId']/../input");
+    private final By deploymentRestEndpoint = By.xpath("//label[@for='endpoint.url']/../input");
+    private final By deploymentUsername = By.xpath("//label[@for='endpoint.username']/../input");
+    private final By deploymentPassword = By.xpath("//label[@for='endpoint.password']/../input");
+    private final By deploymentRBHttp = By.xpath("//label[@for='radio-element-http-basic']/../input");
+    private final By deploymentRBToken = By.xpath("//label[@for='radio-element-bearer-token']/../input");
+    private final By deploymentAddAttachments = By.xpath("//label[@for='deployment.attachments']/../input");
 
     public CamundaModelerAppPage() {
         Properties prop = new Properties();
@@ -42,8 +42,6 @@ public class CamundaModelerAppPage {
         String confPath = confFileUrl.getPath();
         try (FileInputStream fis = new FileInputStream(confPath)) {
             prop.load(fis);
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
         }

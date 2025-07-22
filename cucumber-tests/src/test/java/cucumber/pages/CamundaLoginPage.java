@@ -11,9 +11,9 @@ import net.serenitybdd.screenplay.targets.Target;
 @DefaultUrl("http://localhost/")
 public class CamundaLoginPage extends PageObject {
 
-    private static Target USER_LOGIN = Target.the("login field").locatedBy("//*[@placeholder='Username']");
-    private static Target USER_PASSWORD = Target.the("password field").locatedBy("//*[@placeholder='Password']");
-    private static Target LOGIN_BUTTON = Target.the("login button").locatedBy("//*[@type='submit']");
+    private static final Target USER_LOGIN = Target.the("login field").locatedBy("//*[@placeholder='Username']");
+    private static final Target USER_PASSWORD = Target.the("password field").locatedBy("//*[@placeholder='Password']");
+    private static final Target LOGIN_BUTTON = Target.the("login button").locatedBy("//*[@type='submit']");
 
     private static Performable setLogin(String userLogin) {
         return Task.where("{0} searches for '" + userLogin + "'", Enter.theValue(userLogin).into(USER_LOGIN));

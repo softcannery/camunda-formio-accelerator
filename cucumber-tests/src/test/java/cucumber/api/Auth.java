@@ -15,14 +15,14 @@ public class Auth extends Base {
     private Cookie JSESSIONID;
 
     private void getCsrf() {
-        RestAssured.baseURI = this.camundaUrl;
+        RestAssured.baseURI = camundaUrl;
         Map<String, String> headers = new HashMap<>();
-        headers.put("referer", this.camundaUrl + "/camunda/app/tasklist/default/");
+        headers.put("referer", camundaUrl + tasks);
         Cookies cookies = RestAssured
             .given()
             .headers(headers)
             .when()
-            .get("/camunda/api/engine/engine/")
+            .get(engine)
             .then()
             .statusCode(200)
             .extract()
@@ -37,18 +37,18 @@ public class Auth extends Base {
 
         Map<String, String> headers = new HashMap<>();
         headers.put("content-type", "application/x-www-form-urlencoded;charset=UTF-8");
-        headers.put("origin", this.camundaUrl);
-        headers.put("referer", this.camundaUrl + "/camunda/app/tasklist/default/");
+        headers.put("origin", camundaUrl);
+        headers.put("referer", camundaUrl + tasks);
         headers.put("X-Xsrf-Token", this.XSRF.getValue());
         headers.put("Accept", "application/json, text/plain, */*");
-        RestAssured.baseURI = this.camundaUrl;
+        RestAssured.baseURI = camundaUrl;
         RequestSpecification httpRequest = RestAssured.given();
         Response res = httpRequest
             .headers(headers)
             .cookie(this.XSRF)
             .cookie(this.JSESSIONID)
-            .body("username=" + this.username + "&password=" + this.password)
-            .post("/camunda/api/admin/auth/user/default/login/tasklist");
+            .body("username=" + username + "&password=" + password)
+            .post(loginTasks);
         Assertions.assertEquals(200, res.statusCode(), "Authenticate: response code is not 200");
         this.JSESSIONID = res.getDetailedCookie("JSESSIONID");
         this.XSRF =
@@ -58,7 +58,7 @@ public class Auth extends Base {
                 .cookie(this.XSRF)
                 .cookie(this.JSESSIONID)
                 .when()
-                .get("/camunda/api/engine/engine/")
+                .get(engine)
                 .then()
                 .statusCode(200)
                 .extract()

@@ -2,33 +2,33 @@ package cucumber.pages;
 
 import static net.serenitybdd.core.Serenity.getDriver;
 
-import net.serenitybdd.core.annotations.findby.By;
+import java.util.concurrent.TimeUnit;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
+import org.awaitility.Awaitility;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
 public class ReactMultiProcessForm {
 
+    private static final By startProcessBtn = By.xpath("//a[contains(text(),'Start Process')]");
+    private static final By processName = By.xpath("//a[contains(text(), 'Multi-Instance Sub-Process Demo')]");
+    private static final By submitBtn = By.xpath("//button[text()='Submit']");
+    private static final By tasksList = By.xpath("//a[contains(text(),'Tasklist')]");
+    private static final By approveCheckBox = By.xpath("//input[@name='data[approved]']");
+    private static final By submitForm = By.xpath("//button[@type='submit']");
+    private static final By showResults = By.xpath("//div[text()='Show Result']");
+
     public static Performable startMultiProcess() {
         WebDriver driver = getDriver();
-        for (int i = 0; i < 20; i++) {
-            try {
-                driver.findElement(By.xpath("//a[contains(text(),'Start Process')]")).click();
-                driver.findElement(By.xpath("//a[contains(text(), 'Multi-Instance Sub-Process Demo')]"));
-                break;
-            } catch (NoSuchElementException e) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }
-        driver.findElement(By.xpath("//a[contains(text(), 'Multi-Instance Sub-Process Demo')]")).click();
-        driver.findElement(By.xpath("//button[text()='Submit']")).click();
+        Awaitility.await().atMost(20, TimeUnit.SECONDS).until(() -> driver.findElements(startProcessBtn).size() > 0);
+        driver.findElement(startProcessBtn).click();
+        Awaitility.await().atMost(20, TimeUnit.SECONDS).until(() -> driver.findElements(processName).size() > 0);
+
+        driver.findElement(processName).click();
+        driver.findElement(submitBtn).click();
         return Task.where("{0} Start Process");
     }
 
@@ -38,7 +38,7 @@ public class ReactMultiProcessForm {
         for (String user : multiTaskUsers) {
             actor.wasAbleTo(NavigateTo.theReactMainPage());
             WebDriver driver = getDriver();
-            driver.findElement(By.xpath("//a[contains(text(),'Tasklist')]")).click();
+            driver.findElement(tasksList).click();
             try {
                 driver.findElement(By.xpath("(//div[text()='Evaluate " + user + "'])[1]")).click();
             } catch (ElementClickInterceptedException e) {
@@ -65,32 +65,32 @@ public class ReactMultiProcessForm {
                 "return document.getElementsByName('data[supervisorEmail]')[0].value"
             );
             if (user.equals("Chris")) {
-                Assert.assertEquals("Wrong employee name", emplName, "Chris");
-                Assert.assertEquals("Wrong employee Email", emplEmail, "chris@example.com");
+                Assert.assertEquals("Wrong employee name", "Chris", emplName);
+                Assert.assertEquals("Wrong employee Email", "chris@example.com", emplEmail);
                 Assert.assertTrue("Wrong DOH", doh.contains("2023-04-02"));
-                Assert.assertEquals("Wrong Position", position, "Position3");
-                Assert.assertEquals("Wrong supervisor name", supervisorName, "Joe Doe");
-                Assert.assertEquals("Wrong supervisor Email", supervisorEmail, "joe@example.com");
+                Assert.assertEquals("Wrong Position", "Position3", position);
+                Assert.assertEquals("Wrong supervisor name", "Joe Doe", supervisorName);
+                Assert.assertEquals("Wrong supervisor Email", "joe@example.com", supervisorEmail);
             }
             if (user.equals("Tyler")) {
-                Assert.assertEquals("Wrong employee name", emplName, "Tyler");
-                Assert.assertEquals("Wrong employee Email", emplEmail, "tyler@example.com");
+                Assert.assertEquals("Wrong employee name", "Tyler", emplName);
+                Assert.assertEquals("Wrong employee Email", "tyler@example.com", emplEmail);
                 Assert.assertTrue("Wrong DOH", doh.contains("2023-04-04"));
-                Assert.assertEquals("Wrong Position", position, "Position2");
-                Assert.assertEquals("Wrong supervisor name", supervisorName, "Joe Doe");
-                Assert.assertEquals("Wrong supervisor Email", supervisorEmail, "joe@example.com");
+                Assert.assertEquals("Wrong Position", "Position2", position);
+                Assert.assertEquals("Wrong supervisor name", "Joe Doe", supervisorName);
+                Assert.assertEquals("Wrong supervisor Email", "joe@example.com", supervisorEmail);
             }
             if (user.equals("Edward")) {
-                Assert.assertEquals("Wrong employee name", emplName, "Edward");
-                Assert.assertEquals("Wrong employee Email", emplEmail, "edward@example.com");
+                Assert.assertEquals("Wrong employee name", "Edward", emplName);
+                Assert.assertEquals("Wrong employee Email", "edward@example.com", emplEmail);
                 Assert.assertTrue("Wrong DOH", doh.contains("2023-04-01"));
-                Assert.assertEquals("Wrong Position", position, "Position1 ");
-                Assert.assertEquals("Wrong supervisor name", supervisorName, "Joe Doe");
-                Assert.assertEquals("Wrong supervisor Email", supervisorEmail, "joe@example.com");
+                Assert.assertEquals("Wrong Position", "Position1 ", position);
+                Assert.assertEquals("Wrong supervisor name", "Joe Doe", supervisorName);
+                Assert.assertEquals("Wrong supervisor Email", "joe@example.com", supervisorEmail);
             }
-            WebElement approvedField = driver.findElement(By.xpath("//input[@name='data[approved]']"));
+            WebElement approvedField = driver.findElement(approveCheckBox);
             actions.moveToElement(approvedField).click().build().perform();
-            WebElement submitButton = driver.findElement(By.xpath("//button[@type='submit']"));
+            WebElement submitButton = driver.findElement(submitForm);
             actions.moveToElement(submitButton).click().build().perform();
             try {
                 Thread.sleep(3000);
@@ -102,13 +102,10 @@ public class ReactMultiProcessForm {
     }
 
     public static Performable completeShowResults() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         WebDriver driver = getDriver();
-        driver.findElement(By.xpath("//a[contains(text(),'Tasklist')]")).click();
+        Awaitility.await().atMost(5, TimeUnit.SECONDS).until(() -> driver.findElements(tasksList).size() > 0);
+        driver.findElement(tasksList).click();
+        Awaitility.await().atMost(5, TimeUnit.SECONDS).until(() -> driver.findElements(showResults).size() > 1);
         driver.findElement(By.xpath("(//div[text()='Show Result'])[1]")).click();
         try {
             Thread.sleep(2000);
@@ -164,9 +161,9 @@ public class ReactMultiProcessForm {
         Assert.assertNotNull("Task must be approved", row3.findElement(By.xpath("//input[@checked='true']")));
 
         try {
-            driver.findElement(By.xpath("//button[@type='submit']")).click();
+            driver.findElement(submitForm).click();
         } catch (ElementClickInterceptedException e) {
-            driver.findElement(By.xpath("//button[@type='submit']")).click();
+            driver.findElement(submitForm).click();
         }
         return Task.where("{0} Complete MultiTasks");
     }

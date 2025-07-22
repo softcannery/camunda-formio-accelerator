@@ -2,10 +2,10 @@
 Feature: Simple Formio Task Action
   @reset
   Scenario: Start and complete process API test
-    Given kermit is logged in to Camunda via POST
-    When he starts an Simple Process via API
-    When he completes Simple Process via API
-    Then he should see that process not in the list via API
+    Given user is logged in to Camunda via POST
+    When user starts an Simple Process via API
+    When user completes Simple Process via API
+    Then user should see that process not in the list via API
   @reset
   Scenario: Start and complete process - Approved
     Given kermit is logged in to Camunda

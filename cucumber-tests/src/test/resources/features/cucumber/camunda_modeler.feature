@@ -10,6 +10,6 @@ Feature: Camunda Modeler plugin
     Then Deploy to Camunda button is displayed
     And All fields are present in 'Deploy to Camunda' menu
     And Download bpmn project "simple-task-process"
-    Given kermit is logged in to Camunda via POST
+    Given user is logged in to Camunda via POST
     Then Check process "simple-task-process" is present by ID
     And Check all formio files are present in process "simple-task-process"

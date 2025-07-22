@@ -2,10 +2,11 @@ package cucumber.pages;
 
 import static net.serenitybdd.core.Serenity.getDriver;
 
+import java.util.concurrent.TimeUnit;
 import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
-import org.openqa.selenium.NoSuchElementException;
+import org.awaitility.Awaitility;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -30,19 +31,16 @@ public class SimpleProcessUpgrade {
 
     public static int getSimpleProcessVersion() {
         WebDriver driver = getDriver();
-        for (int i = 0; i < 20; i++) {
-            try {
-                driver.findElement(By.xpath("//a[contains(text(),'Start Process')]")).click();
-                driver.findElement(By.xpath("//a[contains(text(), 'Simple Formio Task Action')]")).getText();
-                break;
-            } catch (NoSuchElementException e) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }
+        Awaitility
+            .await()
+            .atMost(20, TimeUnit.SECONDS)
+            .until(() -> driver.findElements(By.xpath("//a[contains(text(),'Start Process')]")).size() > 0);
+        driver.findElement(By.xpath("//a[contains(text(),'Start Process')]")).click();
+        Awaitility
+            .await()
+            .atMost(20, TimeUnit.SECONDS)
+            .until(() -> driver.findElements(By.xpath("//a[contains(text(), 'Simple Formio Task Action')]")).size() > 0
+            );
         String textInList = driver
             .findElement(By.xpath("//a[contains(text(), 'Simple Formio Task Action')]"))
             .getText();
@@ -59,11 +57,10 @@ public class SimpleProcessUpgrade {
         actions.moveToElement(processName).click().build().perform();
         driver.findElement(By.xpath("//input[@name='data[textField]']")).sendKeys("test");
         driver.findElement(By.xpath("//input[@name='data[number]']")).sendKeys("11111");
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        Awaitility
+            .await()
+            .atMost(5, TimeUnit.SECONDS)
+            .until(() -> driver.findElements(By.xpath("//button[@type='submit']")).size() > 0);
         driver.findElement(By.xpath("//button[@type='submit']")).click();
         return Task.where("{0} Start Process");
     }

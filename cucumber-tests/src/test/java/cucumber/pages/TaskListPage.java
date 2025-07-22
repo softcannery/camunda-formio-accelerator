@@ -1,5 +1,6 @@
 package cucumber.pages;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.serenitybdd.annotations.DefaultUrl;
@@ -8,6 +9,7 @@ import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
+import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
@@ -19,17 +21,19 @@ import org.openqa.selenium.WebElement;
 @DefaultUrl("http://localhost/camunda/app/tasklist/default/")
 public class TaskListPage extends PageObject {
 
-    public static Target START_PROCESS = Target
+    private static final Target START_PROCESS = Target
         .the("Start Process button")
         .locatedBy("//*[@class='ng-scope start-process-action']");
-    public static Target TASK_LIST_FIRST_ITEM_PROCESS = Target
+    public static final Target TASK_LIST_FIRST_ITEM_PROCESS = Target
         .the("First process in the list")
         .locatedBy("(//ol[contains(@class, 'tasks-list')]/li)[1]/.//h6");
-    public static Target CLAIM_BUTTON = Target.the("Click Claim button").locatedBy("//button[text()='Claim']");
-    public static Target HIDE_TASK_LIST_BUTTON = Target
+    private static final Target CLAIM_BUTTON = Target.the("Click Claim button").locatedBy("//button[text()='Claim']");
+    private static final Target HIDE_TASK_LIST_BUTTON = Target
         .the("Hide")
         .locatedBy("//section[contains(@class,'tasks-list')]/.//button[@ng-click='toggleRegion($event)']");
-    private static Target START_BUTTON = Target.the("Start button").locatedBy("//button[contains(text(), 'Start')]");
+    private static final Target START_BUTTON = Target
+        .the("Start button")
+        .locatedBy("//button[contains(text(), 'Start')]");
 
     @FindBy(name = "data[action]")
     public static WebElementFacade DROPDOWN_ACTION;
@@ -67,12 +71,7 @@ public class TaskListPage extends PageObject {
 
     public static boolean isElementPresent(String xPath) {
         WebDriver driver = Serenity.getDriver();
-        try {
-            driver.findElement(By.xpath(xPath));
-            return true;
-        } catch (org.openqa.selenium.NoSuchElementException e) {
-            return false;
-        }
+        return driver.findElements(By.xpath(xPath)).size() > 0;
     }
 
     public static int getTasksCount() {
@@ -97,18 +96,24 @@ public class TaskListPage extends PageObject {
         return Integer.parseInt(countTasksStr);
     }
 
-    public static int getCountProcesses() {
+    public static int getCountProcesses(Actor actor) {
+        actor.wasAbleTo(NavigateTo.theProcessCountAPIPage());
         WebDriver driver = Serenity.getDriver();
         WebElement responseWE = driver.findElement(By.xpath("//pre"));
         String jsonString = responseWE.getText();
         int count = 0;
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = null;
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode jsonNode = mapper.readTree(jsonString);
-            count = jsonNode.get("count").asInt();
-        } catch (Exception e) {
-            e.printStackTrace();
+            jsonNode = mapper.readTree(jsonString);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
+        if (jsonNode.has("count")) {
+            count = jsonNode.get("count").asInt();
+        }
+
         return count;
     }
 

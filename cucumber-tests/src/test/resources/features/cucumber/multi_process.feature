@@ -5,5 +5,5 @@ Feature: Parallel tasks process
     When he selects start process "Multi-Instance Sub-Process Demo"
     When he clicks start process button
     When he approve multi tasks
-    Then he open Show Results, clime and complete
-    Then he process is closed
+    Then he open Show Results, claim and complete
+    Then he checks that process is closed
