@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.serenitybdd.annotations.DefaultUrl;
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.core.annotations.findby.By;
+import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.serenitybdd.screenplay.Actor;
@@ -34,6 +35,7 @@ public class TaskListPage extends PageObject {
         .the("Start button")
         .locatedBy("//button[contains(text(), 'Start')]");
 
+    @FindBy(name = "data[action]")
     public static WebElementFacade DROPDOWN_ACTION;
 
     public static Performable clickStartProcess() {
