@@ -89,7 +89,8 @@
             FormioUtils.eachComponent(
               form.components,
               function (c) {
-                createVariable(variableManager, c.component.key, "string");
+                let key = c.component !== undefined ? c.component.key : c.key;
+                createVariable(variableManager, key, "string");
               },
               true,
             );
@@ -120,7 +121,8 @@
               }
 
               FormioUtils.eachComponent(form.components, function (c) {
-                const value = variableManager.variableValue(c.component.key);
+                clet key = c.component !== undefined ? c.component.key : c.key;
+                const value = variableManager.variableValue(key);
                 if (value !== undefined && value !== null)
                   submission.data[c.component.key] = value;
               });
