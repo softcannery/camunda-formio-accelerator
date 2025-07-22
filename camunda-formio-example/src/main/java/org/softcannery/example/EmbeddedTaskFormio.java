@@ -45,8 +45,8 @@
 package org.softcannery.example;
 
 import lombok.extern.slf4j.Slf4j;
-import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.spring.boot.starter.event.PostDeployEvent;
+import org.cibseven.bpm.engine.ProcessEngine;
+import org.cibseven.bpm.spring.boot.starter.event.PostDeployEvent;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
