@@ -134,6 +134,7 @@
 					<skip>${skipPrettier}</skip>
 					<prettierJavaVersion>2.2.0</prettierJavaVersion>
 					<printWidth>120</printWidth>
+					<endOfLine>LF</endOfLine>
 					<tabWidth>4</tabWidth>
 					<useTabs>false</useTabs>
 					<ignoreConfigFile>true</ignoreConfigFile>

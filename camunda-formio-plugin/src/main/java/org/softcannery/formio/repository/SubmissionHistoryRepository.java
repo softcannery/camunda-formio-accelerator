@@ -45,22 +45,15 @@
 package org.softcannery.formio.repository;
 
 import java.util.List;
-import java.util.Optional;
 import org.softcannery.formio.model.SubmissionHistoryEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SubmissionHistoryRepository extends CrudRepository<SubmissionHistoryEntity, String> {
-    Optional<SubmissionHistoryEntity> findByActivityInstanceId(String activityInstanceId);
-
-    Optional<SubmissionHistoryEntity> findByInstanceIdAndTaskId(String instanceId, String taskId);
-
     List<SubmissionHistoryEntity> findByInstanceIdAndSubmissionNameAndTaskId(
         String instanceId,
         String submissionName,
         String taskId
     );
-
-    List<SubmissionHistoryEntity> findByInstanceId(String instanceId);
 }
