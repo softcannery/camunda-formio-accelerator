@@ -121,10 +121,10 @@
               }
 
               FormioUtils.eachComponent(form.components, function (c) {
-                clet key = c.component !== undefined ? c.component.key : c.key;
+                const key = c.component !== undefined ? c.component.key : c.key;
                 const value = variableManager.variableValue(key);
                 if (value !== undefined && value !== null)
-                  submission.data[c.component.key] = value;
+                  submission.data[key] = value;
               });
               $scope.formioForm.submission = submission;
             });
