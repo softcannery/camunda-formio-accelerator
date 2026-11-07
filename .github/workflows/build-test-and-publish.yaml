@@ -103,6 +103,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+      - name: Test embedded Form.io script
+        run: node --test test/formio-component-key.test.js
       - name: build plugin
         run: |
           cd ./camunda-modeler-formio-plugin
